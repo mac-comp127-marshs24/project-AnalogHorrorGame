@@ -20,6 +20,10 @@ public class HorrorGame {
 
         Rectangle box = new Rectangle(300, 100, 100, 100);
         canvas.add(box);
+
+        Ellipse key = new Ellipse(200, 180, 40,40);
+        canvas.add(key);
+
         canvas.draw();
 
     }
