@@ -5,7 +5,7 @@ public class HorrorGame {
     private static final int CANVAS_WIDTH = 854;
     private static final int CANVAS_HEIGHT = 480;
     
-    private static int inventoryHeight = getCanvasHeight() / 7; 
+    private static int inventoryHeight = getCanvasHeight() / 7; // Using methods instead while thinking about refactoring l8r
     private static int inventoryWidth = getCanvasWidth() / 8 * 7;
     public static void main(String[] args) {
         skeletonTest();
@@ -14,6 +14,7 @@ public class HorrorGame {
     public static void skeletonTest() {
         CanvasWindow canvas = new CanvasWindow("game", CANVAS_WIDTH, CANVAS_HEIGHT);
 
+        // Generally just thinking we work on click/item interactions with some basic shapes for now; move the logic to the proper classes after?
         Rectangle inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
         canvas.add(inventoryBar);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 6 * 5);
