@@ -4,7 +4,7 @@ import edu.macalester.graphics.CanvasWindow;
 
 public class HorrorGame {
     public static void main(String[] args) {
-        CanvasWindow canvas = new CanvasWindow("game", 640, 480);
+        CanvasWindow canvas = new CanvasWindow("game", 854, 480);
         
         
     }
