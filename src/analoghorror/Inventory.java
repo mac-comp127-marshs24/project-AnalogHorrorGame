@@ -27,7 +27,7 @@ public class Inventory extends GraphicsGroup{
 
         for(int i = 0; i < 10; i++){
             Rectangle slot = new Rectangle(x, y, SLOT_WIDTH, SLOT_HEIGHT);
-            canvas.add(slot);
+            //canvas.add(slot);
             x += SLOT_WIDTH + padding;
         }
         
