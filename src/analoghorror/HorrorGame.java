@@ -1,6 +1,5 @@
 package analoghorror;
-import edu.macalester.graphics.CanvasWindow;
-//import edu.macalester.graphics.GraphicsObject;
+import edu.macalester.graphics.*;
 
 public class HorrorGame {
     private static final int CANVAS_WIDTH  = 854;
@@ -8,6 +7,8 @@ public class HorrorGame {
     public static void main(String[] args) {
         CanvasWindow canvas = new CanvasWindow("game", CANVAS_WIDTH, CANVAS_HEIGHT);
         
-        
+        Rectangle rectangle = new Rectangle(20, 20, 10, 10);
+        canvas.add(rectangle);
+        canvas.draw();
     }
 }
