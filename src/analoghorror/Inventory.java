@@ -1,6 +1,8 @@
 package analoghorror;
 
-import edu.macalester.graphics.CanvasWindow;
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.macalester.graphics.*;
 
 /**
@@ -10,7 +12,16 @@ public class Inventory extends GraphicsGroup{
     private static final double SLOT_WIDTH = 50;
     private static final double SLOT_HEIGHT = 50;
 
+    //i feel like we can utilize List.ofCopy here? i made it protected so other classes can add or remove to itemsList but safety seems sus
+    // *reminder for me, check registrar lab? i think it was that utilized list.copyOf for defensive copying?
+    protected List itemsList = new ArrayList<Item>();
+
+    // use similar logic for forecast box to add each item object to an individual inventory slot
+
+
+
     public Inventory(CanvasWindow canvas){
+
         /*constructor for inventory obj */
         slotGenerator(canvas);
 
