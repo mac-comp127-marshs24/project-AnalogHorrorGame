@@ -8,12 +8,20 @@ public class HorrorGame {
     private static int inventoryHeight = getCanvasHeight() / 7; 
     private static int inventoryWidth = getCanvasWidth() / 8 * 7;
     public static void main(String[] args) {
+        skeletonTest();
+    }
+
+    public static void skeletonTest() {
         CanvasWindow canvas = new CanvasWindow("game", CANVAS_WIDTH, CANVAS_HEIGHT);
-        
-        Rectangle rectangle = new Rectangle(10, 10, inventoryWidth, inventoryHeight);
-        canvas.add(rectangle);
-        rectangle.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 6 * 5);
+
+        Rectangle inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
+        canvas.add(inventoryBar);
+        inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 6 * 5);
+
+        Rectangle box = new Rectangle(300, 100, 100, 100);
+        canvas.add(box);
         canvas.draw();
+
     }
 
     public static int getCanvasWidth(){
