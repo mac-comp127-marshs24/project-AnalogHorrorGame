@@ -1,0 +1,7 @@
+/**
+ * Inventory
+ */
+public class Inventory {
+
+    
+}
