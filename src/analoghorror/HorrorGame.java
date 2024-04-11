@@ -6,10 +6,15 @@ public class HorrorGame {
     private static final int CANVAS_WIDTH = 854;
     private static final int CANVAS_HEIGHT = 480;
     
-    private static int inventoryHeight = getCanvasHeight() / 7; // Using methods instead while thinking about refactoring l8r
-    private static int inventoryWidth = getCanvasWidth() / 8 * 7;
-    private static CanvasWindow canvas;
-    private static Rectangle inventoryBar;
+    private int inventoryHeight = getCanvasHeight() / 7; // Using methods instead while thinking about refactoring l8r
+    private int inventoryWidth = getCanvasWidth() / 8 * 7;
+    private CanvasWindow canvas;
+    private Rectangle inventoryBar;
+    Rectangle box;
+    Ellipse key;
+    boolean boxBool;
+    boolean keyBool;
+
     public static void main(String[] args) {
         new HorrorGame();
     }
@@ -22,14 +27,14 @@ public class HorrorGame {
         canvas.add(inventoryBar);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 6 * 5);
 
-        Rectangle box = new Rectangle(300, 100, 100, 100);
+        box = new Rectangle(300, 100, 100, 100);
         canvas.add(box);
 
-        Ellipse key = new Ellipse(200, 180, 40,40);
+        key = new Ellipse(200, 180, 40,40);
         canvas.add(key);
 
         canvas.draw();
-        itemLogic();
+        // itemLogic();
 
     }
 
@@ -41,14 +46,32 @@ public class HorrorGame {
         return CANVAS_HEIGHT;
     }
 
-    public void itemLogic(){  // Draft
-        canvas.onClick(event -> {
-            check(event).setCenter((inventoryBar.getCenter()));
-            canvas.draw();
-        });
-    }
+    // public void itemLogic(){  // Draft
+    //     canvas.onClick(event -> {
+    //         if((check(event) == box && boxBool == false) || (check(event) == key && keyBool == false)){
+    //             check(event).setCenter((inventoryBar.getCenter()));
+    //         } else if((check(event) == box && boxBool == true) || (check(event) == key && keyBool == true)) {
+    //             canvas.getElementAt(event.getPosition()).setCenter(canvas.getCenter());
+    //         }
+    //         canvas.draw();
+    //     });
+    // }
 
-    public GraphicsObject check(MouseButtonEvent event){
-        return canvas.getElementAt(event.getPosition());
-    }
+    // public GraphicsObject check(MouseButtonEvent event){
+    //     GraphicsObject item = canvas.getElementAt(event.getPosition());
+    //     // maybe also add a bool to each Item object so we can check if it's in the inventory
+    //     // that way we can change behavior
+    //     if(item == box && boxBool == true){
+    //         boxBool = false;
+    //     } else if (item == key && keyBool == true) {
+    //         keyBool = false;
+    //     }
+    //     else{
+    //         if (item == box) {
+    //             boxBool = true;
+    //         } else if(item == key)
+    //             keyBool = true;
+    //     }
+    //     return item;
+    // }
 }
