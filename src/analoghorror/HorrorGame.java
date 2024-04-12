@@ -49,7 +49,6 @@ public class HorrorGame {
         cursorDefault = new Ellipse(0, 0, 10, 10);
         cursorObject = cursorDefault;
 
-
         box = new Rectangle(300, 100, 100, 100);
         box.setStrokeWidth(1);
         game.add(box);
@@ -125,7 +124,6 @@ public class HorrorGame {
                 }
             }
         });
-
     }
 
     public GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
