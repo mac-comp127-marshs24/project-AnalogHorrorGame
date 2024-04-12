@@ -1,22 +1,32 @@
 package analoghorror;
+
 import edu.macalester.graphics.*;
-import edu.macalester.graphics.events.MouseButtonEvent;
+import edu.macalester.graphics.events.*;
 
 public class HorrorGame {
     private static final int CANVAS_WIDTH = 854;
     private static final int CANVAS_HEIGHT = 480;
-    
-    private int inventoryHeight = getCanvasHeight() / 7; // Using methods instead while thinking about refactoring l8r
+
+    private int inventoryHeight = getCanvasHeight() / 7; // using methods instead while thinking about refactoring l8r —W
     private int inventoryWidth = getCanvasWidth() / 8 * 7;
     private CanvasWindow canvas;
-    private Rectangle inventoryBar;
-    Rectangle box;
-    Ellipse key;
-    
-    boolean boxBool = false; // ideally these should be in an Item class w/ getters and setters
-    boolean keyBool = false;
-    Point boxHome;
-    Point keyHome;
+
+    /**
+     * you are now entering the land of bullshit ugly code made to test the skeleton interaction —W
+     */
+    Rectangle inventoryBar;  // I imagine this wouldn't live here —W
+    Rectangle box;  // pretend this is an Interactable object or whatever —W
+    Ellipse key;  // pretend this is an Item object —W
+
+    /**
+     * ideally these should be in an Item class w/ getters and setters —W
+     */
+    boolean keyBool = false;  // true if in inventory —W
+    Point keyHome;  // inventory space —W
+    GraphicsObject cursorObject;
+    GraphicsObject cursorDefault;
+    GraphicsGroup game;
+    GraphicsGroup cursor;
 
     public static void main(String[] args) {
         new HorrorGame();
@@ -25,71 +35,91 @@ public class HorrorGame {
     private HorrorGame() {
         canvas = new CanvasWindow("game", CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        // Generally just thinking we work on click/item interactions with some basic shapes for now; move the logic to the proper classes after?
         inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
         canvas.add(inventoryBar);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 6 * 5);
-        boxHome = new Point(300, 100);
-        keyHome = new Point(200, 180);
+
+        keyHome = new Point(200, inventoryBar.getCenter().getY());
+        cursorDefault = new Ellipse(0, 0, 10, 10);
+        cursorObject = cursorDefault;
+
+        game = new GraphicsGroup();
+        cursor = new GraphicsGroup();
 
         box = new Rectangle(300, 100, 100, 100);
-        canvas.add(box);
+        game.add(box);
 
-        key = new Ellipse(200, 180, 40,40);
-        canvas.add(key);
+        key = new Ellipse(200, 180, 40, 40);
+        game.add(key);
 
+        canvas.add(game);
+        canvas.add(cursor);
         canvas.draw();
         itemLogic();
 
     }
 
-    public static int getCanvasWidth(){
+    public static int getCanvasWidth() {
         return CANVAS_WIDTH;
     }
 
-    public static int getCanvasHeight(){
+    public static int getCanvasHeight() {
         return CANVAS_HEIGHT;
     }
 
-    public void itemLogic(){  // Draft
-        canvas.onClick(event -> {
-            if (check(event) == box && boxBool == false){
-                canvas.getElementAt(event.getPosition()).setCenter((inventoryBar.getCenter())); // proper spot in inventory (use set or smthn)
-                boxBool = true;
-            }
-            if (check(event) == key && keyBool == false){
-                canvas.getElementAt(event.getPosition()).setCenter((inventoryBar.getCenter())); // proper spot in inventory (use set or smthn)
-                keyBool = true;
-            } 
-            if (check(event) == box && boxBool == true) {
-                check(event).setPosition(boxHome); // proper spot in room (track using Item info)
-                boxBool = false;
-            }
-            if (check(event) == key && keyBool == true) {
-                check(event).setPosition(keyHome);; // proper spot in room (track using Item info)
-                keyBool = false;
-            }
+    public void itemLogic() {  // just to get a general idea on what an interaction could look like —W
+        canvas.animate(() -> {
+            canvas.onMouseMove(event -> {
+                // if the key isn't set as the cursor object, uses cursorDefault to prevent exception errors
+                // (invisible, but could be hand l8r) —W
+                cursorObject.setCenter(event.getPosition());
+            });
             canvas.draw();
         });
+        canvas.onClick(event -> {
+            // if the object under the click is key and key isn't in the inventory —W
+            if (check(event, game) == key && keyBool == false) {
+                // put key in inventory
+                game.getElementAt(event.getPosition()).setCenter(keyHome); // spot in inventory (use a Set or smthn) in Item —W
+                cursorObject = cursorDefault;
+                keyBool = true;  // key is now in inventory —W
+            }
+            // if key is under click and key is in inventory —W
+            if (check(event, game) == key && keyBool == true) {
+                // cursor is now key and key is now part of the cursor group —W
+                cursorObject = check(event, game);
+                game.remove(cursorObject);
+                cursor.add(cursorObject);
+                keyBool = false;  // key is out of inventory —W
+            }
+            // if the cursor is key and clicked over box —W
+            if (check(event, cursor) == key) {
+                if (check(event, game) == box) {
+                    // change box and reset key in inventory —W
+                    box.setStrokeWidth(10);
+                    cursor.remove(cursorObject);
+                    game.add(cursorObject);
+                    key.setCenter(keyHome);
+                    cursorObject = cursorDefault;
+
+                }
+                // // I wanted the key to reset upon a click even if you aren't using it over a box
+                // // but I couldn't get it to work for some reason :(
+                // // maybe one of you'll have more luck —W
+                // key.setCenter(keyHome);
+                // cursor.remove(cursorObject);
+                // System.out.println(cursorObject);
+                // game.add(cursorObject);
+                // System.out.println(cursorObject);
+                // cursorObject = cursorDefault;
+                // System.out.println(cursorObject);
+            }
+        });
+
     }
 
-    public GraphicsObject check(MouseButtonEvent event){
-        GraphicsObject item = canvas.getElementAt(event.getPosition());
-        // maybe also add a bool to each Item object so we can check if it's in the inventory
-        // that way we can change behavior
-        // if (item == box && boxBool == true) {
-        //     System.out.println("boxBool is now " + boxBool);
-        // } 
-        // if (item == key && keyBool == true) {
-        //     System.out.println("keyBool is now " + keyBool);
-        // } else {
-        //     if (item == box) {
-        //         System.out.println("boxBool is now " + boxBool);
-        //     } 
-        //     if (item == key) {
-        //         System.out.println("keyBool is now " + keyBool);
-        //     }
-        // }
+    public GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
+        GraphicsObject item = group.getElementAt(event.getPosition());
         return item;
     }
 }
