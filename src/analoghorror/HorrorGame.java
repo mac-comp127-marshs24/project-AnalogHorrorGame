@@ -21,12 +21,14 @@ public class HorrorGame {
     /**
      * ideally these should be in an Item class w/ getters and setters —W
      */
+    boolean boxBool = false;  // true if box is "open"
     boolean keyBool = false;  // true if in inventory —W
     Point keyHome;  // inventory space —W
     GraphicsObject cursorObject;
     GraphicsObject cursorDefault;
     GraphicsGroup game;
     GraphicsGroup cursor;
+    GraphicsGroup ui;
 
     public static void main(String[] args) {
         new HorrorGame();
@@ -35,23 +37,27 @@ public class HorrorGame {
     private HorrorGame() {
         canvas = new CanvasWindow("game", CANVAS_WIDTH, CANVAS_HEIGHT);
 
+        game = new GraphicsGroup();
+        cursor = new GraphicsGroup();
+        ui = new GraphicsGroup();
+
         inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
-        canvas.add(inventoryBar);
+        ui.add(inventoryBar);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 6 * 5);
 
         keyHome = new Point(200, inventoryBar.getCenter().getY());
         cursorDefault = new Ellipse(0, 0, 10, 10);
         cursorObject = cursorDefault;
 
-        game = new GraphicsGroup();
-        cursor = new GraphicsGroup();
 
         box = new Rectangle(300, 100, 100, 100);
+        box.setStrokeWidth(1);
         game.add(box);
 
         key = new Ellipse(200, 180, 40, 40);
         game.add(key);
 
+        canvas.add(ui);
         canvas.add(game);
         canvas.add(cursor);
         canvas.draw();
@@ -96,23 +102,27 @@ public class HorrorGame {
             if (check(event, cursor) == key) {
                 if (check(event, game) == box) {
                     // change box and reset key in inventory —W
-                    box.setStrokeWidth(10);
+                    if (!boxBool) {
+                        box.setStrokeWidth(10);
+                    }
+                    if (boxBool){
+                        box.setStrokeWidth(1);
+                    }
                     cursor.remove(cursorObject);
                     game.add(cursorObject);
                     key.setCenter(keyHome);
                     cursorObject = cursorDefault;
-
+                    boxBool = true;
+                    keyBool = true;
                 }
-                // // I wanted the key to reset upon a click even if you aren't using it over a box
-                // // but I couldn't get it to work for some reason :(
-                // // maybe one of you'll have more luck —W
-                // key.setCenter(keyHome);
-                // cursor.remove(cursorObject);
-                // System.out.println(cursorObject);
-                // game.add(cursorObject);
-                // System.out.println(cursorObject);
-                // cursorObject = cursorDefault;
-                // System.out.println(cursorObject);
+                // I wanted the key to reset upon a click even if you aren't using it over a box —W
+                if (check(event, ui) != inventoryBar && keyBool == false) {
+                    cursor.remove(cursorObject);
+                    game.add(cursorObject);
+                    key.setCenter(keyHome);
+                    cursorObject = cursorDefault;
+                    keyBool = true;
+                }
             }
         });
 
