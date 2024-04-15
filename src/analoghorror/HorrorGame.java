@@ -30,6 +30,11 @@ public class HorrorGame {
     GraphicsGroup cursor;
     GraphicsGroup ui;
 
+    /**
+     * working on image asset tests
+     */
+    Image uiTexture;
+
     public static void main(String[] args) {
         new HorrorGame();
     }
@@ -42,8 +47,13 @@ public class HorrorGame {
         ui = new GraphicsGroup();
 
         inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
-        ui.add(inventoryBar);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
+
+        uiTexture = new Image("/res/assets/testBar.png");
+        uiTexture.setPosition(inventoryBar.getPosition());
+
+        ui.add(uiTexture);
+        ui.add(inventoryBar);
 
         keyHome = new Point(200, inventoryBar.getCenter().getY());
         cursorDefault = new Ellipse(0, 0, 10, 10);
@@ -76,14 +86,14 @@ public class HorrorGame {
     }
 
     public void itemLogic() {  // just to get a general idea on what an interaction could look like —W
-        canvas.animate(() -> {
+        // canvas.animate(() -> {
             canvas.onMouseMove(event -> {
                 // if the key isn't set as the cursor object, uses cursorDefault to prevent exception errors
                 // (invisible, but could be hand l8r) —W
                 cursorObject.setCenter(event.getPosition());
             });
             canvas.draw();
-        });
+        // });
         canvas.onClick(event -> {
             // if the object under the click is key and key isn't in the inventory —W
             if (check(event, game) == key && keyBool == false) {
