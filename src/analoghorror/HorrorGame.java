@@ -23,7 +23,8 @@ public class HorrorGame {
      */
     boolean boxBool = false;  // true if box is "open"
     boolean keyBool = false;  // true if in inventory —W
-    Point keyHome;  // inventory space —W
+    Point keyHome;  // inventory space —W; we should have an inventory class to help with slot management
+    
     GraphicsObject cursorObject;
     GraphicsObject cursorDefault;
     GraphicsGroup game;
@@ -49,7 +50,7 @@ public class HorrorGame {
         inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
 
-        uiTexture = new Image("/res/assets/testBar.png");
+        uiTexture = new Image("assets/testBar.png");
         uiTexture.setPosition(inventoryBar.getPosition());
 
         ui.add(uiTexture);
@@ -116,15 +117,16 @@ public class HorrorGame {
                     // change box and reset key in inventory —W
                     if (!boxBool) {
                         box.setStrokeWidth(10);
+                        boxBool = true;
                     }
-                    if (boxBool){
+                    else if (boxBool){
                         box.setStrokeWidth(1);
+                        boxBool = false;
                     }
                     cursor.remove(cursorObject);
                     game.add(cursorObject);
                     key.setCenter(keyHome);
                     cursorObject = cursorDefault;
-                    boxBool = true;
                     keyBool = true;
                 }
                 // I wanted the key to reset upon a click even if you aren't using it over a box —W
