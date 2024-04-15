@@ -23,7 +23,8 @@ public class HorrorGame {
      */
     boolean boxBool = false;  // true if box is "open"
     boolean keyBool = false;  // true if in inventory —W
-    Point keyHome;  // inventory space —W
+    Point keyHome;  // inventory space —W; we should have an inventory class to help with slot management
+    
     GraphicsObject cursorObject;
     GraphicsObject cursorDefault;
     GraphicsGroup game;
