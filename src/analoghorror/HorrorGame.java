@@ -43,7 +43,7 @@ public class HorrorGame {
 
         inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
         ui.add(inventoryBar);
-        inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 6 * 5);
+        inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
 
         keyHome = new Point(200, inventoryBar.getCenter().getY());
         cursorDefault = new Ellipse(0, 0, 10, 10);
@@ -61,6 +61,9 @@ public class HorrorGame {
         canvas.add(cursor);
         canvas.draw();
         itemLogic();
+
+        System.out.println(inventoryBar.getWidth());
+        System.out.println(inventoryBar.getHeight());
 
     }
 
