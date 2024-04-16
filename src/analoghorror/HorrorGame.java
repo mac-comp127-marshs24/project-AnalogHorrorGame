@@ -2,6 +2,9 @@ package analoghorror;
 
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.*;
+// import analoghorror.*;
+import analoghorror.item.Cursor;
+import analoghorror.item.KeyItem;
 
 public class HorrorGame {
     private static final int CANVAS_WIDTH = 854;
@@ -16,16 +19,15 @@ public class HorrorGame {
      */
     Rectangle inventoryBar;  // I imagine this wouldn't live here —W
     Rectangle box;  // pretend this is an Interactable object or whatever —W
-    Ellipse key;  // pretend this is an Item object —W
+    KeyItem key;  // pretend this is an Item object —W
 
     /**
      * ideally these should be in an Item class w/ getters and setters —W
      */
     boolean boxBool = false;  // true if box is "open"
-    boolean keyBool = false;  // true if in inventory —W
-    Point keyHome;  // inventory space —W; we should have an inventory class to help with slot management
     
-    GraphicsObject cursorObject;
+    Cursor activeCursor;
+    // GraphicsObject cursorObject;
     GraphicsObject cursorDefault;
     GraphicsGroup game;
     GraphicsGroup cursor;
@@ -40,7 +42,7 @@ public class HorrorGame {
         new HorrorGame();
     }
 
-    private HorrorGame() {
+    public HorrorGame() {
         canvas = new CanvasWindow("game", CANVAS_WIDTH, CANVAS_HEIGHT);
 
         game = new GraphicsGroup();
@@ -56,15 +58,15 @@ public class HorrorGame {
         ui.add(uiTexture);
         ui.add(inventoryBar);
 
-        keyHome = new Point(200, inventoryBar.getCenter().getY());
-        cursorDefault = new Ellipse(0, 0, 10, 10);
-        cursorObject = cursorDefault;
+        activeCursor = new Cursor(new Ellipse(0, 0, 10, 10));
+        activeCursor.resetCursor();
+        cursor.add(activeCursor);
 
         box = new Rectangle(300, 100, 100, 100);
         box.setStrokeWidth(1);
         game.add(box);
 
-        key = new Ellipse(200, 180, 40, 40);
+        key = new KeyItem(200, 180, 40, 40, inventoryBar);
         game.add(key);
 
         canvas.add(ui);
@@ -87,55 +89,24 @@ public class HorrorGame {
     }
 
     public void itemLogic() {  // just to get a general idea on what an interaction could look like —W
-        // canvas.animate(() -> {
-            canvas.onMouseMove(event -> {
-                // if the key isn't set as the cursor object, uses cursorDefault to prevent exception errors
-                // (invisible, but could be hand l8r) —W
-                cursorObject.setCenter(event.getPosition());
-            });
-            canvas.draw();
-        // });
-        canvas.onClick(event -> {
+        canvas.onMouseMove(event -> {
+            // if the key isn't set as the cursor object, uses cursorDefault to prevent exception errors
+            // (invisible, but could be hand l8r) —W
+            activeCursor.setCenter(event.getPosition());
+        });
+        canvas.draw();
+        canvas.onClick(event -> {  // TODO: make so calls if(check() != null){check().interaction()}
             // if the object under the click is key and key isn't in the inventory —W
-            if (check(event, game) == key && keyBool == false) {
-                // put key in inventory
-                game.getElementAt(event.getPosition()).setCenter(keyHome); // spot in inventory (use a Set or smthn) in Item —W
-                cursorObject = cursorDefault;
-                keyBool = true;  // key is now in inventory —W
-            }
-            // if key is under click and key is in inventory —W
-            if (check(event, game) == key && keyBool == true) {
-                // cursor is now key and key is now part of the cursor group —W
-                cursorObject = check(event, game);
-                game.remove(cursorObject);
-                cursor.add(cursorObject);
-                keyBool = false;  // key is out of inventory —W
+            if (check(event, game) == key) {
+                key.inventoryLogic(event, game, cursor, activeCursor);
             }
             // if the cursor is key and clicked over box —W
             if (check(event, cursor) == key) {
                 if (check(event, game) == box) {
-                    // change box and reset key in inventory —W
-                    if (!boxBool) {
-                        box.setStrokeWidth(10);
-                        boxBool = true;
-                    }
-                    else if (boxBool){
-                        box.setStrokeWidth(1);
-                        boxBool = false;
-                    }
-                    cursor.remove(cursorObject);
-                    game.add(cursorObject);
-                    key.setCenter(keyHome);
-                    cursorObject = cursorDefault;
-                    keyBool = true;
-                }
-                // I wanted the key to reset upon a click even if you aren't using it over a box —W
-                if (check(event, ui) != inventoryBar && keyBool == false) {
-                    cursor.remove(cursorObject);
-                    game.add(cursorObject);
-                    key.setCenter(keyHome);
-                    cursorObject = cursorDefault;
-                    keyBool = true;
+                    boxBool = key.interaction(event, game, boxBool, box, cursor, activeCursor, ui, inventoryBar);  // this bool implementation brings shame to my ancestors
+                    key.resetCursorAfterInteraction(event, game, cursor, activeCursor, ui, inventoryBar);
+                } else {
+                    key.resetCursor(event, game, cursor, activeCursor, ui, inventoryBar);
                 }
             }
         });
