@@ -109,7 +109,7 @@ public class HorrorGame {
                     key.resetCursor(event, game, cursor, activeCursor, ui, inventoryBar);
                 }
             }
-        });
+        }); 
     }
 
     public GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {

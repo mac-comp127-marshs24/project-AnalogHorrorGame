@@ -31,7 +31,7 @@ public class CollectableItem extends Item {
 
     public void resetCursorAfterInteraction(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
     Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){
-        cursor.remove(cursorObject);
+        // cursor.remove(cursorObject);  // don't think I need this, but keeping it for future troubleshooting just in case
         checkedGroup.add(cursorObject.getCursor());
         this.setCenter(inventorySlot);
         cursorObject.resetCursor();
@@ -41,7 +41,7 @@ public class CollectableItem extends Item {
     public void resetCursor(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
     Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){
         if (ui.getElementAt(event.getPosition()) != inventoryBar && inInventory == false) {
-            cursor.remove(cursorObject);
+            // cursor.remove(cursorObject);  // don't think I need this, but keeping it for future troubleshooting just in case
             checkedGroup.add(this);
             this.setCenter(inventorySlot);
             inInventory = true;  // I wanted the key to reset upon a click even if you aren't using it over a box —W
