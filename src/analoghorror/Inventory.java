@@ -3,7 +3,7 @@ package analoghorror;
 import java.util.ArrayList;
 import java.util.List;
 
-import analoghorror.item.Item;
+import analoghorror.item.LegacyItem;
 import edu.macalester.graphics.*;
 
 /**
@@ -15,7 +15,7 @@ public class Inventory extends GraphicsGroup{
 
     //i feel like we can utilize List.ofCopy here? i made it protected so other classes can add or remove to itemsList but safety seems sus
     // *reminder for me, check registrar lab? i think it was that utilized list.copyOf for defensive copying?
-    protected List<Item> itemsList = new ArrayList<Item>();
+    protected List<LegacyItem> itemsList = new ArrayList<LegacyItem>();
 
     // use similar logic for forecast box to add each item object to an individual inventory slot
 

@@ -19,7 +19,7 @@ public class HorrorGame {
      */
     Rectangle inventoryBar;  // I imagine this wouldn't live here —W
     Rectangle box;  // pretend this is an Interactable object or whatever —W
-    KeyItem key;  // pretend this is an Item object —W
+    Item key;  // pretend this is an Item object —W
 
     /**
      * ideally these should be in an Item class w/ getters and setters —W
@@ -68,7 +68,7 @@ public class HorrorGame {
         box.setStrokeWidth(1);
         game.add(box);
 
-        key = new KeyItem(200, 180, 40, 40, inventoryBar);
+        key = new Item(200, 180, inventoryBar, "assets/key.png");
         game.add(key);
 
         canvas.add(ui);

@@ -1,155 +1,68 @@
 package analoghorror.item;
 
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
-import analoghorror.HorrorGame;
-import analoghorror.item.cursor.CursorManager;
-import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.MouseButtonEvent;
 
-public abstract class Item extends GraphicsObject{
-    private CanvasWindow canvas;
-    GraphicsGroup game;
-    private CursorManager cursorManager;
-    GraphicsGroup ui;
+import edu.macalester.graphics.*;
 
-    /*Inventory */
-    private Boolean itemInInventory;
+public class Item extends Image{
+    boolean inInventory;  // true if in inventory —W
+    Point inventorySlot;  // inventory space —W; we should have an inventory class to help with slot management
 
-    /*Item interaction */
-    private Boolean interactable;
+    public Item(double x, double y, Rectangle inventory, String path) {
+        super(x, y);
+        setImagePath(path);
+        inInventory = false;
+        inventorySlot = new Point(108, inventory.getCenter().getY());
 
-    public Item(CanvasWindow window, GraphicsGroup game, GraphicsGroup cursor, Item item){
-        this.canvas = window;
-        this.game = game;
-        this.cursorManager = new CursorManager();
-        this.ui = new GraphicsGroup();
-
-        itemInInventory = false;
-        interactable = true;
-
-        // itemLogic(game, item);
+        //TODO Auto-generated constructor stub
+    }
+   
+    public void inventoryLogic(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){
+        if (inInventory) {
+            // cursor is now key and key is now part of the cursor group —W
+            cursorObject.setCursor(this);
+            checkedGroup.remove(cursorObject.getCursor());
+            cursor.add(cursorObject);
+            inInventory = false;  // key is out of inventory —W
+        }
+        else if (!inInventory) {
+            // put key in inventory
+            this.setCenter(inventorySlot); // spot in inventory (use a Set or smthn) in Item —W
+            cursorObject.resetCursor();
+            inInventory = true;  // key is now in inventory —W
+        }
     }
 
-    /**
-     * Sets item to element clicked on within a given group.
-     * @param event
-     * @param group
-     * @return Item at click
-     */
-    private GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
-        GraphicsObject item = group.getElementAt(event.getPosition());
-        return item;
+    public boolean interaction(MouseButtonEvent event, GraphicsGroup checkedGroup, boolean itemInteractionBool, Rectangle interactable, GraphicsGroup cursor, 
+        Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){  // listen, I'm sorry; this is stupid but I gotta make do with the garbage temp boxBool shit I made earlier
+            // change box and reset key in inventory —W
+            if (!itemInteractionBool) {
+                interactable.setStrokeWidth(10);
+                return true;
+            }
+            else if (itemInteractionBool){
+                interactable.setStrokeWidth(1);
+                return false;
+            }
+            return itemInteractionBool;
+        }
+
+    public void resetCursorAfterInteraction(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
+    Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){
+        cursor.remove(cursorObject);
+        checkedGroup.add(cursorObject.getCursor());
+        this.setCenter(inventorySlot);
+        cursorObject.resetCursor();
+        inInventory = true;
     }
 
-    /**
-     * Logic for game behavior.
-     * @param game
-     * @param item
-     */
-    // public void itemLogic(GraphicsGroup game, Item item) {  
-    //     //canvas animate
-    //     canvas.animate(() -> {
-    //         canvas.onMouseMove(event -> {
-    //             // if the key isn't set as the cursor object, uses cursorDefault to prevent exception errors
-    //             // (invisible, but could be hand l8r) —W
-    //             cursorManager.getCursorObject().setCenter(event.getPosition());
-    //         });
-    //         canvas.draw();
-    //     });
-    //     canvas.onClick(event -> {
-    //         objectUnderClick(event);
-
-    //         if (interactable){
-    //             itemInteraction(event, item, game, ui);
-    //         }
-            
-    //     });
-    // }
-
-   /**
-    * Checks if Item is in inventory
-    * @return True (yes) or false (no)
-    */
-    protected boolean isInInventory(){
-        return this.itemInInventory;
+    public void resetCursor(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
+    Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){
+        if (ui.getElementAt(event.getPosition()) != inventoryBar && inInventory == false) {
+            cursor.remove(cursorObject);
+            checkedGroup.add(this);
+            this.setCenter(inventorySlot);
+            inInventory = true;  // I wanted the key to reset upon a click even if you aren't using it over a box —W
+        }
     }
-
-    /**
-     * Checks if Item under click is current Item whether or not its in inventory.
-     * @param event 
-     */
-    // private void objectUnderClick(MouseButtonEvent event){
-    //     /*Is in inventory */
-
-    //     // if the object under the click is key and key isn't in the inventory —W
-    //     if (check(event, game) == this && itemInInventory == false) {
-    //         // put key in inventory
-    //         game.getElementAt(event.getPosition()).setCenter(HorrorGame.getKeyHome()); // spot in inventory (use a Set or smthn) in Item —W
-    //         cursorManager.returnCursorToDefault();
-    //         itemInInventory = true;  // key is now in inventory —W
-    //     }
-
-    //     /*Is not in inventory */
-
-    //     // if key is under click and key is in inventory —W
-    //     if (check(event, game) == this && itemInInventory == true) {
-    //         // cursor is now key and key is now part of the cursor group —W
-    //         cursorManager.setCursorObject(check(event, game));
-    //         cursorManager.addToCursorGroup(game);
-        
-    //         itemInInventory = false;  // key is out of inventory —W
-    //     }
-
-    // }
-
-    /**
-     * Resets Item with a click if you aren't using it with its related interactable.
-     * @param event
-     * @param ui
-     */
-    // private void resetUponClick(MouseButtonEvent event, GraphicsGroup ui){
-    //     // I wanted the key to reset upon a click even if you aren't using it over a box —W
-    //     if (check(event, ui) != HorrorGame.inventoryBar && isInInventory() == false) {
-    //         cursorManager.addToCursorGroup(game);
-    //         this.setCenter(HorrorGame.getKeyHome());
-
-    //         cursorManager.returnCursorToDefault();
-    //         this.itemInInventory = true;
-    //     }
-    // }
-
-    /**
-     * Behavior for interaction: If the cursor is the current item and it is clicked over it's related interactable, change the subject of interaction and reset current item in inventory. Otherwise, reset item upon click.
-     * @param event
-     * @param subjectOfInteraction
-     * @param game
-     * @param ui
-     */
-    // private void itemInteraction(MouseButtonEvent event, Item subjectOfInteraction, GraphicsGroup game, GraphicsGroup ui){
-    //     //     /*Interactable */
-    //             // if the cursor is key and clicked over box —W
-    //             if (check(event, cursorManager.getCursorGroup()) == this) {
-    //                 if (check(event, game) == subjectOfInteraction) {
-    //                     Boolean subjectBool = subjectOfInteraction.itemInInventory; //change to .isInInventory -M
-        
-    //                     // change box and reset key in inventory —W
-    //                     if (!subjectBool) {
-    //                         //subjectOfInteraction.setStrokeWidth(10);
-    //                     }
-    //                     if (subjectBool){
-    //                         //subjectOfInteraction.setStrokeWidth(1);
-    //                     }
-    //                     cursorManager.addToCursorGroup(game);
-    //                     this.setCenter(HorrorGame.getKeyHome());
-    //                     cursorManager.returnCursorToDefault();
-    //                     subjectBool = true;
-    //                     this.itemInInventory = true;
-    //                 }
-                    
-    //             }
-        
-    //             resetUponClick(event, ui);
-    //     }
 }
