@@ -19,11 +19,14 @@ public class Collectable extends Image {
      * @param path Texture
      * @param collectableID Referenced when an Item checks to see if it can change its state with the Collectable object
      */
-    public Collectable(double x, double y, Rectangle inventory, String path, String collectableID) {
+    public Collectable(double x, double y, String path, String collectableID) {
         super(x, y, path);
         inInventory = false;
-        inventorySlot = new Point(108, inventory.getCenter().getY());
         this.collectableID = collectableID;
+    }
+
+    public void setInventorySlot(Rectangle inventory, double x){
+        inventorySlot = new Point(x, inventory.getCenter().getY());
     }
     
     /**

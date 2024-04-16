@@ -3,6 +3,7 @@ package analoghorror.item;
 import java.util.HashSet;
 import java.util.Set;
 
+import analoghorror.Cursor;
 import edu.macalester.graphics.*;
 
 public class Item extends Image{
@@ -10,7 +11,8 @@ public class Item extends Image{
     boolean singleUse;  // True if item can only have its state changed once
     String defaultImagePath;
     String modifiedImagePath;
-    Set<String> validCollectables;
+    Set<String> validInitialCollectables;
+    Set<String> validSubCollectables;
 
     /**
      * An interactable game Item that extends the Image GraphicsObject. Arguments determine textures and if
@@ -30,7 +32,8 @@ public class Item extends Image{
         defaultImagePath = defaultPath;
         modifiedImagePath = modifiedPath;
         this.singleUse = singleUse;
-        validCollectables = new HashSet<String>();
+        validInitialCollectables = new HashSet<String>();
+        validSubCollectables = new HashSet<String>();
     }
 
     /**
@@ -40,33 +43,51 @@ public class Item extends Image{
      * @param collectable
      */
     public void interaction(Collectable collectable){
-        if (defaultState && collectableIsValid(collectable)) {
+        if (defaultState && collectableIsValid(collectable, validInitialCollectables)) {
             setImagePath(modifiedImagePath);
             defaultState = false;
         }
-        else if (!defaultState && !singleUse && collectableIsValid(collectable)) {
+        else if (!defaultState && !singleUse && collectableIsValid(collectable, validSubCollectables)) {
             setImagePath(defaultImagePath);
             defaultState = true;
         }
     }
 
     /**
-     * @return true if Item is unmodified.
+     * @return true if Item is unmodified or in its default state.
      */
     public boolean getState(){
         return defaultState;
     }
 
     /**
-     * Adds Collectable to the internal validCollectable Set to be references upon interaction();
+     * Changes the state of the Item to the opposite of its current
+     */
+    public void changeState(){
+        if (defaultState) {
+            setImagePath(modifiedImagePath);
+            defaultState = false;
+        } 
+        else if (!defaultState) {
+            setImagePath(defaultImagePath);
+            defaultState = true;
+        }
+    }
+
+    /**
+     * Adds Collectable to the internal validCollectable Set to be referenced upon interaction();
      * 
      * @param collectable
      */
-    public void addValidCollectable(Collectable collectable){
-        validCollectables.add(collectable.getIDString());
+    public void addValidInitCollectable(Collectable collectable){
+        validInitialCollectables.add(collectable.getIDString());
     }
 
-    private boolean collectableIsValid(Collectable collectable){
-        return validCollectables.contains(collectable.getIDString());
+    public void addValidSubCollectable(Collectable collectable){
+        validSubCollectables.add(collectable.getIDString());
+    }
+
+    private boolean collectableIsValid(Collectable collectable, Set<String> set){
+        return set.contains(collectable.getIDString());
     }
 }

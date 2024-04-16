@@ -9,6 +9,7 @@ public class HorrorGame {
     private static final int CANVAS_HEIGHT = 480;
 
     private CanvasWindow canvas;
+    Collectable hand;
     Cursor activeCursor;
     GraphicsObject cursorDefault;  // TODO: Make the default cursor our hands? 
     GraphicsGroup cursor;
@@ -29,6 +30,8 @@ public class HorrorGame {
     GraphicsGroup game;
     Item box;
     Collectable key;
+    Item door;
+    Collectable doorBell;
     // *****
 
 
@@ -57,7 +60,8 @@ public class HorrorGame {
         ui.add(inventoryBar);
         // *****
 
-        activeCursor = new Cursor(new Ellipse(0, 0, 10, 10));
+        hand = new Collectable(0, 0, "assets/hand.png", "hand");
+        activeCursor = new Cursor(hand);
         activeCursor.resetCursor();
         cursor.add(activeCursor);
 
@@ -67,9 +71,23 @@ public class HorrorGame {
         box = new Item(300, 100, "assets/chestClosed.png", "assets/chestOpen.png", false);
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
-        key = new Collectable(200, 180, inventoryBar, "assets/key.png", "key01");
+        key = new Collectable(200, 180, "assets/key.png", "key01");
+        key.setInventorySlot(inventoryBar, 108);
         game.add(key);
-        box.addValidCollectable(key);  // Add the Collectable to the internal validCollectable Set for the Item
+        box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Set for the Item
+
+        door = new Item(400, 200, "assets/doorClosed.png", "assets/doorOpen.png", false);
+        game.add(door);
+
+        doorBell = new Collectable(600, 40, "assets/doorbell.png", "doorbell01");
+        doorBell.setInventorySlot(inventoryBar, 200);
+        game.add(doorBell);
+        door.addValidInitCollectable(doorBell);
+        
+        door.addValidInitCollectable(key);
+
+        box.addValidSubCollectable(hand);
+        door.addValidSubCollectable(hand);
         // *****
 
         canvas.add(ui);
@@ -95,24 +113,30 @@ public class HorrorGame {
         canvas.draw();
         // Click logic
         canvas.onClick(event -> {
-            if (check(event, game) instanceof Collectable) {  
+            if (check(event, game) instanceof Collectable) {
                 // If the element under the click is a Collectable
                 Collectable collectable = (Collectable) check(event, game);
-                collectable.inventoryLogic(event, game, cursor, activeCursor);  
+                collectable.inventoryLogic(event, game, cursor, activeCursor);
                 // It is added to inventory if it isn't already collected, otherwise it becomes the cursor
             }
             if (check(event, cursor) instanceof Collectable) {
-                // If the Collectble is the cursor
+                // If the Collectable is the cursor
                 Collectable collectable = (Collectable) check(event, cursor);
                 if (check(event, game) instanceof Item) {
                     // ...and there is an Item underneath it...
                     Item item = (Item) check(event, game);
                     item.interaction(collectable);
                     // Try to interact with the Item
-                    collectable.resetCursor(game, cursor, activeCursor);
-                } else {
-                    // Reset the cursor if there isn't an item under it
-                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);  // TODO improve w/ Inventory class
+                    if (collectable != hand) {
+                        // Reset the cursor if there isn't an item under it and it isn't the hand
+                        collectable.resetCursor(game, cursor, activeCursor);
+                    } else if (collectable == hand) {
+                        item.interaction(collectable);
+                    }
+                } else if (collectable != hand) {
+                    // Reset the cursor if there isn't an item under it and it isn't the hand
+                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);
+                    // TODO: Improve w/ Inventory class
                 }
             }
         });
