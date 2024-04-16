@@ -1,6 +1,7 @@
 package analoghorror.item;
 
-public class BoxItem extends Item{  // make a new RoomItem class that includes two paths for the constructor bc KeyItems only need one, probably? Maybe a "glowing" sprite?
+public class BoxItem extends Item{  
+    // TODO: Make a new RoomItem class that includes two paths for the constructor bc KeyItems only need one, probably? Maybe a "glowing" sprite?
     String defaultImagePath;
     String modifiedImagePath;
 

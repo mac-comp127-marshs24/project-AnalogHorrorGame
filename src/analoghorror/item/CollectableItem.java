@@ -6,7 +6,7 @@ import edu.macalester.graphics.*;
 
 public class CollectableItem extends Item {
     boolean inInventory;  // True if CollectableItem is in inventory
-    Point inventorySlot;  // inventory space; we should have an inventory class to help with slot management —W
+    Point inventorySlot;  // Inventory space; TODO: have an inventory class to help with slot management
 
     public CollectableItem(double x, double y, Rectangle inventory, String path) {
         super(x, y, path);
@@ -46,9 +46,9 @@ public class CollectableItem extends Item {
      * @param cursor
      * @param cursorObject
      */
-    public void resetCursorAfterInteraction(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){
-        // cursor.remove(cursorObject);  // don't think I need this, but keeping it for future troubleshooting just in case
-        checkedGroup.add(cursorObject.getCursor());
+    public void resetCursor(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){
+        // cursor.remove(cursorObject);  // Don't think I need this, but keeping it for future troubleshooting just in case
+        checkedGroup.add(this);
         this.setCenter(inventorySlot);
         cursorObject.resetCursor();
         inInventory = true;
@@ -66,14 +66,11 @@ public class CollectableItem extends Item {
      * @param ui
      * @param inventoryBar
      */
-    public void resetCursor(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
+    public void resetCursorIfOverRoom(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
     Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){
         if (ui.getElementAt(event.getPosition()) != inventoryBar && inInventory == false) {
-            // cursor.remove(cursorObject);  // don't think I need this, but keeping it for future troubleshooting just in case
-            checkedGroup.add(this);
-            this.setCenter(inventorySlot);
-            inInventory = true;  // I wanted the key to reset upon a click even if you aren't using it over a box —W
-            cursorObject.resetCursor();
+            // cursor.remove(cursorObject);  // Don't think I need this, but keeping it for future troubleshooting just in case
+            resetCursor(checkedGroup, cursor, cursorObject);
         }
     }
 }

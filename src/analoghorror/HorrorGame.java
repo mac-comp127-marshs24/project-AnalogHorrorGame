@@ -10,11 +10,11 @@ public class HorrorGame {
 
     private CanvasWindow canvas;
     Cursor activeCursor;
-    GraphicsObject cursorDefault;  // Make hands in the future
+    GraphicsObject cursorDefault;  // TODO: Make hands? 
     GraphicsGroup cursor;
 
     /**
-     * Handle differently using Inventory/UI class in the future —W
+     * TODO: Handle differently using Inventory/UI class
      */
     private int inventoryHeight = getCanvasHeight() / 7;
     private int inventoryWidth = getCanvasWidth() / 8 * 7;
@@ -24,7 +24,7 @@ public class HorrorGame {
     // *****
 
     /**
-     * The following will exist in a future Room class —W
+     * TODO: The following will exist in a future Room class
      */
     GraphicsGroup game;
     BoxItem box;
@@ -39,12 +39,12 @@ public class HorrorGame {
     public HorrorGame() {
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        game = new GraphicsGroup();  // Probably Room in the future —W
+        game = new GraphicsGroup();  // TODO: Probably Room in the future —W
         cursor = new GraphicsGroup();
         ui = new GraphicsGroup();
 
         /**
-         * Handle differently using Inventory/UI class in the future —W
+         * TODO: Handle differently using Inventory/UI class 
          */
         inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
@@ -87,16 +87,16 @@ public class HorrorGame {
             activeCursor.setCenter(event.getPosition());
         });
         canvas.draw();
-        canvas.onClick(event -> {  // TODO: make so calls if(check() != null){check().interaction()}
+        canvas.onClick(event -> {  // TODO: Make so calls if(check() != null){check().interaction()}
             if (check(event, game) == key) {
                 key.inventoryLogic(event, game, cursor, activeCursor);
             }
             if (check(event, cursor) == key) {
                 if (check(event, game) == box) {
                     key.interaction(box);
-                    key.resetCursorAfterInteraction(game, cursor, activeCursor);
+                    key.resetCursor(game, cursor, activeCursor);
                 } else {
-                    key.resetCursor(event, game, cursor, activeCursor, ui, inventoryBar);
+                    key.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);
                 }
             }
         }); 

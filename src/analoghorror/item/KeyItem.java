@@ -1,7 +1,5 @@
 package analoghorror.item;
 
-// import edu.macalester.graphics.events.*;
-// import analoghorror.Cursor;
 import edu.macalester.graphics.*;
 
 public class KeyItem extends CollectableItem {
