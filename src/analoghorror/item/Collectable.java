@@ -9,6 +9,16 @@ public class Collectable extends Image {
     Point inventorySlot;  // Inventory space; TODO: have an inventory class to help with slot management
     String collectableID;
 
+    /**
+     * A game item that can be collected into the Inventory. Arguments determine location in Inventory, texture,
+     * and a unique collectableID.
+     * 
+     * @param x
+     * @param y
+     * @param inventory TODO: Implement a better interaction with an Inventory class
+     * @param path Texture
+     * @param collectableID Referenced when an Item checks to see if it can change its state with the Collectable object
+     */
     public Collectable(double x, double y, Rectangle inventory, String path, String collectableID) {
         super(x, y, path);
         inInventory = false;
@@ -66,7 +76,7 @@ public class Collectable extends Image {
      * @param cursor
      * @param cursorObject
      * @param ui
-     * @param inventoryBar
+     * @param inventoryBar  // TODO: Improve interaction with Inventory class
      */
     public void resetCursorIfOverRoom(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
     Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){
