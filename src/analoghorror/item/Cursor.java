@@ -1,5 +1,6 @@
 package analoghorror.item;
 
+import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsObject;
 
@@ -7,14 +8,15 @@ public class Cursor extends GraphicsGroup{
     GraphicsObject cursorDefault;
     GraphicsObject cursor;
 
-    public Cursor(GraphicsObject cursorDefault){
-        this.cursorDefault = cursorDefault;
+    public Cursor(GraphicsObject gameCursor){
+        // cursorDefault = gameCursor;
+        cursorDefault = new Ellipse(0, 0, 40, 40);
     }
 
-    public void setCursor(GraphicsObject cursor){
-        this.removeAll();
-        this.add(cursor);
-        this.cursor = cursor;
+    public void setCursor(GraphicsObject newCursor){
+        removeAll();
+        cursor = newCursor;
+        add(cursor);
     }
 
     public GraphicsObject getCursor(){
@@ -22,8 +24,6 @@ public class Cursor extends GraphicsGroup{
     }
 
     public void resetCursor(){
-        this.removeAll();
-        this.add(cursorDefault);
-        cursor = cursorDefault;
+        setCursor(cursorDefault);
     }
 }
