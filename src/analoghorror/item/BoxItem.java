@@ -1,10 +1,6 @@
 package analoghorror.item;
 
-import analoghorror.Cursor;
-import edu.macalester.graphics.*;
-import edu.macalester.graphics.events.*;
-
-public class BoxItem extends Item{  // maybe make a new RoomItem class that includes two paths for the constructor
+public class BoxItem extends Item{  // make a new RoomItem class that includes two paths for the constructor bc KeyItems only need one, probably? Maybe a "glowing" sprite?
     String defaultImagePath;
     String modifiedImagePath;
 
@@ -15,8 +11,7 @@ public class BoxItem extends Item{  // maybe make a new RoomItem class that incl
     }
     
     @Override
-    public void interaction(MouseButtonEvent event, GraphicsGroup checkedGroup, boolean itemInteractionBool, Item interactable, GraphicsGroup cursor, 
-        Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){  // listen, I'm sorry; this is stupid but I gotta make do with the garbage temp boxBool shit I made earlier
+    public void interaction(Item interactable){
         if (defaultState) {
             setImagePath(modifiedImagePath);
             defaultState = false;

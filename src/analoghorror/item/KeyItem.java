@@ -1,7 +1,7 @@
 package analoghorror.item;
 
-import edu.macalester.graphics.events.*;
-import analoghorror.Cursor;
+// import edu.macalester.graphics.events.*;
+// import analoghorror.Cursor;
 import edu.macalester.graphics.*;
 
 public class KeyItem extends CollectableItem {
@@ -14,9 +14,8 @@ public class KeyItem extends CollectableItem {
     }
 
     @Override
-    public void interaction(MouseButtonEvent event, GraphicsGroup checkedGroup, boolean itemInteractionBool, Item interactable, GraphicsGroup cursor, 
-        Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){  // listen, I'm sorry; this is stupid but I gotta make do with the garbage temp boxBool shit I made earlier
-            interactable.interaction(event, checkedGroup, itemInteractionBool, interactable, cursor, cursorObject, ui, inventoryBar);
+    public void interaction(Item interactable){
+            interactable.interaction(interactable);
         }
    
     
