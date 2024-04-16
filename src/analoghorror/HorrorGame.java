@@ -21,6 +21,7 @@ public class HorrorGame {
     private int inventoryWidth = getCanvasWidth() / 8 * 7;
     Rectangle inventoryBar;
     Image uiTexture;
+    Image background;
     GraphicsGroup ui;
     // *****
 
@@ -53,6 +54,8 @@ public class HorrorGame {
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
         inventoryBar.setStroked(false);
         inventoryBar.setFilled(false);;
+        background = new Image("assets/hall.png");
+        canvas.add(background);
         uiTexture = new Image("assets/testBar.png");
         uiTexture.setPosition(inventoryBar.getPosition());
         // Maybe including this? Unsure ↓
