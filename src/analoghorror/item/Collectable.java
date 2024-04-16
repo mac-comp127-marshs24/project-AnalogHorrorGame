@@ -10,7 +10,7 @@ public class Collectable extends Image {
     String collectableID;
 
     /**
-     * A game item that can be collected into the Inventory. Arguments determine location in Inventory, texture,
+     * A game item that can be collected into the Inventory when clicked. Arguments determine location in Inventory, texture,
      * and a unique collectableID.
      * 
      * @param x

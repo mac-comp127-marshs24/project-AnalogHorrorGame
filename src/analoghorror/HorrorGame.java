@@ -62,7 +62,7 @@ public class HorrorGame {
         cursor.add(activeCursor);
 
         /**
-         * Item/Collectable example.
+         * Item/Collectable constructor example.
          */
         box = new Item(300, 100, "assets/chestClosed.png", "assets/chestOpen.png", false);
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
@@ -93,20 +93,26 @@ public class HorrorGame {
             activeCursor.setCenter(event.getPosition());
         });
         canvas.draw();
-        // TODO: Add annotation
+        // Click logic
         canvas.onClick(event -> {
-            if (check(event, game) instanceof Collectable) {
+            if (check(event, game) instanceof Collectable) {  
+                // If the element under the click is a Collectable
                 Collectable collectable = (Collectable) check(event, game);
-                collectable.inventoryLogic(event, game, cursor, activeCursor);
+                collectable.inventoryLogic(event, game, cursor, activeCursor);  
+                // It is added to inventory if it isn't already collected, otherwise it becomes the cursor
             }
             if (check(event, cursor) instanceof Collectable) {
+                // If the Collectble is the cursor
                 Collectable collectable = (Collectable) check(event, cursor);
                 if (check(event, game) instanceof Item) {
+                    // ...and there is an Item underneath it...
                     Item item = (Item) check(event, game);
                     item.interaction(collectable);
+                    // Try to interact with the Item
                     collectable.resetCursor(game, cursor, activeCursor);
                 } else {
-                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);
+                    // Reset the cursor if there isn't an item under it
+                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);  // TODO improve w/ Inventory class
                 }
             }
         });
