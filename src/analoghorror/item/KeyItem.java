@@ -12,7 +12,7 @@ public class KeyItem extends Ellipse{
     public KeyItem(double x, double y, double width, double height, Rectangle inventory) {
         super(x, y, width, height);
         inInventory = false;
-        inventorySlot = new Point(200, inventory.getCenter().getY());
+        inventorySlot = new Point(108, inventory.getCenter().getY());
 
         //TODO Auto-generated constructor stub
     }

@@ -2,9 +2,9 @@ package analoghorror;
 
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.*;
-// import analoghorror.*;
-import analoghorror.item.Cursor;
-import analoghorror.item.KeyItem;
+import analoghorror.item.*;
+// import analoghorror.item.Cursor;
+// import analoghorror.item.KeyItem;
 
 public class HorrorGame {
     private static final int CANVAS_WIDTH = 854;
@@ -51,6 +51,8 @@ public class HorrorGame {
 
         inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
+        inventoryBar.setStroked(false);
+        inventoryBar.setFilled(false);;
 
         uiTexture = new Image("assets/testBar.png");
         uiTexture.setPosition(inventoryBar.getPosition());
@@ -90,8 +92,6 @@ public class HorrorGame {
 
     public void itemLogic() {  // just to get a general idea on what an interaction could look like —W
         canvas.onMouseMove(event -> {
-            // if the key isn't set as the cursor object, uses cursorDefault to prevent exception errors
-            // (invisible, but could be hand l8r) —W
             activeCursor.setCenter(event.getPosition());
         });
         canvas.draw();
