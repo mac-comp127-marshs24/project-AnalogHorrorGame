@@ -27,8 +27,8 @@ public class HorrorGame {
      * TODO: The following will exist in a future Room class
      */
     GraphicsGroup game;
-    BoxItem box;
-    KeyItem key;
+    Item box;
+    Collectable key;
     // *****
 
 
@@ -39,7 +39,7 @@ public class HorrorGame {
     public HorrorGame() {
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        game = new GraphicsGroup();  // TODO: Probably Room in the future —W
+        game = new GraphicsGroup();  // TODO: Probably Room in the future
         cursor = new GraphicsGroup();
         ui = new GraphicsGroup();
 
@@ -61,11 +61,16 @@ public class HorrorGame {
         activeCursor.resetCursor();
         cursor.add(activeCursor);
 
-        box = new BoxItem(300, 100, "assets/chestClosed.png", "assets/chestOpen.png");
-        game.add(box);
+        /**
+         * Item/Collectable example.
+         */
+        box = new Item(300, 100, "assets/chestClosed.png", "assets/chestOpen.png", false);
+        game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
-        key = new KeyItem(200, 180, inventoryBar, "assets/key.png");
+        key = new Collectable(200, 180, inventoryBar, "assets/key.png", "key01");
         game.add(key);
+        box.addValidCollectable(key);  // Add the Collectable to the internal validCollectable Set for the Item
+        // *****
 
         canvas.add(ui);
         canvas.add(game);
@@ -90,15 +95,15 @@ public class HorrorGame {
         canvas.draw();
         // TODO: Add annotation
         canvas.onClick(event -> {
-            if (check(event, game) instanceof CollectableItem) {
-                CollectableItem collectable = (CollectableItem) check(event, game);
+            if (check(event, game) instanceof Collectable) {
+                Collectable collectable = (Collectable) check(event, game);
                 collectable.inventoryLogic(event, game, cursor, activeCursor);
             }
-            if (check(event, cursor) instanceof CollectableItem) {
-                CollectableItem collectable = (CollectableItem) check(event, cursor);
+            if (check(event, cursor) instanceof Collectable) {
+                Collectable collectable = (Collectable) check(event, cursor);
                 if (check(event, game) instanceof Item) {
                     Item item = (Item) check(event, game);
-                    collectable.interaction(item);  // :eyes:
+                    item.interaction(collectable);
                     collectable.resetCursor(game, cursor, activeCursor);
                 } else {
                     collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);

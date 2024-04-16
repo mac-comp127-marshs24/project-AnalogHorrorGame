@@ -4,14 +4,16 @@ import edu.macalester.graphics.events.*;
 import analoghorror.Cursor;
 import edu.macalester.graphics.*;
 
-public class CollectableItem extends Item {
+public class Collectable extends Image {
     boolean inInventory;  // True if CollectableItem is in inventory
     Point inventorySlot;  // Inventory space; TODO: have an inventory class to help with slot management
+    String collectableID;
 
-    public CollectableItem(double x, double y, Rectangle inventory, String path) {
+    public Collectable(double x, double y, Rectangle inventory, String path, String collectableID) {
         super(x, y, path);
         inInventory = false;
         inventorySlot = new Point(108, inventory.getCenter().getY());
+        this.collectableID = collectableID;
     }
     
     /**
@@ -72,5 +74,9 @@ public class CollectableItem extends Item {
             // cursor.remove(cursorObject);  // Don't think I need this, but keeping it for future troubleshooting just in case
             resetCursor(checkedGroup, cursor, cursorObject);
         }
+    }
+
+    public String getIDString(){
+        return collectableID;
     }
 }
