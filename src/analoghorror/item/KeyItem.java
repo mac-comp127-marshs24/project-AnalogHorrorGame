@@ -13,8 +13,8 @@ public class KeyItem extends CollectableItem {
 
     @Override
     public void interaction(Item interactable){
-            interactable.interaction(interactable);
-        }
+        interactable.interaction(interactable);
+    }
    
     
 }

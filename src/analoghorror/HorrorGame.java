@@ -10,7 +10,7 @@ public class HorrorGame {
 
     private CanvasWindow canvas;
     Cursor activeCursor;
-    GraphicsObject cursorDefault;  // TODO: Make hands? 
+    GraphicsObject cursorDefault;  // TODO: Make the default cursor our hands? 
     GraphicsGroup cursor;
 
     /**
@@ -83,23 +83,28 @@ public class HorrorGame {
     }
 
     public void itemLogic() {
+        // Move cursor with the mouse
         canvas.onMouseMove(event -> {
             activeCursor.setCenter(event.getPosition());
         });
         canvas.draw();
-        canvas.onClick(event -> {  // TODO: Make so calls if(check() != null){check().interaction()}
-            if (check(event, game) == key) {
-                key.inventoryLogic(event, game, cursor, activeCursor);
+        // TODO: Add annotation
+        canvas.onClick(event -> {
+            if (check(event, game) instanceof CollectableItem) {
+                CollectableItem collectable = (CollectableItem) check(event, game);
+                collectable.inventoryLogic(event, game, cursor, activeCursor);
             }
-            if (check(event, cursor) == key) {
-                if (check(event, game) == box) {
-                    key.interaction(box);
-                    key.resetCursor(game, cursor, activeCursor);
+            if (check(event, cursor) instanceof CollectableItem) {
+                CollectableItem collectable = (CollectableItem) check(event, cursor);
+                if (check(event, game) instanceof Item) {
+                    Item item = (Item) check(event, game);
+                    collectable.interaction(item);  // :eyes:
+                    collectable.resetCursor(game, cursor, activeCursor);
                 } else {
-                    key.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);
+                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);
                 }
             }
-        }); 
+        });
     }
 
     public GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
