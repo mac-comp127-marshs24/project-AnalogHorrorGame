@@ -9,9 +9,9 @@ public class HorrorGame {
     private static final int CANVAS_HEIGHT = 480;
 
     private CanvasWindow canvas;
-    Collectable hand;
+    Collectable hand;  // TODO: Random hand asset
     Cursor activeCursor;
-    GraphicsObject cursorDefault;  // TODO: Make the default cursor our hands? 
+    GraphicsObject cursorDefault;
     GraphicsGroup cursor;
 
     /**
@@ -74,7 +74,7 @@ public class HorrorGame {
         key = new Collectable(200, 180, "assets/key.png", "key01");
         key.setInventorySlot(inventoryBar, 108);
         game.add(key);
-        box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Set for the Item
+        box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
         door = new Item(400, 200, "assets/doorClosed.png", "assets/doorOpen.png", false);
         game.add(door);

@@ -3,7 +3,7 @@ package analoghorror.item;
 import java.util.HashSet;
 import java.util.Set;
 
-import analoghorror.Cursor;
+// import analoghorror.Cursor;
 import edu.macalester.graphics.*;
 
 public class Item extends Image{
@@ -61,7 +61,7 @@ public class Item extends Image{
     }
 
     /**
-     * Changes the state of the Item to the opposite of its current
+     * Changes the state of the Item to the opposite of its current.
      */
     public void changeState(){
         if (defaultState) {
@@ -75,7 +75,9 @@ public class Item extends Image{
     }
 
     /**
-     * Adds Collectable to the internal validCollectable Set to be referenced upon interaction();
+     * Adds Collectable to the internal validInitialCollectable Set to be referenced upon interaction();
+     * 
+     * Initial Collectables can be used to change from a default state to a modified state.
      * 
      * @param collectable
      */
@@ -83,6 +85,13 @@ public class Item extends Image{
         validInitialCollectables.add(collectable.getIDString());
     }
 
+    /**
+     * Adds Collectable to the internal validSubCollectable Set to be referenced upon interaction();
+     * 
+     * Sub Collectables can be used to change from a modified state back to a default state.
+     * 
+     * @param collectable
+     */
     public void addValidSubCollectable(Collectable collectable){
         validSubCollectables.add(collectable.getIDString());
     }

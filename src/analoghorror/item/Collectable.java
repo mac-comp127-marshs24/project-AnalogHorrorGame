@@ -6,7 +6,7 @@ import edu.macalester.graphics.*;
 
 public class Collectable extends Image {
     boolean inInventory;  // True if CollectableItem is in inventory
-    Point inventorySlot;  // Inventory space; TODO: have an inventory class to help with slot management
+    Point inventorySlot;  // Inventory space; TODO: Have an inventory class to help with slot management
     String collectableID;
 
     /**
@@ -48,7 +48,7 @@ public class Collectable extends Image {
         }
         else if (!inInventory) {
             // Put CollectableItem in inventory
-            this.setCenter(inventorySlot); // Reference variable
+            this.setCenter(inventorySlot);
             cursorObject.resetCursor();
             inInventory = true;  // CollectableItem is now in inventory
         }
