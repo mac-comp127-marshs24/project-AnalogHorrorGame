@@ -1,6 +1,7 @@
 package analoghorror.item;
 
 import edu.macalester.graphics.events.*;
+import analoghorror.Cursor;
 import edu.macalester.graphics.*;
 
 public class KeyItem extends CollectableItem {
@@ -13,18 +14,9 @@ public class KeyItem extends CollectableItem {
     }
 
     @Override
-    public boolean interaction(MouseButtonEvent event, GraphicsGroup checkedGroup, boolean itemInteractionBool, Rectangle interactable, GraphicsGroup cursor, 
+    public void interaction(MouseButtonEvent event, GraphicsGroup checkedGroup, boolean itemInteractionBool, Item interactable, GraphicsGroup cursor, 
         Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){  // listen, I'm sorry; this is stupid but I gotta make do with the garbage temp boxBool shit I made earlier
-            // change box and reset key in inventory —W
-            if (!itemInteractionBool) {
-                interactable.setStrokeWidth(10);
-                return true;
-            }
-            else if (itemInteractionBool){
-                interactable.setStrokeWidth(1);
-                return false;
-            }
-            return itemInteractionBool;
+            interactable.interaction(event, checkedGroup, itemInteractionBool, interactable, cursor, cursorObject, ui, inventoryBar);
         }
    
     

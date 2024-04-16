@@ -18,7 +18,7 @@ public class HorrorGame {
      * you are now entering the land of bullshit ugly code made to test the skeleton interaction —W
      */
     Rectangle inventoryBar;  // I imagine this wouldn't live here —W
-    Rectangle box;  // pretend this is an Interactable object or whatever —W
+    BoxItem box;  // pretend this is an Interactable object or whatever —W
     KeyItem key;  // pretend this is an Item object —W
 
     /**
@@ -27,7 +27,6 @@ public class HorrorGame {
     boolean boxBool = false;  // true if box is "open"
     
     Cursor activeCursor;
-    // GraphicsObject cursorObject;
     GraphicsObject cursorDefault;
     GraphicsGroup game;
     GraphicsGroup cursor;
@@ -64,8 +63,7 @@ public class HorrorGame {
         activeCursor.resetCursor();
         cursor.add(activeCursor);
 
-        box = new Rectangle(300, 100, 100, 100);
-        box.setStrokeWidth(1);
+        box = new BoxItem(300, 100, "assets/chestClosed.png", "assets/chestOpen.png");
         game.add(box);
 
         key = new KeyItem(200, 180, inventoryBar, "assets/key.png");
@@ -103,7 +101,7 @@ public class HorrorGame {
             // if the cursor is key and clicked over box —W
             if (check(event, cursor) == key) {
                 if (check(event, game) == box) {
-                    boxBool = key.interaction(event, game, boxBool, box, cursor, activeCursor, ui, inventoryBar);  // this bool implementation brings shame to my ancestors
+                    key.interaction(event, game, boxBool, box, cursor, activeCursor, ui, inventoryBar);  // this bool implementation brings shame to my ancestors
                     key.resetCursorAfterInteraction(event, game, cursor, activeCursor, ui, inventoryBar);
                 } else {
                     key.resetCursor(event, game, cursor, activeCursor, ui, inventoryBar);

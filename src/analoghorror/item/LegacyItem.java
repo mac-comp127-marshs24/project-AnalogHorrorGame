@@ -4,14 +4,14 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsObject;
 import analoghorror.HorrorGame;
-import analoghorror.item.cursor.CursorManager;
+// import analoghorror.item.cursor.CursorManager;
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.MouseButtonEvent;
 
 public abstract class LegacyItem extends GraphicsObject{
     private CanvasWindow canvas;
     GraphicsGroup game;
-    private CursorManager cursorManager;
+    // private CursorManager cursorManager;
     GraphicsGroup ui;
 
     /*Inventory */
@@ -23,7 +23,7 @@ public abstract class LegacyItem extends GraphicsObject{
     public LegacyItem(CanvasWindow window, GraphicsGroup game, GraphicsGroup cursor, LegacyItem item){
         this.canvas = window;
         this.game = game;
-        this.cursorManager = new CursorManager();
+        // this.cursorManager = new CursorManager();
         this.ui = new GraphicsGroup();
 
         itemInInventory = false;
