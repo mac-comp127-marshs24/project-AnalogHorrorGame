@@ -81,7 +81,7 @@ public class HorrorGame {
         door = new Item(400, 200, "assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png", false);
         game.add(door);
 
-        doorBell = new Collectable(600, 40, "assets" + File.separator + "doorbell.png", "doorbell01");
+        doorBell = new Collectable(600, 40, "assets" + File.separator + "studentCard.png", "doorbell01");
         doorBell.setInventorySlot(inventory, 200);
         game.add(doorBell);
         door.addValidInitCollectable(doorBell);
