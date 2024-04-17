@@ -73,7 +73,7 @@ public class HorrorGame {
         box = new Item(300, 100, "assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png", false);
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
-        key = new Collectable(200, 180, "assets" + File.separator + "key.png", "key01");
+        key = new Collectable(200, 180, "assets" + File.separator + "brassKey.png", "key01");
         key.setInventorySlot(inventory, 108);
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
