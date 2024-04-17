@@ -42,71 +42,81 @@ public class Item extends Image{
     }
 
     /**
+     * Call before interaction();
+     * 
+     * Pass the List of images you want to use as frames. Be sure not to pass
+     * more than the number of item states specified in the constructor.
+     * 
+     * @param pathList List of Strings to be used as texture Paths
+     */
+    public void setStatePaths(List<String> pathList){
+        // System.out.println(pathList + " paths in pathList");
+        if (pathList.size() == itemStates + 1) {
+            for (String path : pathList) {
+                itemTextures.add(path);
+            }
+        }   
+        else {
+            throw new IllegalArgumentException("pathList size exceeds itemStates");        }
+        // System.out.println(itemTextures + " itemTextures in setStatePaths()");  // testing
+    }
+
+    /**
      * Changes Item texture and state if interacted with using a Collectable in the Item's validCollectables
      * Set; singleUse boolean on construction determines number of times the Item can change its state.
      * 
      * @param collectable
      */
     public void interaction(Collectable collectable){
-        // if (defaultState && collectableIsValid(collectable, validInitialCollectables)) {
-        //     setImagePath(modifiedImagePath);
-        //     defaultState = false;
-        // }
-        // else if (!defaultState && !singleUse && collectableIsValid(collectable, validSubCollectables)) {
-        //     setImagePath(defaultImagePath);
-        //     defaultState = true;
-        // }
-        System.out.println("It is interacting. Collectable is " + collectable.getIDString());
-        System.out.println(validInitialCollectables + " are the valid initials");
-        System.out.println(validSubCollectables + " are the valid subs");
+        // System.out.println("It is interacting. Collectable is " + collectable.getIDString());
+        // System.out.println(validInitialCollectables + " are the valid initials");
+        // System.out.println(validSubCollectables + " are the valid subs");
         if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables)) {
             currentState = 0;
             setImagePath(itemTextures.get(currentState));
-            System.out.println("First condition");
+            // System.out.println("First condition");
         }
         else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables)) {
             currentState++;
             setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
-            System.out.println("Second condition");
+            // System.out.println("Second condition");
         }
         else if (currentState > 0 && currentState < itemStates
             && collectableIsValid(collectable, validSubCollectables)) {
             currentState++;
             setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
-            System.out.println("Third condition");
+            // System.out.println("Third condition");
         }
-        System.out.println("Current state is " + currentState);
+        // System.out.println"Current state is " + currentState);
     }
 
     /**
-     * @return true if Item is unmodified or in its default state.
+     * @return currentState number.
+     */
+    public int getState(){
+        return currentState;
+    }
+
+    /**
+     * Changes the state of the Item to the stateNumber specified.
      * 
-     * TODO: Adjust logic
+     * If you want to increment by one, call changeState(getState() + 1);
      */
-    public boolean getState(){
-        return defaultState;
+    public void changeState(int stateNumber){
+        currentState = stateNumber;
+        if (currentState > itemStates) {
+            currentState = 0;
+            throw new IllegalArgumentException("stateNumber exceeds itemStates");
+        }
     }
 
     /**
-     * Changes the state of the Item to the opposite of its current.
+     * @return whether the Item can have its state set to 0 once again.
+     * 
+     * Couple with getState() to see if an Item has been modified.
      */
-    public void changeState(){
-        // if (defaultState) {
-        //     setImagePath(modifiedImagePath);
-        //     defaultState = false;
-        // } 
-        // else if (!defaultState) {
-        //     setImagePath(defaultImagePath);
-        //     defaultState = true;
-        // }
-
-        if (currentState == itemStates && singleUse == false) {
-            currentState = 0;
-            if (currentState < itemStates) {
-                currentState++;
-                setImagePath(itemTextures.get(currentState));
-            }
-        }
+    public boolean isSingleUse(){
+        return singleUse;
     }
 
     /**
@@ -131,20 +141,14 @@ public class Item extends Image{
         validSubCollectables.add(collectable.getIDString());
     }
 
+    /**
+     * @param collectable
+     * @param set
+     * @return true if the specified Collectable is found in the internal Set specified
+     */
     private boolean collectableIsValid(Collectable collectable, Set<String> set){
         return set.contains(collectable.getIDString());
     }
 
-    public void setStatePaths(List<String> pathList){
-        System.out.println(pathList + " paths in pathList");
-        if (pathList.size() == itemStates + 1) {
-            for (String path : pathList) {
-                itemTextures.add(path);
-            }
-        }   
-        else {
-            // return exception
-        }
-        System.out.println(itemTextures + " itemTextures in setStatePaths()");  // testing
-    }
+    
 }

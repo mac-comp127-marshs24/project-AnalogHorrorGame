@@ -88,7 +88,7 @@ public class HorrorGame {
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         game.add(door);
 
-        sonic = new Item(70, 70, "assets" + File.separator + "sonicForward.png", false, 4);
+        sonic = new Item(70, 70, "assets" + File.separator + "sonicForward.png", true, 4);
         sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
         "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
         game.add(sonic);
@@ -139,7 +139,7 @@ public class HorrorGame {
                 // If the Collectable is the cursor
                 Collectable collectable = (Collectable) check(event, cursor);
                 if (check(event, game) instanceof Item) {
-                    System.out.println("It is an Item");
+                    // System.out.println("It is an Item");
                     // ...and there is an Item underneath it...
                     Item item = (Item) check(event, game);
                     // Try to interact with the Item
@@ -156,7 +156,7 @@ public class HorrorGame {
                     // TODO: Improve w/ Inventory class
                 }
             }
-            System.out.println("~~~~~~~~~~~~~");
+            // System.out.println("~~~~~~~~~~~~~");
         });
     }
 
