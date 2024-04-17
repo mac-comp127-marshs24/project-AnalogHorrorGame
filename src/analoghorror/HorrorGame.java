@@ -36,6 +36,7 @@ public class HorrorGame {
     Collectable key;
     Item door;
     Collectable doorBell;
+    Item sonic;
     // *****
 
 
@@ -87,6 +88,13 @@ public class HorrorGame {
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         game.add(door);
 
+        sonic = new Item(70, 70, "assets" + File.separator + "sonicForward.png", false, 4);
+        sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
+        "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
+        game.add(sonic);
+        sonic.addValidInitCollectable(hand);
+        sonic.addValidSubCollectable(hand);
+
         doorBell = new Collectable(600, 40, "assets" + File.separator + "studentCard.png", "doorbell01");
         doorBell.setInventorySlot(inventory, 221);
         game.add(doorBell);
@@ -134,10 +142,10 @@ public class HorrorGame {
                     System.out.println("It is an Item");
                     // ...and there is an Item underneath it...
                     Item item = (Item) check(event, game);
-                    item.interaction(collectable);
                     // Try to interact with the Item
                     if (collectable != hand) {
                         // Reset the cursor if there isn't an item under it and it isn't the hand
+                        item.interaction(collectable);
                         collectable.resetCursor(game, cursor, activeCursor);
                     } else if (collectable == hand) {
                         item.interaction(collectable);
@@ -148,7 +156,7 @@ public class HorrorGame {
                     // TODO: Improve w/ Inventory class
                 }
             }
-            System.out.println(event.getPosition());
+            System.out.println("~~~~~~~~~~~~~");
         });
     }
 

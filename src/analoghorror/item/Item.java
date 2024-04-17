@@ -72,10 +72,10 @@ public class Item extends Image{
         else if (currentState > 0 && currentState < itemStates
             && collectableIsValid(collectable, validSubCollectables)) {
             currentState++;
-            System.out.println("Current state is " + currentState);
-            setImagePath(itemTextures.get(currentState - 1));  // itemTextures.get(1)
+            setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
             System.out.println("Third condition");
         }
+        System.out.println("Current state is " + currentState);
     }
 
     /**
