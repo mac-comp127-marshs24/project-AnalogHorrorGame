@@ -16,7 +16,6 @@ public class Collectable extends Image {
      * 
      * @param x
      * @param y
-     * @param inventory TODO: Implement a better interaction with an Inventory class
      * @param path Texture
      * @param collectableID Referenced when an Item checks to see if it can change its state with the Collectable object
      */
@@ -26,7 +25,7 @@ public class Collectable extends Image {
         this.collectableID = collectableID;
     }
 
-    public void setInventorySlot(Inventory inventory, double x){
+    public void setInventorySlot(Inventory inventory, double x){  // TODO: Eventually make private
         inventorySlot = new Point(x, inventory.getCenter().getY());
     }
     
@@ -39,7 +38,7 @@ public class Collectable extends Image {
      * @param cursor
      * @param cursorObject
      */
-    public void inventoryLogic(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){
+    public void inventoryLogic(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){  // TODO: Add Inventory as arg
         if (inInventory) {
             // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
             cursorObject.setCursor(this);
@@ -49,7 +48,8 @@ public class Collectable extends Image {
         }
         else if (!inInventory) {
             // Put CollectableItem in inventory
-            this.setCenter(inventorySlot);
+            // TODO: Call an inventory.getAvailableSlot() and use it to setInventorySlot
+            this.setCenter(inventorySlot);  
             cursorObject.resetCursor();
             inInventory = true;  // CollectableItem is now in inventory
         }
@@ -63,16 +63,13 @@ public class Collectable extends Image {
      * @param cursorObject
      */
     public void resetCursor(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){
-        // cursor.remove(cursorObject);  // Don't think I need this, but keeping it for future troubleshooting just in case
         checkedGroup.add(this);
         this.setCenter(inventorySlot);
         cursorObject.resetCursor();
         inInventory = true;
     }
 
-    /**
-     * TODO: Improve interaction with a future Inventory/UI class
-     * 
+    /** 
      * CollectableItem is no longer used as Cursor and is sent back to its inventory slot if the inventory UI isn't under it.
      * 
      * @param event
@@ -80,12 +77,11 @@ public class Collectable extends Image {
      * @param cursor
      * @param cursorObject
      * @param ui
-     * @param inventoryBar  // TODO: Improve interaction with Inventory class
+     * @param inventoryBar  
      */
     public void resetCursorIfOverRoom(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
     Cursor cursorObject, Inventory inventory){
         if (inventory.pointInSlot(event.getPosition()) == false && inInventory == false) {
-            // cursor.remove(cursorObject);  // Don't think I need this, but keeping it for future troubleshooting just in case
             resetCursor(checkedGroup, cursor, cursorObject);
         }
     }

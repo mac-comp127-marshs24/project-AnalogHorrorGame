@@ -115,7 +115,7 @@ public class HorrorGame {
         canvas.draw();
         // Click logic
         canvas.onClick(event -> {
-            if (check(event, game) instanceof Collectable) {
+            if (check(event, game) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
                 // If the element under the click is a Collectable
                 Collectable collectable = (Collectable) check(event, game);
                 collectable.inventoryLogic(event, game, cursor, activeCursor);
