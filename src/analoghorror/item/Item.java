@@ -1,155 +1,101 @@
 package analoghorror.item;
 
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
-import analoghorror.HorrorGame;
-import analoghorror.item.cursor.CursorManager;
+import java.util.HashSet;
+import java.util.Set;
+
 import edu.macalester.graphics.*;
-import edu.macalester.graphics.events.MouseButtonEvent;
 
-public abstract class Item extends GraphicsObject{
-    private CanvasWindow canvas;
-    GraphicsGroup game;
-    private CursorManager cursorManager;
-    GraphicsGroup ui;
+public class Item extends Image{
+    boolean defaultState;
+    boolean singleUse;  // True if item can only have its state changed once
+    String defaultImagePath;
+    String modifiedImagePath;
+    Set<String> validInitialCollectables;
+    Set<String> validSubCollectables;
 
-    /*Inventory */
-    private Boolean itemInInventory;
-
-    /*Item interaction */
-    private Boolean interactable;
-
-    public Item(CanvasWindow window, GraphicsGroup game, GraphicsGroup cursor, Item item){
-        this.canvas = window;
-        this.game = game;
-        this.cursorManager = new CursorManager();
-        this.ui = new GraphicsGroup();
-
-        itemInInventory = false;
-        interactable = true;
-
-        itemLogic(game, item);
+    /**
+     * An interactable game Item that extends the Image GraphicsObject. Arguments determine textures and if
+     * it can alternate states once or twice. Item will not change states unless it s interacted with using
+     * a Collectable that has been added to its validCollectables Set with addValidCollectable();
+     * 
+     * @param x
+     * @param y
+     * @param defaultPath Default texture
+     * @param modifiedPath Changed state texture
+     * @param singleUse Set to true if Item can only have its state changed once
+     */
+    public Item(double x, double y, String defaultPath, String modifiedPath, boolean singleUse) {
+        super(x, y);
+        setImagePath(defaultPath);
+        defaultState = true;
+        defaultImagePath = defaultPath;
+        modifiedImagePath = modifiedPath;
+        this.singleUse = singleUse;
+        validInitialCollectables = new HashSet<String>();
+        validSubCollectables = new HashSet<String>();
     }
 
     /**
-     * Sets item to element clicked on within a given group.
-     * @param event
-     * @param group
-     * @return Item at click
+     * Changes Item texture and state if interacted with using a Collectable in the Item's validCollectables
+     * Set; singleUse boolean on construction determines number of times the Item can change its state.
+     * 
+     * @param collectable
      */
-    private GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
-        GraphicsObject item = group.getElementAt(event.getPosition());
-        return item;
-    }
-
-    /**
-     * Logic for game behavior.
-     * @param game
-     * @param item
-     */
-    public void itemLogic(GraphicsGroup game, Item item) {  
-        //canvas animate
-        canvas.animate(() -> {
-            canvas.onMouseMove(event -> {
-                // if the key isn't set as the cursor object, uses cursorDefault to prevent exception errors
-                // (invisible, but could be hand l8r) —W
-                cursorManager.getCursorObject().setCenter(event.getPosition());
-            });
-            canvas.draw();
-        });
-        canvas.onClick(event -> {
-            objectUnderClick(event);
-
-            if (interactable){
-                itemInteraction(event, item, game, ui);
-            }
-            
-        });
-    }
-
-   /**
-    * Checks if Item is in inventory
-    * @return True (yes) or false (no)
-    */
-    protected boolean isInInventory(){
-        return this.itemInInventory;
-    }
-
-    /**
-     * Checks if Item under click is current Item whether or not its in inventory.
-     * @param event 
-     */
-    private void objectUnderClick(MouseButtonEvent event){
-        /*Is in inventory */
-
-        // if the object under the click is key and key isn't in the inventory —W
-        if (check(event, game) == this && itemInInventory == false) {
-            // put key in inventory
-            game.getElementAt(event.getPosition()).setCenter(HorrorGame.getKeyHome()); // spot in inventory (use a Set or smthn) in Item —W
-            cursorManager.returnCursorToDefault();
-            itemInInventory = true;  // key is now in inventory —W
+    public void interaction(Collectable collectable){
+        if (defaultState && collectableIsValid(collectable, validInitialCollectables)) {
+            setImagePath(modifiedImagePath);
+            defaultState = false;
         }
-
-        /*Is not in inventory */
-
-        // if key is under click and key is in inventory —W
-        if (check(event, game) == this && itemInInventory == true) {
-            // cursor is now key and key is now part of the cursor group —W
-            cursorManager.setCursorObject(check(event, game));
-            cursorManager.addToCursorGroup(game);
-        
-            itemInInventory = false;  // key is out of inventory —W
-        }
-
-    }
-
-    /**
-     * Resets Item with a click if you aren't using it with its related interactable.
-     * @param event
-     * @param ui
-     */
-    private void resetUponClick(MouseButtonEvent event, GraphicsGroup ui){
-        // I wanted the key to reset upon a click even if you aren't using it over a box —W
-        if (check(event, ui) != HorrorGame.inventoryBar && isInInventory() == false) {
-            cursorManager.addToCursorGroup(game);
-            this.setCenter(HorrorGame.getKeyHome());
-
-            cursorManager.returnCursorToDefault();
-            this.itemInInventory = true;
+        else if (!defaultState && !singleUse && collectableIsValid(collectable, validSubCollectables)) {
+            setImagePath(defaultImagePath);
+            defaultState = true;
         }
     }
 
     /**
-     * Behavior for interaction: If the cursor is the current item and it is clicked over it's related interactable, change the subject of interaction and reset current item in inventory. Otherwise, reset item upon click.
-     * @param event
-     * @param subjectOfInteraction
-     * @param game
-     * @param ui
+     * @return true if Item is unmodified or in its default state.
      */
-    private void itemInteraction(MouseButtonEvent event, Item subjectOfInteraction, GraphicsGroup game, GraphicsGroup ui){
-        //     /*Interactable */
-                // if the cursor is key and clicked over box —W
-                if (check(event, cursorManager.getCursorGroup()) == this) {
-                    if (check(event, game) == subjectOfInteraction) {
-                        Boolean subjectBool = subjectOfInteraction.itemInInventory; //change to .isInInventory -M
-        
-                        // change box and reset key in inventory —W
-                        if (!subjectBool) {
-                            //subjectOfInteraction.setStrokeWidth(10);
-                        }
-                        if (subjectBool){
-                            //subjectOfInteraction.setStrokeWidth(1);
-                        }
-                        cursorManager.addToCursorGroup(game);
-                        this.setCenter(HorrorGame.getKeyHome());
-                        cursorManager.returnCursorToDefault();
-                        subjectBool = true;
-                        this.itemInInventory = true;
-                    }
-                    
-                }
-        
-                resetUponClick(event, ui);
+    public boolean getState(){
+        return defaultState;
+    }
+
+    /**
+     * Changes the state of the Item to the opposite of its current.
+     */
+    public void changeState(){
+        if (defaultState) {
+            setImagePath(modifiedImagePath);
+            defaultState = false;
+        } 
+        else if (!defaultState) {
+            setImagePath(defaultImagePath);
+            defaultState = true;
         }
+    }
+
+    /**
+     * Adds Collectable to the internal validInitialCollectable Set to be referenced upon interaction();
+     * 
+     * Initial Collectables can be used to change from a default state to a modified state.
+     * 
+     * @param collectable
+     */
+    public void addValidInitCollectable(Collectable collectable){
+        validInitialCollectables.add(collectable.getIDString());
+    }
+
+    /**
+     * Adds Collectable to the internal validSubCollectable Set to be referenced upon interaction();
+     * 
+     * Sub Collectables can be used to change from a modified state back to a default state.
+     * 
+     * @param collectable
+     */
+    public void addValidSubCollectable(Collectable collectable){
+        validSubCollectables.add(collectable.getIDString());
+    }
+
+    private boolean collectableIsValid(Collectable collectable, Set<String> set){
+        return set.contains(collectable.getIDString());
+    }
 }
