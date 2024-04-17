@@ -59,7 +59,7 @@ public class Item extends Image{
         System.out.println("It is interacting. Collectable is " + collectable.getIDString());
         System.out.println(validInitialCollectables + " are the valid initials");
         System.out.println(validSubCollectables + " are the valid subs");
-        if (currentState == itemStates && singleUse == false) {
+        if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables)) {
             currentState = 0;
             setImagePath(itemTextures.get(currentState));
             System.out.println("First condition");

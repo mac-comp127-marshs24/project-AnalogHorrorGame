@@ -78,7 +78,7 @@ public class HorrorGame {
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
         key = new Collectable(200, 180, "assets" + File.separator + "brassKey.png", "key01");
-        key.setInventorySlot(inventory, 108);
+        key.setInventorySlot(inventory, 164);
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
@@ -88,7 +88,7 @@ public class HorrorGame {
         game.add(door);
 
         doorBell = new Collectable(600, 40, "assets" + File.separator + "studentCard.png", "doorbell01");
-        doorBell.setInventorySlot(inventory, 200);
+        doorBell.setInventorySlot(inventory, 221);
         game.add(doorBell);
         door.addValidInitCollectable(doorBell);
         
@@ -148,7 +148,7 @@ public class HorrorGame {
                     // TODO: Improve w/ Inventory class
                 }
             }
-            System.out.println("~~~~~~~~~~~~");
+            System.out.println(event.getPosition());
         });
     }
 
