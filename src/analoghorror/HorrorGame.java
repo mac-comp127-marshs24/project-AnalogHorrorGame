@@ -73,7 +73,6 @@ public class HorrorGame {
         /**
          * Item/Collectable constructor example.
          */
-        // box = new Item(300, 100, "assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png", false);
         box = new Item(300, 100, "assets" + File.separator + "chestClosed.png", false, 2);
         box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
@@ -83,7 +82,6 @@ public class HorrorGame {
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
-        // door = new Item(400, 200, "assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png", false);
         door = new Item(400, 200, "assets" + File.separator + "doorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         game.add(door);
@@ -139,7 +137,6 @@ public class HorrorGame {
                 // If the Collectable is the cursor
                 Collectable collectable = (Collectable) check(event, cursor);
                 if (check(event, game) instanceof Item) {
-                    // System.out.println("It is an Item");
                     // ...and there is an Item underneath it...
                     Item item = (Item) check(event, game);
                     // Try to interact with the Item
@@ -156,7 +153,6 @@ public class HorrorGame {
                     // TODO: Improve w/ Inventory class
                 }
             }
-            // System.out.println("~~~~~~~~~~~~~");
         });
     }
 

@@ -8,7 +8,6 @@ import java.util.Set;
 import edu.macalester.graphics.*;
 
 public class Item extends Image{
-    boolean defaultState;
     boolean singleUse;  // True if item can only have its state changed once
     String defaultImagePath;
     int itemStates;
@@ -31,7 +30,6 @@ public class Item extends Image{
     public Item(double x, double y, String defaultPath, boolean isSingleUse, int numberOfItemStates) {
         super(x, y);
         setImagePath(defaultPath);
-        defaultState = true;
         defaultImagePath = defaultPath;
         itemStates = numberOfItemStates - 1;
         currentState = 0;
@@ -50,15 +48,14 @@ public class Item extends Image{
      * @param pathList List of Strings to be used as texture Paths
      */
     public void setStatePaths(List<String> pathList){
-        // System.out.println(pathList + " paths in pathList");
         if (pathList.size() == itemStates + 1) {
             for (String path : pathList) {
                 itemTextures.add(path);
             }
         }   
         else {
-            throw new IllegalArgumentException("pathList size exceeds itemStates");        }
-        // System.out.println(itemTextures + " itemTextures in setStatePaths()");  // testing
+            throw new IllegalArgumentException("pathList size exceeds itemStates");        
+        }
     }
 
     /**
@@ -68,26 +65,19 @@ public class Item extends Image{
      * @param collectable
      */
     public void interaction(Collectable collectable){
-        // System.out.println("It is interacting. Collectable is " + collectable.getIDString());
-        // System.out.println(validInitialCollectables + " are the valid initials");
-        // System.out.println(validSubCollectables + " are the valid subs");
         if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables)) {
             currentState = 0;
             setImagePath(itemTextures.get(currentState));
-            // System.out.println("First condition");
         }
         else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables)) {
             currentState++;
             setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
-            // System.out.println("Second condition");
         }
         else if (currentState > 0 && currentState < itemStates
             && collectableIsValid(collectable, validSubCollectables)) {
             currentState++;
-            setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
-            // System.out.println("Third condition");
+            setImagePath(itemTextures.get(currentState));
         }
-        // System.out.println"Current state is " + currentState);
     }
 
     /**
