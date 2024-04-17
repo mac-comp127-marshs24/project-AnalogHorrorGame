@@ -20,9 +20,7 @@ public class HorrorGame {
     /**
      * TODO: Handle differently using Inventory/UI class
      */
-    private int inventoryHeight = getCanvasHeight() / 7;
-    private int inventoryWidth = getCanvasWidth() / 8 * 7;
-    Rectangle inventoryBar;
+    Inventory inventory;
     Image uiTexture;
     Image background;
     GraphicsGroup ui;
@@ -53,17 +51,15 @@ public class HorrorGame {
         /**
          * TODO: Handle differently using Inventory/UI class 
          */
-        inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
-        inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
-        inventoryBar.setStroked(false);
-        inventoryBar.setFilled(false);;
+        inventory = new Inventory(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
         background = new Image("assets" + File.separator + "hall.png");
         canvas.add(background);
         uiTexture = new Image("assets" + File.separator + "testBar.png");
-        uiTexture.setPosition(inventoryBar.getPosition());
+        uiTexture.setPosition(inventory.getPosition());
         // Maybe including this? Unsure ↓
         ui.add(uiTexture);
-        ui.add(inventoryBar);
+        ui.add(inventory);
         // *****
 
         hand = new Collectable(0, 0, "assets" + File.separator + "hand.png", "hand");
@@ -78,7 +74,7 @@ public class HorrorGame {
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
         key = new Collectable(200, 180, "assets" + File.separator + "key.png", "key01");
-        key.setInventorySlot(inventoryBar, 108);
+        key.setInventorySlot(inventory, 108);
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
@@ -86,7 +82,7 @@ public class HorrorGame {
         game.add(door);
 
         doorBell = new Collectable(600, 40, "assets" + File.separator + "doorbell.png", "doorbell01");
-        doorBell.setInventorySlot(inventoryBar, 200);
+        doorBell.setInventorySlot(inventory, 200);
         game.add(doorBell);
         door.addValidInitCollectable(doorBell);
         
@@ -141,7 +137,7 @@ public class HorrorGame {
                     }
                 } else if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
-                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, ui, inventoryBar);
+                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, inventory);
                     // TODO: Improve w/ Inventory class
                 }
             }

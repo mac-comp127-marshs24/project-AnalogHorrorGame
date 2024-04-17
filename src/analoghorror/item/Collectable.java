@@ -2,6 +2,7 @@ package analoghorror.item;
 
 import edu.macalester.graphics.events.*;
 import analoghorror.Cursor;
+import analoghorror.Inventory;
 import edu.macalester.graphics.*;
 
 public class Collectable extends Image {
@@ -25,7 +26,7 @@ public class Collectable extends Image {
         this.collectableID = collectableID;
     }
 
-    public void setInventorySlot(Rectangle inventory, double x){
+    public void setInventorySlot(Inventory inventory, double x){
         inventorySlot = new Point(x, inventory.getCenter().getY());
     }
     
@@ -82,8 +83,8 @@ public class Collectable extends Image {
      * @param inventoryBar  // TODO: Improve interaction with Inventory class
      */
     public void resetCursorIfOverRoom(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
-    Cursor cursorObject, GraphicsGroup ui, Rectangle inventoryBar){
-        if (ui.getElementAt(event.getPosition()) != inventoryBar && inInventory == false) {
+    Cursor cursorObject, Inventory inventory){
+        if (inventory.pointInSlot(event.getPosition()) == false && inInventory == false) {
             // cursor.remove(cursorObject);  // Don't think I need this, but keeping it for future troubleshooting just in case
             resetCursor(checkedGroup, cursor, cursorObject);
         }

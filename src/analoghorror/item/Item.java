@@ -3,7 +3,6 @@ package analoghorror.item;
 import java.util.HashSet;
 import java.util.Set;
 
-// import analoghorror.Cursor;
 import edu.macalester.graphics.*;
 
 public class Item extends Image{
