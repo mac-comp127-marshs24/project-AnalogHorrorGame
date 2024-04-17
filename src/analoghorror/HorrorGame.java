@@ -2,6 +2,9 @@ package analoghorror;
 
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.*;
+
+import java.io.File;
+
 import analoghorror.item.*;
 
 public class HorrorGame {
@@ -54,16 +57,16 @@ public class HorrorGame {
         inventoryBar.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
         inventoryBar.setStroked(false);
         inventoryBar.setFilled(false);;
-        background = new Image("assets/hall.png");
+        background = new Image("assets" + File.separator + "hall.png");
         canvas.add(background);
-        uiTexture = new Image("assets/testBar.png");
+        uiTexture = new Image("assets" + File.separator + "testBar.png");
         uiTexture.setPosition(inventoryBar.getPosition());
         // Maybe including this? Unsure ↓
         ui.add(uiTexture);
         ui.add(inventoryBar);
         // *****
 
-        hand = new Collectable(0, 0, "assets/hand.png", "hand");
+        hand = new Collectable(0, 0, "assets" + File.separator + "hand.png", "hand");
         activeCursor = new Cursor(hand);
         activeCursor.resetCursor();
         cursor.add(activeCursor);
@@ -71,18 +74,18 @@ public class HorrorGame {
         /**
          * Item/Collectable constructor example.
          */
-        box = new Item(300, 100, "assets/chestClosed.png", "assets/chestOpen.png", false);
+        box = new Item(300, 100, "assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png", false);
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
-        key = new Collectable(200, 180, "assets/key.png", "key01");
+        key = new Collectable(200, 180, "assets" + File.separator + "key.png", "key01");
         key.setInventorySlot(inventoryBar, 108);
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
-        door = new Item(400, 200, "assets/doorClosed.png", "assets/doorOpen.png", false);
+        door = new Item(400, 200, "assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png", false);
         game.add(door);
 
-        doorBell = new Collectable(600, 40, "assets/doorbell.png", "doorbell01");
+        doorBell = new Collectable(600, 40, "assets" + File.separator + "doorbell.png", "doorbell01");
         doorBell.setInventorySlot(inventoryBar, 200);
         game.add(doorBell);
         door.addValidInitCollectable(doorBell);
