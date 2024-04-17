@@ -10,6 +10,7 @@ import edu.macalester.graphics.*;
  * Inventory
  */
 public class Inventory extends GraphicsGroup{
+    private static final double PADDING = 10;
     private static final double SLOT_WIDTH = 50;
     private static final double SLOT_HEIGHT = 50;
 
@@ -24,6 +25,7 @@ public class Inventory extends GraphicsGroup{
     public Inventory(double x, double y, double canvasWidth, double canvasHeight){
         super(x, y);
         generator(canvasWidth, canvasHeight);
+        inventoryList = new ArrayList<Collectable>();  // TODO: Ask Moyartu about implementation —W
     }
 
     private static void slotInteraction(CanvasWindow canvas){
@@ -51,7 +53,7 @@ public class Inventory extends GraphicsGroup{
     }
 
     /**
-     * For use in Cursor restCursorIfOverRoom();
+     * Primarily for use in Cursor restCursorIfOverRoom();
      * 
      * If the Point is over an Rectangle (slot) within Inventory, returns true.
      * 
@@ -66,5 +68,14 @@ public class Inventory extends GraphicsGroup{
             return false;
         }
     }
+
+    // public Point getAvailableSlot(){
+    //     loop over list of slots
+    //         if slot is occupied
+    //             keep looping
+    //         if slot is empty
+    //             return slot.getCenter()
+    //     else return exception 
+    // }
     
 }
