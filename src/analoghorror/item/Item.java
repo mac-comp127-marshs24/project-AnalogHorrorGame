@@ -1,6 +1,8 @@
 package analoghorror.item;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import edu.macalester.graphics.*;
@@ -9,9 +11,11 @@ public class Item extends Image{
     boolean defaultState;
     boolean singleUse;  // True if item can only have its state changed once
     String defaultImagePath;
-    String modifiedImagePath;
+    int itemStates;
+    int currentState;
     Set<String> validInitialCollectables;
     Set<String> validSubCollectables;
+    List<String> itemTextures;
 
     /**
      * An interactable game Item that extends the Image GraphicsObject. Arguments determine textures and if
@@ -24,15 +28,17 @@ public class Item extends Image{
      * @param modifiedPath Changed state texture
      * @param singleUse Set to true if Item can only have its state changed once
      */
-    public Item(double x, double y, String defaultPath, String modifiedPath, boolean singleUse) {
+    public Item(double x, double y, String defaultPath, boolean isSingleUse, int numberOfItemStates) {
         super(x, y);
         setImagePath(defaultPath);
         defaultState = true;
         defaultImagePath = defaultPath;
-        modifiedImagePath = modifiedPath;
-        this.singleUse = singleUse;
+        itemStates = numberOfItemStates - 1;
+        currentState = 0;
+        singleUse = isSingleUse;
         validInitialCollectables = new HashSet<String>();
         validSubCollectables = new HashSet<String>();
+        itemTextures = new ArrayList<>(numberOfItemStates);
     }
 
     /**
@@ -42,18 +48,40 @@ public class Item extends Image{
      * @param collectable
      */
     public void interaction(Collectable collectable){
-        if (defaultState && collectableIsValid(collectable, validInitialCollectables)) {
-            setImagePath(modifiedImagePath);
-            defaultState = false;
+        // if (defaultState && collectableIsValid(collectable, validInitialCollectables)) {
+        //     setImagePath(modifiedImagePath);
+        //     defaultState = false;
+        // }
+        // else if (!defaultState && !singleUse && collectableIsValid(collectable, validSubCollectables)) {
+        //     setImagePath(defaultImagePath);
+        //     defaultState = true;
+        // }
+        System.out.println("It is interacting. Collectable is " + collectable.getIDString());
+        System.out.println(validInitialCollectables + " are the valid initials");
+        System.out.println(validSubCollectables + " are the valid subs");
+        if (currentState == itemStates && singleUse == false) {
+            currentState = 0;
+            setImagePath(itemTextures.get(currentState));
+            System.out.println("First condition");
         }
-        else if (!defaultState && !singleUse && collectableIsValid(collectable, validSubCollectables)) {
-            setImagePath(defaultImagePath);
-            defaultState = true;
+        else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables)) {
+            currentState++;
+            setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
+            System.out.println("Second condition");
+        }
+        else if (currentState > 0 && currentState < itemStates
+            && collectableIsValid(collectable, validSubCollectables)) {
+            currentState++;
+            System.out.println("Current state is " + currentState);
+            setImagePath(itemTextures.get(currentState - 1));  // itemTextures.get(1)
+            System.out.println("Third condition");
         }
     }
 
     /**
      * @return true if Item is unmodified or in its default state.
+     * 
+     * TODO: Adjust logic
      */
     public boolean getState(){
         return defaultState;
@@ -63,13 +91,21 @@ public class Item extends Image{
      * Changes the state of the Item to the opposite of its current.
      */
     public void changeState(){
-        if (defaultState) {
-            setImagePath(modifiedImagePath);
-            defaultState = false;
-        } 
-        else if (!defaultState) {
-            setImagePath(defaultImagePath);
-            defaultState = true;
+        // if (defaultState) {
+        //     setImagePath(modifiedImagePath);
+        //     defaultState = false;
+        // } 
+        // else if (!defaultState) {
+        //     setImagePath(defaultImagePath);
+        //     defaultState = true;
+        // }
+
+        if (currentState == itemStates && singleUse == false) {
+            currentState = 0;
+            if (currentState < itemStates) {
+                currentState++;
+                setImagePath(itemTextures.get(currentState));
+            }
         }
     }
 
@@ -97,5 +133,18 @@ public class Item extends Image{
 
     private boolean collectableIsValid(Collectable collectable, Set<String> set){
         return set.contains(collectable.getIDString());
+    }
+
+    public void setStatePaths(List<String> pathList){
+        System.out.println(pathList + " paths in pathList");
+        if (pathList.size() == itemStates + 1) {
+            for (String path : pathList) {
+                itemTextures.add(path);
+            }
+        }   
+        else {
+            // return exception
+        }
+        System.out.println(itemTextures + " itemTextures in setStatePaths()");  // testing
     }
 }
