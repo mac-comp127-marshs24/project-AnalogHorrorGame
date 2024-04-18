@@ -29,7 +29,7 @@ public class InventoryPlanning extends GraphicsGroup {
     private static ArrayList<Collectable> inventoryList = new ArrayList<Collectable>(inventoryCapacity); 
 
     public InventoryPlanning() {
-
+        //maybe add slotList, invList and slotGroup to constructor
     }
 
     public static void main(String[] args) {
@@ -58,48 +58,29 @@ public class InventoryPlanning extends GraphicsGroup {
     // return inventoryList.contains(collectable);
     // }
 
-    /*
-     * - IF COLLECTABLE IS NOT IN SET:
-     */
-
     public static void addToSlot(Collectable collectable) {
-        // if (inventoryList.size() < inventoryCapacity && !isInInventory(collectable)) {
         inventoryList.add(collectable);
+        /* Set position to the box corresponding to the set index */
         int slotIndex = inventoryList.indexOf(collectable);  // Get the index of the added item
         slotPlacement(collectable, slotList.get(slotIndex));  // Pass both collectable and slot
-        // }
     }
-
+    
     private static void slotPlacement(Collectable collectable, GraphicsObject slot) {
-        collectable.setCenter(slot.getCenter());
+        collectable.setCenter(slot.getCenter()); //Sets center of collectable to slot center
     }
-
-
-    /* -set position to the box corresponding to the set index */
-
 
     /*
-     * -KEEP SLOT GENERATOR & GENERATE 11 BOXES, EACH USING INDIVIDUAL INVENTORY BLOCK INSTEAD OF
-     * RECTANGLES
+     * Generates 11 slots, each using individual inventory block instead of rectangles
      */
-
-    /* Basic gist for adding 10 (i think) inventory boxes */
     private static void generator(double canvasHeight) {
         double x = 0, y = canvasHeight * 0.85;
-
         for (int i = 0; i < 11; i++) {
             Image slot = new Image(x, y, "assets" + File.separator + "slotbg.png");
-            slotGroup.add(slot);
-            slotList.add(slot);
+            slotGroup.add(slot); //Adds slots to an overall group (easier for movement?)
+            slotList.add(slot); //Add slots to a list of slots
             x += SLOT_WIDTH + PADDING;
         }
         temp.add(slotGroup);
     }
-
-
-    /*
-     * - ADD SLOTS TO A LIST OF SLOTS? - collectable.setPosition(slotList[3].getCenter())
-     * 
-     */
 
 }
