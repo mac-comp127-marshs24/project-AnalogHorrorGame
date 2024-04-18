@@ -151,7 +151,7 @@ public class HorrorGame {
                     collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, inventory);
                 }
             }
-            System.out.println(event.getPosition());
+            // System.out.println(event.getPosition());
         });
     }
 
