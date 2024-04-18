@@ -26,13 +26,10 @@ public class InventoryPlanning extends GraphicsGroup {
     private static GraphicsGroup slotGroup = new GraphicsGroup();
     private static List<GraphicsObject> slotList = new ArrayList<>();
 
-    private static ArrayList<Collectable> inventorySet = new ArrayList<Collectable>(inventoryCapacity);  // TODO: Ask
-                                                                                                         // Moyartu
-    // about implementation
-    // —W;
+    private static ArrayList<Collectable> inventoryList = new ArrayList<Collectable>(inventoryCapacity); 
 
     public InventoryPlanning() {
-         
+
     }
 
     public static void main(String[] args) {
@@ -46,19 +43,19 @@ public class InventoryPlanning extends GraphicsGroup {
         addToSlot(doorBell);
         addToSlot(sonic);
 
-        inventorySet.remove(doorBell);
-        temp.add(key);   
+        inventoryList.remove(doorBell);
+        temp.add(key);
         temp.add(doorBell);
-        temp.add(sonic);    
+        temp.add(sonic);
         System.out.println(key.getPosition());
     }
 
     /* PSUEDOCODE!!!!!!!!!! */
     /*
-     * Add to inventory: - check if collectable is in set: inventorySet.contains(collectable)
+     * Add to inventory: - check if collectable is in set: inventoryList.contains(collectable)
      */
     // public static boolean isInInventory(Collectable collectable) {
-    //     return inventorySet.contains(collectable);
+    // return inventoryList.contains(collectable);
     // }
 
     /*
@@ -66,16 +63,16 @@ public class InventoryPlanning extends GraphicsGroup {
      */
 
     public static void addToSlot(Collectable collectable) {
-//   if (inventorySet.size() < inventoryCapacity && !isInInventory(collectable)) {
-    inventorySet.add(collectable);
-    int slotIndex = inventorySet.indexOf(collectable);  // Get the index of the added item
-    slotPlacement(collectable, slotList.get(slotIndex));  // Pass both collectable and slot
-//   }
-}
-    
+        // if (inventoryList.size() < inventoryCapacity && !isInInventory(collectable)) {
+        inventoryList.add(collectable);
+        int slotIndex = inventoryList.indexOf(collectable);  // Get the index of the added item
+        slotPlacement(collectable, slotList.get(slotIndex));  // Pass both collectable and slot
+        // }
+    }
+
     private static void slotPlacement(Collectable collectable, GraphicsObject slot) {
-  collectable.setCenter(slot.getCenter());
-}
+        collectable.setCenter(slot.getCenter());
+    }
 
 
     /* -set position to the box corresponding to the set index */
