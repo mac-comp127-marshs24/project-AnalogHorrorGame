@@ -4,7 +4,6 @@ import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.*;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import analoghorror.item.*;
@@ -35,7 +34,7 @@ public class HorrorGame {
     Item box;
     Collectable key;
     Item door;
-    Collectable doorBell;
+    Collectable card;
     Item sonic;
     // *****
 
@@ -55,7 +54,7 @@ public class HorrorGame {
          * TODO: Handle differently using Inventory/UI class 
          */
         inventory = new Inventory(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 8 * 7);
+        inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
         background = new Image("assets" + File.separator + "hall.png");
         canvas.add(background);
         uiTexture = new Image("assets" + File.separator + "testBar.png");
@@ -73,30 +72,30 @@ public class HorrorGame {
         /**
          * Item/Collectable constructor example.
          */
-        box = new Item(300, 100, "assets" + File.separator + "chestClosed.png", false, 2);
+        box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
         box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
-        key = new Collectable(200, 180, "assets" + File.separator + "brassKey.png", "key01");
-        key.setInventorySlot(inventory, 164);
+        key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
+        key.setInventorySlot(inventory, 111);
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
-        door = new Item(400, 200, "assets" + File.separator + "doorClosed.png", false, 2);
+        door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         game.add(door);
 
-        sonic = new Item(70, 70, "assets" + File.separator + "sonicForward.png", true, 4);
+        sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
         sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
         "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
         game.add(sonic);
         sonic.addValidInitCollectable(hand);
         sonic.addValidSubCollectable(hand);
 
-        doorBell = new Collectable(600, 40, "assets" + File.separator + "studentCard.png", "doorbell01");
-        doorBell.setInventorySlot(inventory, 221);
-        game.add(doorBell);
-        door.addValidInitCollectable(doorBell);
+        card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
+        card.setInventorySlot(inventory, 174);
+        game.add(card);
+        door.addValidInitCollectable(card);
         
         door.addValidInitCollectable(key);
 
@@ -150,9 +149,9 @@ public class HorrorGame {
                 } else if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
                     collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, inventory);
-                    // TODO: Improve w/ Inventory class
                 }
             }
+            System.out.println(event.getPosition());
         });
     }
 

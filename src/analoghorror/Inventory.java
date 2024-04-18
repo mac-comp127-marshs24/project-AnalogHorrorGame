@@ -37,7 +37,7 @@ public class Inventory extends GraphicsGroup{
 
     /*Basic gist for adding 10 (i think) inventory boxes*/
     private void generator(double canvasWidth, double canvasHeight){
-        Rectangle inventoryBar = new Rectangle(0, 0, canvasWidth / 8 * 7, canvasHeight / 7);
+        Rectangle inventoryBar = new Rectangle(0, 0, 742, 68);
         inventoryBar.setStroked(false);
         inventoryBar.setFilled(false);
         add(inventoryBar);
