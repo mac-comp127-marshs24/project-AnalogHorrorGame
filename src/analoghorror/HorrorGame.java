@@ -142,13 +142,13 @@ public class HorrorGame {
                     if (collectable != hand) {
                         // Reset the cursor if there isn't an item under it and it isn't the hand
                         item.interaction(collectable);
-                        collectable.resetCursor(game, cursor, activeCursor);
+                        collectable.resetCursor(game, activeCursor);
                     } else if (collectable == hand) {
                         item.interaction(collectable);
                     }
                 } else if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
-                    collectable.resetCursorIfOverRoom(event, game, cursor, activeCursor, inventory);
+                    collectable.resetCursorIfOverRoom(event, game, activeCursor, inventory);
                 }
             }
             // System.out.println(event.getPosition());

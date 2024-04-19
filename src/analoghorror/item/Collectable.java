@@ -62,7 +62,7 @@ public class Collectable extends Image {
      * @param cursor
      * @param cursorObject
      */
-    public void resetCursor(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){
+    public void resetCursor(GraphicsGroup checkedGroup, Cursor cursorObject){
         checkedGroup.add(this);
         this.setCenter(inventorySlot);
         cursorObject.resetCursor();
@@ -79,10 +79,10 @@ public class Collectable extends Image {
      * @param ui
      * @param inventoryBar  
      */
-    public void resetCursorIfOverRoom(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, 
+    public void resetCursorIfOverRoom(MouseButtonEvent event, GraphicsGroup checkedGroup,
     Cursor cursorObject, Inventory inventory){
         if (inventory.pointInSlot(event.getPosition()) == false && inInventory == false) {
-            resetCursor(checkedGroup, cursor, cursorObject);
+            resetCursor(checkedGroup, cursorObject);
         }
     }
 
