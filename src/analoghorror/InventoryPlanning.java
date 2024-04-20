@@ -1,8 +1,12 @@
 package analoghorror;
 
 import java.io.File;
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import analoghorror.item.Collectable;
 import edu.macalester.graphics.CanvasWindow;
@@ -24,9 +28,11 @@ public class InventoryPlanning extends GraphicsGroup {
     private static final int CANVAS_HEIGHT = 480;
 
     private static GraphicsGroup slotGroup = new GraphicsGroup();
+    private static GraphicsGroup inventoryItemsGroup = new GraphicsGroup();
     private static List<GraphicsObject> slotList = new ArrayList<>();
 
-    private static ArrayList<Collectable> inventoryList = new ArrayList<Collectable>(inventoryCapacity); 
+    //rework list
+    private static ArrayList<String> inventoryList = new ArrayList<String>(Collections.nCopies(inventoryCapacity, "0")); 
 
     public InventoryPlanning() {
         //maybe add slotList, invList and slotGroup to constructor
@@ -43,10 +49,9 @@ public class InventoryPlanning extends GraphicsGroup {
         addToSlot(doorBell);
         addToSlot(sonic);
 
-        inventoryList.remove(doorBell);
-        temp.add(key);
-        temp.add(doorBell);
-        temp.add(sonic);
+        removeFromSlot(doorBell);
+
+        addToSlot(doorBell);
         System.out.println(key.getPosition());
     }
 
@@ -59,14 +64,37 @@ public class InventoryPlanning extends GraphicsGroup {
     // }
 
     public static void addToSlot(Collectable collectable) {
-        inventoryList.add(collectable);
+        int firstEmpty = inventoryList.indexOf("0"); //based on the assumption that it returns the first index of "0"
+
+        //set first empty index to ID string
+        inventoryList.set(firstEmpty, collectable.getIDString());
         /* Set position to the box corresponding to the set index */
-        int slotIndex = inventoryList.indexOf(collectable);  // Get the index of the added item
+        int slotIndex = getInventoryList().indexOf(collectable.getIDString());  // Get the index of the added item
         slotPlacement(collectable, slotList.get(slotIndex));  // Pass both collectable and slot
+
+        //add to inventory graphics group
+        inventoryItemsGroup.add(collectable);
+
+        //add to canvas
+        temp.add(inventoryItemsGroup);
+    }
+
+    public static void removeFromSlot(Collectable collectable){
+        int indexOfLastInstance = inventoryList.indexOf(collectable.getIDString());
+        inventoryList.set(indexOfLastInstance, "0");
+        inventoryItemsGroup.remove(collectable);
+
+        //redraw inventory
+        temp.remove(inventoryItemsGroup);
+        temp.add(inventoryItemsGroup);
     }
     
     private static void slotPlacement(Collectable collectable, GraphicsObject slot) {
         collectable.setCenter(slot.getCenter()); //Sets center of collectable to slot center
+    }
+
+    private static List<String> getInventoryList(){
+        return List.copyOf(inventoryList);
     }
 
     /*
@@ -75,7 +103,7 @@ public class InventoryPlanning extends GraphicsGroup {
     private static void generator(double canvasHeight) {
         double x = 0, y = canvasHeight * 0.85;
         for (int i = 0; i < 11; i++) {
-            Image slot = new Image(x, y, "assets" + File.separator + "slotbg.png");
+            Image slot = new Image(x, y, "assets" + File.separator + "slotbg.png"); //change to transparent squares
             slotGroup.add(slot); //Adds slots to an overall group (easier for movement?)
             slotList.add(slot); //Add slots to a list of slots
             x += SLOT_WIDTH + PADDING;
