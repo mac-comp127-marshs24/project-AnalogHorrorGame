@@ -7,6 +7,7 @@ import java.util.List;
 
 import analoghorror.item.Collectable;
 import edu.macalester.graphics.*;
+import edu.macalester.graphics.events.MouseButtonEvent;
 
 /**
  * Inventory
@@ -79,14 +80,14 @@ public class Inventory extends GraphicsGroup{
         return collectableLayer;
     }
 
-    public void testCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor){
-        if (collectable.getInInventory()) {
-            assignCollectable(collectable, cursorGroup, cursor);
-        }
-        else if (!collectable.getInInventory()) {
-           acquireCollectable(collectable, cursor);
-        }
-    }
+    // public void testCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor){
+    //     if (collectable.getInInventory()) {
+    //         assignCollectable(collectable, cursorGroup, cursor);
+    //     }
+    //     else if (!collectable.getInInventory()) {
+    //        acquireCollectable(collectable, cursor);
+    //     }
+    // }
 
     public void acquireCollectable(Collectable collectable, Cursor cursor){
          // Put CollectableItem in inventory
@@ -103,11 +104,12 @@ public class Inventory extends GraphicsGroup{
         collectable.setInInventory(true);  // CollectableItem is now in inventory
     }
 
-    public void assignCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor){
+    public void assignCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor, MouseButtonEvent event){
         // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
         cursor.setCursor(collectable);
         collectableLayer.remove(cursor.getCursor());
         cursorGroup.add(cursor);
+        cursor.setCenter(event.getPosition());
         collectable.setInInventory(false);  // CollectableItem is out of inventory
     }
 

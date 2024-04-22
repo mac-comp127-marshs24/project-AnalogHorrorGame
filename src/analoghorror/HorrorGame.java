@@ -129,9 +129,15 @@ public class HorrorGame {
             if (check(event, game) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
                 // If the element under the click is a Collectable
                 Collectable collectable = (Collectable) check(event, game);
-                // collectable.inventoryLogic(game, cursor, activeCursor);
-                inventory.testCollectable(collectable, cursor, activeCursor);  // NEW
-                // It is added to inventory if it isn't already collected, otherwise it becomes the cursor
+                inventory.acquireCollectable(collectable, activeCursor);  // NEW
+                game.remove(collectable);
+                // It is added to inventory if it isn't already collected
+            }
+            else if (check(event, inventory) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
+                // If the element under the click is a Collectable and in Inventory
+                Collectable collectable = (Collectable) check(event, inventory);
+                inventory.assignCollectable(collectable, cursor, activeCursor, event);  // NEW
+                // It becomes the cursor
             }
             if (check(event, cursor) instanceof Collectable) {
                 // If the Collectable is the cursor
@@ -144,12 +150,14 @@ public class HorrorGame {
                         // Reset the cursor if there isn't an item under it and it isn't the hand
                         item.interaction(collectable);
                         collectable.resetCursor(inventory, activeCursor);
+                        activeCursor.setCenter(event.getPosition()); // test
                     } else if (collectable == hand) {
                         item.interaction(collectable);
                     }
                 } else if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
                     collectable.resetCursorIfOverRoom(event, activeCursor, inventory);
+                    activeCursor.setCenter(event.getPosition()); // test
                 }
             }
             // System.out.println(event.getPosition());
