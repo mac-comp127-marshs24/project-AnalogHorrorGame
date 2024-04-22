@@ -23,16 +23,16 @@ public class InventoryDemo extends GraphicsGroup {
     private static final double SLOT_HEIGHT = 50;
     private static final int inventoryCapacity = 11;
 
-    private static CanvasWindow temp;
+    private static CanvasWindow temp;  // probably don't need ↓
     private static final int CANVAS_WIDTH = 854;
     private static final int CANVAS_HEIGHT = 480;
 
-    private static GraphicsGroup slotGroup = new GraphicsGroup();
-    private static GraphicsGroup inventoryItemsGroup = new GraphicsGroup();
-    private static List<GraphicsObject> slotList = new ArrayList<>();
-
+    private static GraphicsGroup slotGroup = new GraphicsGroup();  // base
+    private static GraphicsGroup inventoryItemsGroup = new GraphicsGroup();  // collectableLayer
+    private static List<GraphicsObject> slotList = new ArrayList<>();  
     //rework list
-    private static ArrayList<String> inventoryList = new ArrayList<String>(Collections.nCopies(inventoryCapacity, "0")); 
+    private static ArrayList<String> inventoryList = new ArrayList<String>(Collections.nCopies(inventoryCapacity, "0")); // List<Collectable>
+
 
     public InventoryDemo() {
         //maybe add slotList, invList and slotGroup to constructor
@@ -64,7 +64,7 @@ public class InventoryDemo extends GraphicsGroup {
     // }
 
     public static void addToSlot(Collectable collectable) {
-        int firstEmpty = inventoryList.indexOf("0"); //based on the assumption that it returns the first index of "0"
+        int firstEmpty = inventoryList.indexOf("0"); //based on the assumption that it returns the first index of "0" | null or ""?
 
         //set first empty index to ID string
         inventoryList.set(firstEmpty, collectable.getIDString());
@@ -84,7 +84,7 @@ public class InventoryDemo extends GraphicsGroup {
         inventoryList.set(indexOfLastInstance, "0");
         inventoryItemsGroup.remove(collectable);
 
-        //redraw inventory
+        //redraw inventory | use .draw()
         temp.remove(inventoryItemsGroup);
         temp.add(inventoryItemsGroup);
     }
@@ -103,7 +103,7 @@ public class InventoryDemo extends GraphicsGroup {
     private static void generator(double canvasHeight) {
         double x = 0, y = canvasHeight * 0.85;
         for (int i = 0; i < 11; i++) {
-            Image slot = new Image(x, y, "assets" + File.separator + "slotbg.png"); //change to transparent squares
+            Image slot = new Image(x, y, "assets" + File.separator + "slotbg.png"); //change to transparent squares | maybe rectangles bc Collectable extends Image
             slotGroup.add(slot); //Adds slots to an overall group (easier for movement?)
             slotList.add(slot); //Add slots to a list of slots
             x += SLOT_WIDTH + PADDING;

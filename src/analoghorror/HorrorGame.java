@@ -53,7 +53,7 @@ public class HorrorGame {
         /**
          * TODO: Handle differently using Inventory/UI class 
          */
-        inventory = new Inventory(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
         background = new Image("assets" + File.separator + "hall.png");
         canvas.add(background);
