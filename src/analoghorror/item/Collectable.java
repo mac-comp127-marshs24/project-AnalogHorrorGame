@@ -38,7 +38,7 @@ public class Collectable extends Image {
      * @param cursor
      * @param cursorObject
      */
-    public void inventoryLogic(MouseButtonEvent event, GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){  // TODO: Add Inventory as arg
+    public void inventoryLogic(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){  // TODO: Add Inventory as arg
         if (inInventory) {
             // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
             cursorObject.setCursor(this);
@@ -88,5 +88,13 @@ public class Collectable extends Image {
 
     public String getIDString(){
         return collectableID;
+    }
+
+    public boolean getInInventory(){
+        return inInventory;
+    }
+
+    public void setInInventory(boolean inInventory){
+        this.inInventory = inInventory;
     }
 }

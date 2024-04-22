@@ -129,7 +129,7 @@ public class HorrorGame {
             if (check(event, game) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
                 // If the element under the click is a Collectable
                 Collectable collectable = (Collectable) check(event, game);
-                collectable.inventoryLogic(event, game, cursor, activeCursor);
+                collectable.inventoryLogic(game, cursor, activeCursor);
                 // It is added to inventory if it isn't already collected, otherwise it becomes the cursor
             }
             if (check(event, cursor) instanceof Collectable) {
