@@ -33,13 +33,6 @@ public class Inventory extends GraphicsGroup{
         generator(inventoryWidth, inventoryHeight, imagePath); // 742 x 68
     }
 
-    private static void slotInteraction(CanvasWindow canvas){
-        /*canvas.OnMouseCLick
-         * if slotGroup.getElement at event.getPosition is null do nothing
-         * if there is an element maybe mark true? do some item interaction? or change visuals of inventory slot like border?
-         */
-    }
-
     private void generator(double inventoryWidth, double inventoryHeight, String imagePath){
         Image texture = new Image(0, 0, imagePath);
         Rectangle inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
@@ -80,18 +73,8 @@ public class Inventory extends GraphicsGroup{
         return collectableLayer;
     }
 
-    // public void testCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor){
-    //     if (collectable.getInInventory()) {
-    //         assignCollectable(collectable, cursorGroup, cursor);
-    //     }
-    //     else if (!collectable.getInInventory()) {
-    //        acquireCollectable(collectable, cursor);
-    //     }
-    // }
-
     public void acquireCollectable(Collectable collectable, Cursor cursor){
-         // Put CollectableItem in inventory
-        // TODO: Call an inventory.getAvailableSlot() and use it to setInventorySlot
+        // Put CollectableItem in inventory
         inventoryList.set(getAvailableSlotIndex(), collectable);  // Set first empty index to Collectable
         
         int collectableSlot = inventoryList.indexOf(collectable);  // Set collectable "slot" to center of available slotBox
@@ -112,15 +95,6 @@ public class Inventory extends GraphicsGroup{
         cursor.setCenter(event.getPosition());
         collectable.setInInventory(false);  // CollectableItem is out of inventory
     }
-
-    // public Point getAvailableSlot(){
-    //     loop over list of slots
-    //         if slot is occupied
-    //             keep looping
-    //         if slot is empty
-    //             return slot.getCenter()
-    //     else return exception 
-    // }
 
     public int getAvailableSlotIndex(){
         int firstAvailable = inventoryList.indexOf(null);  // Returns first instance of null

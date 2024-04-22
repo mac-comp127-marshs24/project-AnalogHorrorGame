@@ -18,13 +18,8 @@ public class HorrorGame {
     GraphicsObject cursorDefault;
     GraphicsGroup cursor;
 
-    /**
-     * TODO: Handle differently using Inventory/UI class
-     */
     Inventory inventory;
-    Image uiTexture;
     Image background;
-    GraphicsGroup ui;
     // *****
 
     /**
@@ -48,20 +43,12 @@ public class HorrorGame {
 
         game = new GraphicsGroup();  // TODO: Probably Room in the future
         cursor = new GraphicsGroup();
-        ui = new GraphicsGroup();
 
-        /**
-         * TODO: Handle differently using Inventory/UI class 
-         */
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
+
         background = new Image("assets" + File.separator + "hall.png");
         canvas.add(background);
-        uiTexture = new Image("assets" + File.separator + "testBar.png");
-        uiTexture.setPosition(inventory.getPosition());
-        // Maybe including this? Unsure ↓
-        ui.add(uiTexture);
-        ui.add(inventory);
         // *****
 
         hand = new Collectable(0, 0, "assets" + File.separator + "hand.png", "hand");
@@ -77,7 +64,6 @@ public class HorrorGame {
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
         key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
-        // key.setInventorySlot(inventory, 111);
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
@@ -93,7 +79,6 @@ public class HorrorGame {
         sonic.addValidSubCollectable(hand);
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
-        // card.setInventorySlot(inventory, 174);
         game.add(card);
         door.addValidInitCollectable(card);
         
@@ -103,8 +88,8 @@ public class HorrorGame {
         door.addValidSubCollectable(hand);
         // *****
 
-        canvas.add(ui);
         canvas.add(game);
+        canvas.add(inventory);
         canvas.add(cursor);
         canvas.draw();
         itemLogic();
@@ -150,17 +135,19 @@ public class HorrorGame {
                         // Reset the cursor if there isn't an item under it and it isn't the hand
                         item.interaction(collectable);
                         collectable.resetCursor(inventory, activeCursor);
-                        activeCursor.setCenter(event.getPosition()); // test
+                        activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
+                        // Keep everything aligned
                     } else if (collectable == hand) {
                         item.interaction(collectable);
                     }
                 } else if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
                     collectable.resetCursorIfOverRoom(event, activeCursor, inventory);
-                    activeCursor.setCenter(event.getPosition()); // test
+                    activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
+                    // Keep everything aligned
                 }
             }
-            // System.out.println(event.getPosition());
+            // System.out.println(event.getPosition());  // Testing and used to find asset coordinates
         });
     }
 
