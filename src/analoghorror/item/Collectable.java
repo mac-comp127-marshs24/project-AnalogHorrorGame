@@ -25,11 +25,17 @@ public class Collectable extends Image {
         this.collectableID = collectableID;
     }
 
-    public void setInventorySlot(Inventory inventory, double x){  // TODO: Eventually make private
-        inventorySlot = new Point(x, inventory.getCenter().getY());
+    public void setInventorySlot(Point point){  // TODO: Eventually make private
+        inventorySlot = point;
+    }
+
+    public void resetCenter(){
+        setCenter(inventorySlot);
     }
     
     /**
+     * REMOVE; REPLACE WITH testCollectable()
+     * 
      * If CollectableItem is in the inventory, it will be removed and set as the Cursor. If it is not,
      * it is collected and put in the inventory.
      * 
@@ -38,22 +44,22 @@ public class Collectable extends Image {
      * @param cursor
      * @param cursorObject
      */
-    public void inventoryLogic(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){  // TODO: Add Inventory as arg
-        if (inInventory) {
-            // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
-            cursorObject.setCursor(this);
-            checkedGroup.remove(cursorObject.getCursor());
-            cursor.add(cursorObject);
-            inInventory = false;  // CollectableItem is out of inventory
-        }
-        else if (!inInventory) {
-            // Put CollectableItem in inventory
-            // TODO: Call an inventory.getAvailableSlot() and use it to setInventorySlot
-            this.setCenter(inventorySlot);  
-            cursorObject.resetCursor();
-            inInventory = true;  // CollectableItem is now in inventory
-        }
-    }    
+    // public void inventoryLogic(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){  // TODO: Add Inventory as arg
+    //     if (inInventory) {
+    //         // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
+    //         cursorObject.setCursor(this);
+    //         checkedGroup.remove(cursorObject.getCursor());
+    //         cursor.add(cursorObject);
+    //         inInventory = false;  // CollectableItem is out of inventory
+    //     }
+    //     else if (!inInventory) {
+    //         // Put CollectableItem in inventory
+    //         // TODO: Call an inventory.getAvailableSlot() and use it to setInventorySlot
+    //         resetCenter(); 
+    //         cursorObject.resetCursor();
+    //         inInventory = true;  // CollectableItem is now in inventory
+    //     }
+    // }    
 
     /**
      * CollectableItem is no longer used as Cursor and is sent back to its inventory slot.
@@ -62,9 +68,9 @@ public class Collectable extends Image {
      * @param cursor
      * @param cursorObject
      */
-    public void resetCursor(GraphicsGroup checkedGroup, Cursor cursorObject){
-        checkedGroup.add(this);
-        this.setCenter(inventorySlot);
+    public void resetCursor(Inventory inventory, Cursor cursorObject){
+        inventory.returnCollectableToLayer(this);;
+        resetCenter();
         cursorObject.resetCursor();
         inInventory = true;
     }
@@ -79,10 +85,9 @@ public class Collectable extends Image {
      * @param ui
      * @param inventoryBar  
      */
-    public void resetCursorIfOverRoom(MouseButtonEvent event, GraphicsGroup checkedGroup,
-    Cursor cursorObject, Inventory inventory){
+    public void resetCursorIfOverRoom(MouseButtonEvent event, Cursor cursorObject, Inventory inventory){
         if (inventory.pointInSlot(event.getPosition()) == false && inInventory == false) {
-            resetCursor(checkedGroup, cursorObject);
+            resetCursor(inventory, cursorObject);
         }
     }
 

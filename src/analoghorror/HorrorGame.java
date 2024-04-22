@@ -77,7 +77,7 @@ public class HorrorGame {
         game.add(box);  // Add to "Room" (GraphicsGroup for now)
 
         key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
-        key.setInventorySlot(inventory, 111);
+        // key.setInventorySlot(inventory, 111);
         game.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
@@ -93,7 +93,7 @@ public class HorrorGame {
         sonic.addValidSubCollectable(hand);
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
-        card.setInventorySlot(inventory, 174);
+        // card.setInventorySlot(inventory, 174);
         game.add(card);
         door.addValidInitCollectable(card);
         
@@ -129,7 +129,8 @@ public class HorrorGame {
             if (check(event, game) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
                 // If the element under the click is a Collectable
                 Collectable collectable = (Collectable) check(event, game);
-                collectable.inventoryLogic(game, cursor, activeCursor);
+                // collectable.inventoryLogic(game, cursor, activeCursor);
+                inventory.testCollectable(collectable, cursor, activeCursor);  // NEW
                 // It is added to inventory if it isn't already collected, otherwise it becomes the cursor
             }
             if (check(event, cursor) instanceof Collectable) {
@@ -142,13 +143,13 @@ public class HorrorGame {
                     if (collectable != hand) {
                         // Reset the cursor if there isn't an item under it and it isn't the hand
                         item.interaction(collectable);
-                        collectable.resetCursor(game, activeCursor);
+                        collectable.resetCursor(inventory, activeCursor);
                     } else if (collectable == hand) {
                         item.interaction(collectable);
                     }
                 } else if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
-                    collectable.resetCursorIfOverRoom(event, game, activeCursor, inventory);
+                    collectable.resetCursorIfOverRoom(event, activeCursor, inventory);
                 }
             }
             // System.out.println(event.getPosition());

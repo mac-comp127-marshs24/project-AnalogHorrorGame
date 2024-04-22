@@ -28,7 +28,7 @@ public class Inventory extends GraphicsGroup{
         base = new GraphicsGroup();
         collectableLayer = new GraphicsGroup();
         slotBoxList = new ArrayList<Rectangle>();
-        inventoryList = new ArrayList<Collectable>(Collections.nCopies(INVENTORY_CAPACITY, null));  // TODO: Ask Moyartu about implementation —W
+        inventoryList = new ArrayList<Collectable>(Collections.nCopies(INVENTORY_CAPACITY, null));
         generator(inventoryWidth, inventoryHeight, imagePath); // 742 x 68
     }
 
@@ -49,7 +49,7 @@ public class Inventory extends GraphicsGroup{
         double slotRowStartX = 0 + HORIZONTAL_OFFSET, slotY = texture.getY() + VERTICAL_OFFSET;  // just center later? Look at y
         for (int i = 0; i < INVENTORY_CAPACITY; i++) {
             Rectangle slot = new Rectangle(slotRowStartX, slotY, SLOT_WIDTH, SLOT_WIDTH);
-            slot.setFillColor(Color.RED);
+            slot.setFillColor(Color.RED); // Change later
             slotBoxList.add(slot);
             base.add(slot);
             slotRowStartX += slot.getWidth() + HORIZONTAL_PADDING;
@@ -91,7 +91,14 @@ public class Inventory extends GraphicsGroup{
     public void acquireCollectable(Collectable collectable, Cursor cursor){
          // Put CollectableItem in inventory
         // TODO: Call an inventory.getAvailableSlot() and use it to setInventorySlot
-        collectable.setCenter(inventorySlot);  
+        inventoryList.set(getAvailableSlotIndex(), collectable);  // Set first empty index to Collectable
+        
+        int collectableSlot = inventoryList.indexOf(collectable);  // Set collectable "slot" to center of available slotBox
+        collectable.setInventorySlot(slotBoxList.get(collectableSlot).getCenter()); 
+        
+        collectableLayer.add(collectable);  // Add collectable to GraphicsGroup
+        collectable.resetCenter();  // Send to home slotBox
+
         cursor.resetCursor();
         collectable.setInInventory(true);  // CollectableItem is now in inventory
     }
@@ -99,7 +106,7 @@ public class Inventory extends GraphicsGroup{
     public void assignCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor){
         // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
         cursor.setCursor(collectable);
-        collectableLayer.remove(cursor.getCursor());  // or game.remove
+        collectableLayer.remove(cursor.getCursor());
         cursorGroup.add(cursor);
         collectable.setInInventory(false);  // CollectableItem is out of inventory
     }
@@ -112,5 +119,15 @@ public class Inventory extends GraphicsGroup{
     //             return slot.getCenter()
     //     else return exception 
     // }
+
+    public int getAvailableSlotIndex(){
+        int firstAvailable = inventoryList.indexOf(null);  // Returns first instance of null
+        return firstAvailable;
+    }
+
+    public void returnCollectableToLayer(Collectable collectable){
+        collectableLayer.add(collectable);  // Add collectable to GraphicsGroup
+        collectable.resetCenter();  // Send to home slotBox
+    }
     
 }
