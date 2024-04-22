@@ -43,7 +43,8 @@ public class Inventory extends GraphicsGroup{
         double slotRowStartX = 0 + HORIZONTAL_OFFSET, slotY = texture.getY() + VERTICAL_OFFSET;  // just center later? Look at y
         for (int i = 0; i < INVENTORY_CAPACITY; i++) {
             Rectangle slot = new Rectangle(slotRowStartX, slotY, SLOT_WIDTH, SLOT_WIDTH);
-            slot.setFillColor(Color.RED); // Change later
+            slot.setFilled(false);
+            slot.setStroked(false);
             slotBoxList.add(slot);
             base.add(slot);
             slotRowStartX += slot.getWidth() + HORIZONTAL_PADDING;
