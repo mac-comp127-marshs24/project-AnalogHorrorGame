@@ -17,7 +17,7 @@ import edu.macalester.graphics.Image;
 /**
  * Inventory
  */
-public class InventoryPlanning extends GraphicsGroup {
+public class InventoryDemo extends GraphicsGroup {
     private static final double PADDING = 20;
     private static final double SLOT_WIDTH = 50;
     private static final double SLOT_HEIGHT = 50;
@@ -34,7 +34,7 @@ public class InventoryPlanning extends GraphicsGroup {
     //rework list
     private static ArrayList<String> inventoryList = new ArrayList<String>(Collections.nCopies(inventoryCapacity, "0")); 
 
-    public InventoryPlanning() {
+    public InventoryDemo() {
         //maybe add slotList, invList and slotGroup to constructor
     }
 
