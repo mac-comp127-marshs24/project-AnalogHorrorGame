@@ -1,6 +1,5 @@
 package analoghorror;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,9 +8,6 @@ import analoghorror.item.Collectable;
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.MouseButtonEvent;
 
-/**
- * Inventory
- */
 public class Inventory extends GraphicsGroup{
     private static final double HORIZONTAL_PADDING = 8;
     private static final double HORIZONTAL_OFFSET = 27;
@@ -24,6 +20,18 @@ public class Inventory extends GraphicsGroup{
     List<Rectangle> slotBoxList;
     List<Collectable> inventoryList;
 
+    /**
+     * A set of GraphicsGroups overlaying a texture — all of a set size. Once
+     * a Collectable is collected into an Inventory from a Room, a different
+     * room can be redrawn and the Collectable will remain in the Inventory it was
+     * collected into.
+     * 
+     * @param x
+     * @param y
+     * @param inventoryWidth
+     * @param inventoryHeight
+     * @param imagePath Background texture
+     */
     public Inventory(double x, double y, double inventoryWidth, double inventoryHeight, String imagePath){
         super(x, y);
         base = new GraphicsGroup();
@@ -33,6 +41,14 @@ public class Inventory extends GraphicsGroup{
         generator(inventoryWidth, inventoryHeight, imagePath); // 742 x 68
     }
 
+    /**
+     * Constructs the base GraphicsObjects and GraphicsGroups for the Inventory.
+     * Slots are built according to INVENTORY_CAPACITY.
+     * 
+     * @param inventoryWidth
+     * @param inventoryHeight
+     * @param imagePath
+     */
     private void generator(double inventoryWidth, double inventoryHeight, String imagePath){
         Image texture = new Image(0, 0, imagePath);
         Rectangle inventoryBar = new Rectangle(0, 0, inventoryWidth, inventoryHeight);
@@ -70,10 +86,16 @@ public class Inventory extends GraphicsGroup{
         }
     }
 
-    public GraphicsGroup getCollectableLayer(){
-        return collectableLayer;
-    }
-
+    /**
+     * Call if the element under a click is a Collectable.
+     * 
+     * Assigns the Collectable to the first empty index in inventoryList, set's
+     * the inventorySlot point for the Collectable to the first available inventorySlot,
+     * then manages interactions with the Cursor and collectableLayer Graphics Group.
+     * 
+     * @param collectable
+     * @param cursor
+     */
     public void acquireCollectable(Collectable collectable, Cursor cursor){
         // Put CollectableItem in inventory
         inventoryList.set(getAvailableSlotIndex(), collectable);  // Set first empty index to Collectable
@@ -88,6 +110,17 @@ public class Inventory extends GraphicsGroup{
         collectable.setInInventory(true);  // CollectableItem is now in inventory
     }
 
+    /**
+     * Call if the element under a click is a Collectable and in Inventory.
+     * 
+     * Assigns the Collectable to be the displayed Cursor, manages interactions between
+     * GraphicsGroups, and removes the Collectable from Inventory.
+     * 
+     * @param collectable
+     * @param cursorGroup
+     * @param cursor
+     * @param event
+     */
     public void assignCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor, MouseButtonEvent event){
         // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
         cursor.setCursor(collectable);
@@ -106,5 +139,4 @@ public class Inventory extends GraphicsGroup{
         collectableLayer.add(collectable);  // Add collectable to GraphicsGroup
         collectable.resetCenter();  // Send to home slotBox
     }
-    
 }

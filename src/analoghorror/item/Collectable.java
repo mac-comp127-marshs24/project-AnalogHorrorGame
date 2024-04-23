@@ -1,9 +1,9 @@
 package analoghorror.item;
 
 import edu.macalester.graphics.events.*;
+import edu.macalester.graphics.*;
 import analoghorror.Cursor;
 import analoghorror.Inventory;
-import edu.macalester.graphics.*;
 
 public class Collectable extends Image {
     boolean inInventory;  // True if CollectableItem is in inventory
@@ -31,35 +31,7 @@ public class Collectable extends Image {
 
     public void resetCenter(){
         setCenter(inventorySlot);
-    }
-    
-    /**
-     * REMOVE; REPLACE WITH testCollectable()
-     * 
-     * If CollectableItem is in the inventory, it will be removed and set as the Cursor. If it is not,
-     * it is collected and put in the inventory.
-     * 
-     * @param event
-     * @param checkedGroup
-     * @param cursor
-     * @param cursorObject
-     */
-    // public void inventoryLogic(GraphicsGroup checkedGroup, GraphicsGroup cursor, Cursor cursorObject){  // TODO: Add Inventory as arg
-    //     if (inInventory) {
-    //         // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
-    //         cursorObject.setCursor(this);
-    //         checkedGroup.remove(cursorObject.getCursor());
-    //         cursor.add(cursorObject);
-    //         inInventory = false;  // CollectableItem is out of inventory
-    //     }
-    //     else if (!inInventory) {
-    //         // Put CollectableItem in inventory
-    //         // TODO: Call an inventory.getAvailableSlot() and use it to setInventorySlot
-    //         resetCenter(); 
-    //         cursorObject.resetCursor();
-    //         inInventory = true;  // CollectableItem is now in inventory
-    //     }
-    // }    
+    }   
 
     /**
      * CollectableItem is no longer used as Cursor and is sent back to its inventory slot.
