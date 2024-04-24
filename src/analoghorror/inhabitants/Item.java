@@ -1,4 +1,4 @@
-package analoghorror.item;
+package analoghorror.inhabitants;
 
 import java.util.ArrayList;
 import java.util.HashSet;

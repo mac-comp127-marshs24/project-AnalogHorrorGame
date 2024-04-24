@@ -6,7 +6,7 @@ import edu.macalester.graphics.events.*;
 import java.io.File;
 import java.util.Arrays;
 
-import analoghorror.item.*;
+import analoghorror.inhabitants.*;
 
 public class HorrorGame {
     private static final int CANVAS_WIDTH = 854;

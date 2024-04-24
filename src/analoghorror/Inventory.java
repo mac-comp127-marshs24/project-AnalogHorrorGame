@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import analoghorror.item.Collectable;
+import analoghorror.inhabitants.Collectable;
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.MouseButtonEvent;
 

@@ -1,4 +1,4 @@
-package analoghorror.item;
+package analoghorror.inhabitants;
 
 import edu.macalester.graphics.events.*;
 import edu.macalester.graphics.*;

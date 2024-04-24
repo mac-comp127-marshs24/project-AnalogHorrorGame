@@ -1,4 +1,4 @@
-package analoghorror;
+package analoghorror.rooms;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
