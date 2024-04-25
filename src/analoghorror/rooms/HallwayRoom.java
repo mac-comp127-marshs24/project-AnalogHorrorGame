@@ -11,7 +11,7 @@ import edu.macalester.graphics.*;
 
 public class HallwayRoom extends Room{
     private static boolean changeRoom = false;
-    private ClassroomRoom classroom;
+    private GreenChairsRoom classroom;
     static GraphicsGroup roomInhabitants;
     
     Image background;
@@ -21,7 +21,7 @@ public class HallwayRoom extends Room{
     static Item door;
     
 
-    public HallwayRoom(ClassroomRoom classroom){
+    public HallwayRoom(GreenChairsRoom classroom){
         this.classroom = classroom;
         this.roomInhabitants = new GraphicsGroup();
 
@@ -49,6 +49,8 @@ public class HallwayRoom extends Room{
 
     }
 
+    //TODO: delete once functional
+    //couldn't call this in here from horror game for some reason, will delete later
     public static GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
         GraphicsObject item = group.getElementAt(event.getPosition());
         return item;
@@ -57,7 +59,7 @@ public class HallwayRoom extends Room{
     //how it'd probably look in horror game?
     public static void main(String[] args) {
         CanvasWindow temp = new CanvasWindow("temp", 854, 400);
-        ClassroomRoom classroom1 =  new ClassroomRoom();
+        GreenChairsRoom classroom1 =  new GreenChairsRoom();
         HallwayRoom hallway = new HallwayRoom(classroom1);
         temp.add(hallway);
         temp.onClick((event)->

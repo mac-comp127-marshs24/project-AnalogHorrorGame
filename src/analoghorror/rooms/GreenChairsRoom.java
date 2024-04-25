@@ -1,7 +1,7 @@
 package analoghorror.rooms;
 import edu.macalester.graphics.GraphicsGroup;
 
-public class ClassroomRoom extends Room{
+public class GreenChairsRoom extends Room{
 
     @Override
     public void updateRoom() {
