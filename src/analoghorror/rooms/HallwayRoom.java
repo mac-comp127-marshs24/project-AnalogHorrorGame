@@ -10,29 +10,42 @@ import analoghorror.inhabitants.*;
 import edu.macalester.graphics.*;
 
 public class HallwayRoom extends Room{
-    private static boolean changeRoom = false;
+    // private static boolean changeRoom = false;
     private GreenChairsRoom classroom;
-    static GraphicsGroup roomInhabitants;
     
-    Image background;
+    // Image background;
 
     Item box;
     Collectable key;
-    static Item door;
+    Item door;
+    Collectable card;
+    Item sonic;
     
 
-    public HallwayRoom(GreenChairsRoom classroom){
+    public HallwayRoom(GreenChairsRoom classroom, String backgroundImage){
+        super(backgroundImage);
         this.classroom = classroom;
-        this.roomInhabitants = new GraphicsGroup();
-
-        background = new Image("assets" + File.separator + "hall.png");
-        this.add(background);
+        changeRoom = false;
+        // this.roomInhabitants = new GraphicsGroup();
+        // this.add(background)/;
 
         addRoomInhabitants();
         
     }
 
     public void addRoomInhabitants(){
+        // box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
+        // box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
+        // roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
+
+        // key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
+        // roomInhabitants.add(key);
+        // box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
+
+        // door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
+        // door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
+        // roomInhabitants.add(door); box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
+        
         box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
         box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
         roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
@@ -45,34 +58,51 @@ public class HallwayRoom extends Room{
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         roomInhabitants.add(door);
 
+        sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
+        sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
+        "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
+        roomInhabitants.add(sonic);
+        // sonic.addValidInitCollectable(hand);
+        // sonic.addValidSubCollectable(hand);
+
+        card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
+        roomInhabitants.add(card);
+        door.addValidInitCollectable(card);
+        
+        door.addValidInitCollectable(key);
+
+        // box.addValidSubCollectable(hand);
+        // door.addValidSubCollectable(hand);
+
+
         this.add(roomInhabitants);
 
     }
 
     //TODO: delete once functional
     //couldn't call this in here from horror game for some reason, will delete later
-    public static GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
-        GraphicsObject item = group.getElementAt(event.getPosition());
-        return item;
-    }
+    // public static GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
+    //     GraphicsObject item = group.getElementAt(event.getPosition());
+    //     return item;
+    // }
 
     //how it'd probably look in horror game?
-    public static void main(String[] args) {
-        CanvasWindow temp = new CanvasWindow("temp", 854, 400);
-        GreenChairsRoom classroom1 =  new GreenChairsRoom();
-        HallwayRoom hallway = new HallwayRoom(classroom1);
-        temp.add(hallway);
-        temp.onClick((event)->
-        {
-            if(door == check(event, roomInhabitants)){
-                changeRoom = true;
-                System.out.println("new room!");
-                hallway.setActiveRoom(classroom1);  //this would most likely be a call to hallway.updateRoom()? cant do here bc main static             
-            }
+    // public static void main(String[] args) {
+    //     CanvasWindow temp = new CanvasWindow("temp", 854, 400);
+    //     GreenChairsRoom classroom1 =  new GreenChairsRoom();
+    //     HallwayRoom hallway = new HallwayRoom(classroom1);
+    //     temp.add(hallway);
+    //     temp.onClick((event)->
+    //     {
+    //         if(door == check(event, roomInhabitants)){
+    //             changeRoom = true;
+    //             System.out.println("new room!");
+    //             hallway.setActiveRoom(classroom1);  //this would most likely be a call to hallway.updateRoom()? cant do here bc main static             
+    //         }
         
-        }
-        );
-    }
+    //     }
+    //     );
+    // }
     
     @Override
     public void updateRoom() {
