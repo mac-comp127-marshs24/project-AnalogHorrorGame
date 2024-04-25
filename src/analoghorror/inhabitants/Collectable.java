@@ -9,6 +9,7 @@ public class Collectable extends Image {
     boolean inInventory;  // True if CollectableItem is in inventory
     Point inventorySlot;  // Inventory space; TODO: Have an inventory class to help with slot management
     String collectableID;
+    String inventoryPath;
 
     /**
      * A game item that can be collected into the Inventory when clicked. Arguments determine location in Inventory, texture,
@@ -23,6 +24,7 @@ public class Collectable extends Image {
         super(x, y, path);
         inInventory = false;
         this.collectableID = collectableID;
+        this.inventoryPath = path;
     }
 
     public void setInventorySlot(Point point){  // TODO: Eventually make private
@@ -73,5 +75,14 @@ public class Collectable extends Image {
 
     public void setInInventory(boolean inInventory){
         this.inInventory = inInventory;
+    }
+
+    //idk psuedo code
+    public void changePathOnCollection(){
+            this.setImagePath(inventoryPath);
+    }
+
+    public void setInventoryPath(String inventoryPath) {
+        this.inventoryPath = inventoryPath;
     }
 }
