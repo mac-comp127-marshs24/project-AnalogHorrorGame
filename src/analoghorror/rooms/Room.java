@@ -2,58 +2,41 @@ package analoghorror.rooms;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
+
+import java.util.List;
+
+import analoghorror.Inventory;
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.Rectangle;
+import analoghorror.inhabitants.*;
 
-/* We can have an interface for rooms/settings to kinda normalize behaviors if that makes sense? */
-/*
- * Like what behavior do we want all rooms to have: probably like a way of naviating out of said
- * room, normalize behaviors of interacting w said room, etc kinda?
- */
-/* we can maybe do the same w items */
-public abstract class Room {
-    Rectangle moveForward = new Rectangle(20, 20, 20, 20);
-    Rectangle moveBackwards = new Rectangle(320, 20, 20, 20);
-    GraphicsGroup room;
-    // temp rectangle, can change named to left/right
+//room is a graphics group
+public abstract class Room extends GraphicsGroup{
+    private GraphicsGroup roomInhabitants; 
+    private Room activeRoom;
+    private boolean changeRoom;
 
-    public Room(CanvasWindow window) {
-        window.add(roomContents()); //add stuff from current room
-        changeRooms(window);
-        
+    public Room() {
+        this.roomInhabitants = new GraphicsGroup();
+        this.activeRoom = this;
+        this.changeRoom = false;
     }
 
-    /**
-     * Add specific contents to room
-     * @return room graphics group
-     */
-    protected GraphicsGroup roomContents(){
-        room = new GraphicsGroup();
-
-        //add background/items to graphics group
-        //add movement arrows
-        room.add(moveForward);
-        room.add(moveBackwards);
-
-        return room;
+    public GraphicsGroup getRoomInhabitants() {
+        return roomInhabitants;
     }
-    
-    /**
-     * Changes from one room object to another
-     * @param window
-     */
-    private void changeRooms(CanvasWindow window){
-        window.onClick((event) -> {
-            if (window.getElementAt(event.getPosition()) == moveForward){
-                window.removeAll();
-                window.add(roomContents()); //each room has its own roomContents, so then we can maybe do like hallway.RoomContents and get that?
-            }
 
-            else if (window.getElementAt(event.getPosition()) == moveBackwards){
-                window.removeAll();
-                window.add(roomContents()); //specific room content
-            }
-        });
+    //add items to item graphics group in room so not on same "layer" as bg
+    //idk it doesnt have to be on different "layers" aka graphics groups i just feel like its better to have that just in case? idk
+
+    public void addMultipleToRoom(List <Item> items){
+        items.stream().forEach(roomInhabitants::add);
+    }
+
+    public void updateRoom(Room differentRoom) {
+        if(changeRoom){
+            activeRoom = differentRoom;
+        }
     }
 
 }
