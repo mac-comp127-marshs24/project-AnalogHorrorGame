@@ -11,10 +11,8 @@ import edu.macalester.graphics.*;
 
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
-    private GreenChairsRoom classroom;
-    
-    // Image background;
-
+    Collectable primaryCursor;
+    GreenChairsRoom classroom;
     Item box;
     Collectable key;
     Item door;
@@ -22,9 +20,10 @@ public class HallwayRoom extends Room{
     Item sonic;
     
 
-    public HallwayRoom(GreenChairsRoom classroom, String backgroundImage){
+    public HallwayRoom(GreenChairsRoom classroom, Collectable hand, String backgroundImage){
         super(backgroundImage);
         this.classroom = classroom;
+        primaryCursor = hand;
         changeRoom = false;
         // this.roomInhabitants = new GraphicsGroup();
         // this.add(background)/;
@@ -33,19 +32,7 @@ public class HallwayRoom extends Room{
         
     }
 
-    public void addRoomInhabitants(){
-        // box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
-        // box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
-        // roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
-
-        // key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
-        // roomInhabitants.add(key);
-        // box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
-
-        // door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
-        // door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
-        // roomInhabitants.add(door); box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
-        
+    public void addRoomInhabitants(){    
         box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
         box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
         roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
@@ -62,8 +49,8 @@ public class HallwayRoom extends Room{
         sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
         "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
         roomInhabitants.add(sonic);
-        // sonic.addValidInitCollectable(hand);
-        // sonic.addValidSubCollectable(hand);
+        sonic.addValidInitCollectable(primaryCursor);
+        sonic.addValidSubCollectable(primaryCursor);
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
         roomInhabitants.add(card);
@@ -71,20 +58,11 @@ public class HallwayRoom extends Room{
         
         door.addValidInitCollectable(key);
 
-        // box.addValidSubCollectable(hand);
-        // door.addValidSubCollectable(hand);
-
+        box.addValidSubCollectable(primaryCursor);
+        door.addValidSubCollectable(primaryCursor);
 
         this.add(roomInhabitants);
-
     }
-
-    //TODO: delete once functional
-    //couldn't call this in here from horror game for some reason, will delete later
-    // public static GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
-    //     GraphicsObject item = group.getElementAt(event.getPosition());
-    //     return item;
-    // }
 
     //how it'd probably look in horror game?
     // public static void main(String[] args) {

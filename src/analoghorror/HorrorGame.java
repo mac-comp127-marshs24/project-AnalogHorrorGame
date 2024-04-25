@@ -4,7 +4,6 @@ import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.*;
 
 import java.io.File;
-import java.util.Arrays;
 
 import analoghorror.inhabitants.*;
 import analoghorror.rooms.*;
@@ -21,19 +20,7 @@ public class HorrorGame {
 
     Inventory inventory;
     Image background;
-    // *****
-
-    /**
-     * TODO: The following will exist in a future Room class
-     */
     Room activeRoom;
-    // Item box;
-    // Collectable key;
-    // Item door;
-    // Collectable card;
-    // Item sonic;
-    // *****
-
 
     public static void main(String[] args) {
         new HorrorGame();
@@ -41,35 +28,25 @@ public class HorrorGame {
 
     public HorrorGame() {
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
-
-        activeRoom = new HallwayRoom(new GreenChairsRoom("assets" + File.separator + "hall.png"),"assets" + File.separator + "hall.png");
         cursor = new GraphicsGroup();
 
-        inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
-        inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
-
-        // background = new Image("assets" + File.separator + "hall.png");
-        // canvas.add(background);
-        // *****
 
         hand = new Collectable(0, 0, "assets" + File.separator + "hand.png", "hand");
         activeCursor = new Cursor(hand);
         activeCursor.resetCursor();
         cursor.add(activeCursor);
 
+        activeRoom = new HallwayRoom(new GreenChairsRoom("assets" + File.separator + "hall.png"), hand,"assets" + File.separator + "hall.png");
+
+        inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
+        inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
+
+
         canvas.add(activeRoom);
         canvas.add(inventory);
         canvas.add(cursor);
         canvas.draw();
         itemLogic();
-    }
-
-    public static int getCanvasWidth() {
-        return CANVAS_WIDTH;
-    }
-
-    public static int getCanvasHeight() {
-        return CANVAS_HEIGHT;
     }
 
     public void itemLogic() {
@@ -80,7 +57,7 @@ public class HorrorGame {
         canvas.draw();
         // Click logic
         canvas.onClick(event -> {
-            if (check(event, activeRoom) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
+            if (check(event, activeRoom.getRoomInhabitants()) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
                 // If the element under the click is a Collectable
                 Collectable collectable = (Collectable) check(event, activeRoom);
                 inventory.acquireCollectable(collectable, activeCursor);
@@ -96,7 +73,7 @@ public class HorrorGame {
             if (check(event, cursor) instanceof Collectable) {
                 // If the Collectable is the cursor
                 Collectable collectable = (Collectable) check(event, cursor);
-                if (check(event, activeRoom) instanceof Item) {
+                if (check(event, activeRoom.getRoomInhabitants()) instanceof Item) {
                     // ...and there is an Item underneath it...
                     Item item = (Item) check(event, activeRoom);
                     // Try to interact with the Item

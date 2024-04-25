@@ -1,14 +1,7 @@
 package analoghorror.rooms;
 
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
-
-import java.util.List;
-
-import analoghorror.Inventory;
 import edu.macalester.graphics.*;
-import edu.macalester.graphics.Rectangle;
-import analoghorror.inhabitants.*;
 
 //room is a graphics group
 public abstract class Room extends GraphicsGroup{
