@@ -26,10 +26,6 @@ public abstract class Room extends GraphicsGroup{
     //add items to item graphics group in room so not on same "layer" as bg
     //idk it doesnt have to be on different "layers" aka graphics groups i just feel like its better to have that just in case? idk
 
-    public void addMultipleToRoom(List <Item> items){
-        items.stream().forEach(this.roomInhabitants::add);
-    }
-
     public GraphicsGroup getRoomInhabitants() {
         return roomInhabitants;
     }
