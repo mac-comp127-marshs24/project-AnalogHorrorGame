@@ -46,59 +46,70 @@ public class HorrorGame {
         canvas.add(inventory);
         canvas.add(cursor);
         canvas.draw();
-        itemLogic();
+        gameLogic();
     }
 
-    public void itemLogic() {
+    private void gameLogic() {
         // Move cursor with the mouse
         canvas.onMouseMove(event -> {
             activeCursor.setCenter(event.getPosition());
         });
         canvas.draw();
-        // Click logic
         canvas.onClick(event -> {
-            if (check(event, activeRoom.getRoomInhabitants()) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
-                // If the element under the click is a Collectable
-                Collectable collectable = (Collectable) check(event, activeRoom);
-                inventory.acquireCollectable(collectable, activeCursor);
-                activeRoom.getRoomInhabitants().remove(collectable);
-                // It is added to inventory if it isn't already collected
-            }
-            else if (check(event, inventory) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
-                // If the element under the click is a Collectable and in Inventory
-                Collectable collectable = (Collectable) check(event, inventory);
-                inventory.assignCollectable(collectable, cursor, activeCursor, event);  // NEW
-                // It becomes the cursor
-            }
-            if (check(event, cursor) instanceof Collectable) {
-                // If the Collectable is the cursor
-                Collectable collectable = (Collectable) check(event, cursor);
-                if (check(event, activeRoom.getRoomInhabitants()) instanceof Item) {
-                    // ...and there is an Item underneath it...
-                    Item item = (Item) check(event, activeRoom);
-                    // Try to interact with the Item
-                    if (collectable != hand) {
-                        // Reset the cursor if there isn't an item under it and it isn't the hand
-                        item.interaction(collectable);
-                        collectable.resetCursor(inventory, activeCursor);
-                        activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
-                        // Keep everything aligned
-                    } else if (collectable == hand) {
-                        item.interaction(collectable);
-                    }
-                } else if (collectable != hand) {
-                    // Reset the cursor if there isn't an item under it and it isn't the hand
-                    collectable.resetCursorIfOverRoom(event, activeCursor, inventory);
-                    activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
-                    // Keep everything aligned
-                }
-            }
-            // System.out.println(event.getPosition());  // Testing and used to find asset coordinates
+            clickLogic(event);
         });
     }
 
-    public GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
+    private GraphicsObject check(MouseButtonEvent event, GraphicsGroup group) {
         GraphicsObject item = group.getElementAt(event.getPosition());
         return item;
+    }
+
+    private void clickLogic(MouseButtonEvent event){
+        clickInventoryCollectableInteractions(event);
+        clickCollectableItemInteractions(event);
+        // System.out.println(event.getPosition());  // Testing and used to find asset coordinates
+    }
+
+    private void clickInventoryCollectableInteractions(MouseButtonEvent event){
+        if (check(event, activeRoom.getRoomInhabitants()) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
+            // If the element under the click is a Collectable
+            Collectable collectable = (Collectable) check(event, activeRoom);
+            inventory.acquireCollectable(collectable, activeCursor);
+            activeRoom.getRoomInhabitants().remove(collectable);
+            // It is added to inventory if it isn't already collected
+        }
+        else if (check(event, inventory) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
+            // If the element under the click is a Collectable and in Inventory
+            Collectable collectable = (Collectable) check(event, inventory);
+            inventory.assignCollectable(collectable, cursor, activeCursor, event);  // NEW
+            // It becomes the cursor
+        }
+    }
+
+    private void clickCollectableItemInteractions(MouseButtonEvent event){
+        if (check(event, cursor) instanceof Collectable) {
+            // If the Collectable is the cursor
+            Collectable collectable = (Collectable) check(event, cursor);
+            if (check(event, activeRoom.getRoomInhabitants()) instanceof Item) {
+                // ...and there is an Item underneath it...
+                Item item = (Item) check(event, activeRoom);
+                // Try to interact with the Item
+                if (collectable != hand) {
+                    // Reset the cursor if there isn't an item under it and it isn't the hand
+                    item.interaction(collectable);
+                    collectable.resetCursor(inventory, activeCursor);
+                    activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
+                    // Keep everything aligned
+                } else if (collectable == hand) {
+                    item.interaction(collectable);
+                }
+            } else if (collectable != hand) {
+                // Reset the cursor if there isn't an item under it and it isn't the hand
+                collectable.resetCursorIfOverRoom(event, activeCursor, inventory);
+                activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
+                // Keep everything aligned
+            }
+        }
     }
 }
