@@ -139,4 +139,8 @@ public class Inventory extends GraphicsGroup{
         collectableLayer.add(collectable);  // Add collectable to GraphicsGroup
         collectable.resetCenter();  // Send to home slotBox
     }
+
+    public boolean isInInventory(Collectable collectable){
+        return inventoryList.contains(collectable);
+    }
 }
