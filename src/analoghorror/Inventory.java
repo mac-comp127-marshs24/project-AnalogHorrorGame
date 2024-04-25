@@ -140,7 +140,7 @@ public class Inventory extends GraphicsGroup{
         collectable.resetCenter();  // Send to home slotBox
     }
 
-    public boolean isInInventory(Collectable collectable){
+    public boolean isItemInInventory(Collectable collectable){
         return inventoryList.contains(collectable);
     }
 }
