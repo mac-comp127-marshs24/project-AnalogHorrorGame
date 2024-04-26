@@ -12,7 +12,7 @@ import analoghorror.inhabitants.*;
 
 //room is a graphics group
 public abstract class Room extends GraphicsGroup{
-    protected static GraphicsGroup roomInhabitants; 
+    protected GraphicsGroup roomInhabitants; 
     protected Image backgroundImage;
     protected Room activeRoom;
     protected boolean changeRoom;
@@ -22,7 +22,7 @@ public abstract class Room extends GraphicsGroup{
         super();
         roomInhabitants = new GraphicsGroup();
         this.backgroundImage = new Image(backgroundImage);
-        add(this.roomInhabitants);
+        // add(this.roomInhabitants);
         add(this.backgroundImage);
         this.activeRoom = this;
         // this.changeRoom = false;
@@ -45,6 +45,10 @@ public abstract class Room extends GraphicsGroup{
 
     public abstract void addRoomInhabitants();
     public abstract void updateRoom();
+
+    public Image getBackgroundImage(){
+        return backgroundImage;
+    }
 
     //temp from horrorgame, remove
 }

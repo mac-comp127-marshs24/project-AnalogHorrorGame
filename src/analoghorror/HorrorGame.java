@@ -47,7 +47,7 @@ public class HorrorGame {
         windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "tempwindowroom.jpg");
         hallway = new HallwayRoom(greenChairsRoom, hand,"assets" + File.separator + "hall.png");
 
-        activeRoom = hallway;
+        activeRoom = hallway.getActiveRoom();
 
         //activeRoom = new HallwayRoom(new GreenChairsRoom("assets" + File.separator + "hall.png"), hand,"assets" + File.separator + "hall.png");
 
@@ -82,14 +82,25 @@ public class HorrorGame {
         clickInventoryCollectableInteractions(event);
         clickCollectableItemInteractions(event);
         activeRoom.updateRoom();
+        if (activeRoom != activeRoom.getActiveRoom()) {
+            canvas.removeAll();
+            activeRoom = activeRoom.getActiveRoom();
+            canvas.add(activeRoom);
+            canvas.add(inventory);
+            canvas.add(cursor);
+        }
+        canvas.draw();
+        // System.out.println(activeRoom.getBackgroundImage() + " active room");
         // System.out.println(event.getPosition());  // Testing and used to find asset coordinates
     }
 
     private void clickInventoryCollectableInteractions(MouseButtonEvent event){
-        if (check(event, activeRoom.getRoomInhabitants()) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
+        if (check(event, activeRoom) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
             // If the element under the click is a Collectable
             Collectable collectable = (Collectable) check(event, activeRoom);
+            System.out.println(collectable + " collectable in clickInventoryCollectable...");
             inventory.acquireCollectable(collectable, activeCursor);
+            System.out.println(activeRoom.getRoomInhabitants() + " activeRoom inhabitants");
             activeRoom.getRoomInhabitants().remove(collectable);
             // It is added to inventory if it isn't already collected
         }
@@ -105,9 +116,10 @@ public class HorrorGame {
         if (check(event, cursor) instanceof Collectable) {
             // If the Collectable is the cursor
             Collectable collectable = (Collectable) check(event, cursor);
-            if (check(event, activeRoom.getRoomInhabitants()) instanceof Item) {
+            if (check(event, activeRoom) instanceof Item) {
                 // ...and there is an Item underneath it...
                 Item item = (Item) check(event, activeRoom);
+                System.out.println(item + " item in clickCollectableItemInterface");
                 // Try to interact with the Item
                 if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
