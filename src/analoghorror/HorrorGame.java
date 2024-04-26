@@ -81,6 +81,7 @@ public class HorrorGame {
     private void clickLogic(MouseButtonEvent event){
         clickInventoryCollectableInteractions(event);
         clickCollectableItemInteractions(event);
+        canvas.draw();
         activeRoom.updateRoom();
         if (activeRoom != activeRoom.getActiveRoom()) {
             canvas.removeAll();
@@ -89,25 +90,24 @@ public class HorrorGame {
             canvas.add(inventory);
             canvas.add(cursor);
         }
-        canvas.draw();
-        // System.out.println(activeRoom.getBackgroundImage() + " active room");
-        // System.out.println(event.getPosition());  // Testing and used to find asset coordinates
+        // System.out.println(activeRoom.getBackgroundImage() + " active room");  // TESTING
+        // System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
     }
 
     private void clickInventoryCollectableInteractions(MouseButtonEvent event){
         if (check(event, activeRoom) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
             // If the element under the click is a Collectable
             Collectable collectable = (Collectable) check(event, activeRoom);
-            System.out.println(collectable + " collectable in clickInventoryCollectable...");
+            // System.out.println(collectable + " collectable in clickInventoryCollectable...");  // TESTING
             inventory.acquireCollectable(collectable, activeCursor);
-            System.out.println(activeRoom.getRoomInhabitants() + " activeRoom inhabitants");
+            // System.out.println(activeRoom.getRoomInhabitants() + " activeRoom inhabitants");  // TESTING
             activeRoom.getRoomInhabitants().remove(collectable);
             // It is added to inventory if it isn't already collected
         }
         else if (check(event, inventory) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
             // If the element under the click is a Collectable and in Inventory
             Collectable collectable = (Collectable) check(event, inventory);
-            inventory.assignCollectable(collectable, cursor, activeCursor, event);  // NEW
+            inventory.assignCollectable(collectable, cursor, activeCursor, event);
             // It becomes the cursor
         }
     }
@@ -119,7 +119,7 @@ public class HorrorGame {
             if (check(event, activeRoom) instanceof Item) {
                 // ...and there is an Item underneath it...
                 Item item = (Item) check(event, activeRoom);
-                System.out.println(item + " item in clickCollectableItemInterface");
+                // System.out.println(item + " item in clickCollectableItemInterface");  // TESTING
                 // Try to interact with the Item
                 if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
