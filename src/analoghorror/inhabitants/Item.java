@@ -98,6 +98,7 @@ public class Item extends Image{
             currentState = 0;
             throw new IllegalArgumentException("stateNumber exceeds itemStates");
         }
+        setImagePath(itemTextures.get(currentState));
     }
 
     /**

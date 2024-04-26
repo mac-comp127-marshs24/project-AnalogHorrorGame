@@ -21,7 +21,6 @@ public class GreenChairsRoom extends Room{
         this.hallway = hallway;
         primaryCursor =  hand;
         changeRoom = false;
-
         addRoomInhabitants();
     }
 
@@ -62,14 +61,22 @@ public class GreenChairsRoom extends Room{
     public void doorInteraction(){
         if (door.getState() == 1) {
             changeRoom = true;
+            // System.out.println("room change");  // TESTING
+            // setActiveRoom(hallway.getActiveRoom());  // Might be redundant structure
+            changeRoom();
         }
     }
    
     @Override
     public void updateRoom() {
+        doorInteraction();
+    }
+
+    private void changeRoom(){
         if(changeRoom){ //change changeRoom to a specific click event?
             //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
-            setActiveRoom(hallway);
+            hallway.resetActiveRoom();
+            setActiveRoom(hallway.getActiveRoom());
         }
     }
 

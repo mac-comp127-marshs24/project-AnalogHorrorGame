@@ -1,14 +1,7 @@
 package analoghorror.rooms;
 
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
-
-import java.util.List;
-
-import analoghorror.Inventory;
 import edu.macalester.graphics.*;
-import edu.macalester.graphics.Rectangle;
-import analoghorror.inhabitants.*;
 
 //room is a graphics group
 public abstract class Room extends GraphicsGroup{
@@ -18,14 +11,11 @@ public abstract class Room extends GraphicsGroup{
     protected boolean changeRoom;
 
     public Room(String backgroundImage) {
-        //have inventory in room
         super();
         roomInhabitants = new GraphicsGroup();
         this.backgroundImage = new Image(backgroundImage);
-        // add(this.roomInhabitants);
         add(this.backgroundImage);
         this.activeRoom = this;
-        // this.changeRoom = false;
     }
 
     //add items to item graphics group in room so not on same "layer" as bg
@@ -33,6 +23,11 @@ public abstract class Room extends GraphicsGroup{
 
     public GraphicsGroup getRoomInhabitants() {
         return roomInhabitants;
+    }
+
+    public void resetActiveRoom(){
+        activeRoom = this;
+        changeRoom = false;
     }
 
     public Room getActiveRoom(){
@@ -49,6 +44,4 @@ public abstract class Room extends GraphicsGroup{
     public Image getBackgroundImage(){
         return backgroundImage;
     }
-
-    //temp from horrorgame, remove
 }

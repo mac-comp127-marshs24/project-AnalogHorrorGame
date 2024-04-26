@@ -1,13 +1,9 @@
 package analoghorror.rooms;
-import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.events.*;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import analoghorror.inhabitants.*;
-import edu.macalester.graphics.*;
 
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
@@ -20,23 +16,17 @@ public class HallwayRoom extends Room{
     Item sonic;
     
 
-    public HallwayRoom(GreenChairsRoom classroom, Collectable hand, String backgroundImage){
+    public HallwayRoom(Collectable hand, String backgroundImage){
         super(backgroundImage);
-        this.classroom = classroom;
         primaryCursor = hand;
         changeRoom = false;
-        // this.roomInhabitants = new GraphicsGroup();
-        // this.add(background)/;
-
         addRoomInhabitants();
-        doorInteraction();
-        
     }
 
     public void addRoomInhabitants(){    
         box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
         box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
-        this.roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
+        this.roomInhabitants.add(box);  // Add to this.roomInhabitants
 
         key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key02");
         this.roomInhabitants.add(key);
@@ -65,29 +55,11 @@ public class HallwayRoom extends Room{
         add(roomInhabitants);
     }
 
-    //how it'd probably look in horror game?
-    // public static void main(String[] args) {
-    //     CanvasWindow temp = new CanvasWindow("temp", 854, 400);
-    //     GreenChairsRoom classroom1 =  new GreenChairsRoom();
-    //     HallwayRoom hallway = new HallwayRoom(classroom1);
-    //     temp.add(hallway);
-    //     temp.onClick((event)->
-    //     {
-    //         if(door == check(event, roomInhabitants)){
-    //             changeRoom = true;
-    //             System.out.println("new room!");
-    //             hallway.setActiveRoom(classroom1);  //this would most likely be a call to hallway.updateRoom()? cant do here bc main static             
-    //         }
-        
-    //     }
-    //     );
-    // }
-
     public void doorInteraction(){
         if (door.getState() == 1) {
             changeRoom = true;
-            System.out.println("room change");
-            setActiveRoom(classroom.getActiveRoom());
+            // System.out.println("room change");  // TESTING
+            // setActiveRoom(classroom.getActiveRoom());  // Might be redundant structure
             changeRoom();
         }
     }
@@ -95,15 +67,18 @@ public class HallwayRoom extends Room{
     @Override
     public void updateRoom() {
         doorInteraction();
-       
     }
 
     private void changeRoom(){
         if(changeRoom){ //change changeRoom to a specific click event?
             //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
             setActiveRoom(classroom.getActiveRoom());
+            door.changeState(0);
         }
     }
     
+    public void addClassroom(GreenChairsRoom classroom){
+        this.classroom = classroom;
+    }
 
 }

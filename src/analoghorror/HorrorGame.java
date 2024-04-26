@@ -35,17 +35,17 @@ public class HorrorGame {
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
 
-
         hand = new Collectable(0, 0, "assets" + File.separator + "hand.png", "hand");
         activeCursor = new Cursor(hand);
         activeCursor.resetCursor();
         cursor.add(activeCursor);
 
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
+        hallway = new HallwayRoom(hand,"assets" + File.separator + "hall.png");
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
         lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "templecturehall.jpg");
         windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "tempwindowroom.jpg");
-        hallway = new HallwayRoom(greenChairsRoom, hand,"assets" + File.separator + "hall.png");
+        hallway.addClassroom(greenChairsRoom);
 
         activeRoom = hallway.getActiveRoom();
 
@@ -53,7 +53,6 @@ public class HorrorGame {
 
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
-
 
         canvas.add(activeRoom);
         canvas.add(inventory);
