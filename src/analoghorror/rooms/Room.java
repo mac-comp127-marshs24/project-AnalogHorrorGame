@@ -1,11 +1,18 @@
 package analoghorror.rooms;
 
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
+
+import java.util.List;
+
+import analoghorror.Inventory;
 import edu.macalester.graphics.*;
+import edu.macalester.graphics.Rectangle;
+import analoghorror.inhabitants.*;
 
 //room is a graphics group
 public abstract class Room extends GraphicsGroup{
-    protected GraphicsGroup roomInhabitants; 
+    protected static GraphicsGroup roomInhabitants; 
     protected Image backgroundImage;
     protected Room activeRoom;
     protected boolean changeRoom;
@@ -36,6 +43,7 @@ public abstract class Room extends GraphicsGroup{
         this.activeRoom = activeRoom;
     }
 
+    public abstract void addRoomInhabitants();
     public abstract void updateRoom();
 
     //temp from horrorgame, remove
