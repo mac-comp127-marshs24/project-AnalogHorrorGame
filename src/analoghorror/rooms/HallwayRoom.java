@@ -29,6 +29,7 @@ public class HallwayRoom extends Room{
         // this.add(background)/;
 
         addRoomInhabitants();
+        doorInteraction();
         
     }
 
@@ -81,6 +82,14 @@ public class HallwayRoom extends Room{
     //     }
     //     );
     // }
+
+    public void doorInteraction(){
+        if (door.getState() == 1) {
+            changeRoom = true;
+            System.out.println("room change");
+            updateRoom();
+        }
+    }
     
     @Override
     public void updateRoom() {

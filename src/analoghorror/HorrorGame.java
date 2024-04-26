@@ -45,11 +45,9 @@ public class HorrorGame {
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
         lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "templecturehall.jpg");
         windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "tempwindowroom.jpg");
-        
         hallway = new HallwayRoom(greenChairsRoom, hand,"assets" + File.separator + "hall.png");
 
         activeRoom = hallway;
-
 
         //activeRoom = new HallwayRoom(new GreenChairsRoom("assets" + File.separator + "hall.png"), hand,"assets" + File.separator + "hall.png");
 
