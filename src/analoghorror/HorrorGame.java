@@ -81,6 +81,7 @@ public class HorrorGame {
     private void clickLogic(MouseButtonEvent event){
         clickInventoryCollectableInteractions(event);
         clickCollectableItemInteractions(event);
+        activeRoom.updateRoom();
         // System.out.println(event.getPosition());  // Testing and used to find asset coordinates
     }
 
