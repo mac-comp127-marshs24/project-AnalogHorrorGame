@@ -24,6 +24,8 @@ public class HorrorGame {
     Room activeRoom;
     HallwayRoom hallway;
     GreenChairsRoom greenChairsRoom;
+    LectureHallRoom lectureHallRoom;
+    WindowedClassRoom windowedClassRoom;
 
     public static void main(String[] args) {
         new HorrorGame();
@@ -41,6 +43,9 @@ public class HorrorGame {
 
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
+        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "templecturehall.jpg");
+        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "tempwindowroom.jpg");
+        
         hallway = new HallwayRoom(greenChairsRoom, hand,"assets" + File.separator + "hall.png");
 
         activeRoom = hallway;

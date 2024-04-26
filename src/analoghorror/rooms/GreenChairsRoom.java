@@ -13,6 +13,13 @@ public class GreenChairsRoom extends Room{
         changeRoom = false;
     }
 
+    //add items to roomInhabitants here
+	@Override
+	public void addRoomInhabitants() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'addRoomInhabitants'");
+	}
+   
     @Override
     public void updateRoom() {
         if(changeRoom){ //change changeRoom to a specific click event?
@@ -21,11 +28,5 @@ public class GreenChairsRoom extends Room{
         }
     }
 
-    //add items to roomInhabitants here
-	@Override
-	public void addRoomInhabitants() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'addRoomInhabitants'");
-	}
-   
+    
 }
