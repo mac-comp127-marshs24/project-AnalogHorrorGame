@@ -56,8 +56,11 @@ public class HallwayRoom extends Room{
     }
 
     public void doorInteraction(){
+        System.out.println(door.getState() + " state");
+        System.out.println(changeRoom + " before conditional");
         if (door.getState() == 1) {
             changeRoom = true;
+            System.out.println(changeRoom + " after conditional");
             // System.out.println("room change");  // TESTING
             // setActiveRoom(classroom.getActiveRoom());  // Might be redundant structure
             changeRoom();
@@ -72,6 +75,7 @@ public class HallwayRoom extends Room{
     private void changeRoom(){
         if(changeRoom){ //change changeRoom to a specific click event?
             //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
+            classroom.resetActiveRoom();
             setActiveRoom(classroom.getActiveRoom());
             door.changeState(0);
         }

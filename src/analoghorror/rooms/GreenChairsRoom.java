@@ -77,6 +77,7 @@ public class GreenChairsRoom extends Room{
             //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
             hallway.resetActiveRoom();
             setActiveRoom(hallway.getActiveRoom());
+            door.changeState(0);
         }
     }
 
