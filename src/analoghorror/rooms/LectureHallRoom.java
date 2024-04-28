@@ -65,14 +65,21 @@ public class LectureHallRoom extends Room {
     public void doorInteraction(){
         if (door.getState() == 1) {
             changeRoom = true;
+            changeRoom();
         }
     }
 
     @Override
     public void updateRoom() {
+        doorInteraction();
+    }
+
+    private void changeRoom(){
         if(changeRoom){ //change changeRoom to a specific click event?
             //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
-            setActiveRoom(hallway);
+            hallway.resetActiveRoom();
+            setActiveRoom(hallway.getActiveRoom());
+            door.changeState(0);
         }
     }
 

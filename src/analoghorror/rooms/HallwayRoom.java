@@ -8,10 +8,16 @@ import analoghorror.inhabitants.*;
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
     Collectable primaryCursor;
-    GreenChairsRoom classroom;
+    GreenChairsRoom chairClassroom;
+    LectureHallRoom lectureHallRoom;
+    WindowedClassRoom windowedClassRoom;
     Item box;
     Collectable key;
-    Item door;
+
+    Item doorA;
+    Item doorB;
+    Item doorC;
+
     Collectable card;
     Item sonic;
     
@@ -32,9 +38,20 @@ public class HallwayRoom extends Room{
         this.roomInhabitants.add(key);
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
-        door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
-        door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
-        this.roomInhabitants.add(door);
+        /*Doors */
+        doorA = new Item(690, -45, "assets" + File.separator + "corridorDoorAClosed.png", false, 2);
+        doorA.setStatePaths(Arrays.asList("assets" + File.separator + "corridorDoorAClosed.png", "assets" + File.separator + "corridorDoorAOpen.png"));
+        this.roomInhabitants.add(doorA);
+
+        doorB = new Item(540, 60, "assets" + File.separator + "corridorDoorAClosed.png", false, 2);
+        doorB.setStatePaths(Arrays.asList("assets" + File.separator + "corridorDoorAClosed.png", "assets" + File.separator + "corridorDoorAOpen.png"));
+        doorB.setMaxHeight(300);
+        this.roomInhabitants.add(doorB);
+
+        doorC = new Item(340, 109, "assets" + File.separator + "corridorDoorAClosed.png", false, 2);
+        doorC.setStatePaths(Arrays.asList("assets" + File.separator + "corridorDoorAClosed.png", "assets" + File.separator + "corridorDoorAOpen.png"));
+        doorC.setMaxHeight(200);
+        this.roomInhabitants.add(doorC);
 
         sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
         sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
@@ -45,24 +62,34 @@ public class HallwayRoom extends Room{
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card02");
         this.roomInhabitants.add(card);
-        door.addValidInitCollectable(card);
-        
-        door.addValidInitCollectable(key);
 
         box.addValidSubCollectable(primaryCursor);
-        door.addValidSubCollectable(primaryCursor);
+
+        /*Door key interaction */
+        doorA.addValidInitCollectable(card);
+        doorA.addValidInitCollectable(key);
+
+        doorB.addValidInitCollectable(card);
+        doorB.addValidInitCollectable(key);
+
+        doorC.addValidInitCollectable(card);
+        doorC.addValidInitCollectable(key);
+
+        doorA.addValidSubCollectable(primaryCursor);
+        doorB.addValidSubCollectable(primaryCursor);
+        doorC.addValidSubCollectable(primaryCursor);
 
         add(roomInhabitants);
     }
 
     public void doorInteraction(){
-        System.out.println(door.getState() + " state");
+        System.out.println(doorA.getState() + " state");
         System.out.println(changeRoom + " before conditional");
-        if (door.getState() == 1) {
+        if (doorA.getState() == 1 || doorB.getState() == 1 || doorC.getState() == 1) {
             changeRoom = true;
             System.out.println(changeRoom + " after conditional");
             // System.out.println("room change");  // TESTING
-            // setActiveRoom(classroom.getActiveRoom());  // Might be redundant structure
+            // setActiveRoom(chairClassroom.getActiveRoom());  // Might be redundant structure
             changeRoom();
         }
     }
@@ -73,16 +100,34 @@ public class HallwayRoom extends Room{
     }
 
     private void changeRoom(){
-        if(changeRoom){ //change changeRoom to a specific click event?
-            //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
-            classroom.resetActiveRoom();
-            setActiveRoom(classroom.getActiveRoom());
-            door.changeState(0);
+        if(changeRoom && doorA.getState() == 1){ 
+            chairClassroom.resetActiveRoom();
+            setActiveRoom(chairClassroom.getActiveRoom());
+            doorA.changeState(0);
+        }
+
+        else if(changeRoom && doorB.getState() == 1){
+            lectureHallRoom.resetActiveRoom();
+            setActiveRoom(lectureHallRoom.getActiveRoom());
+            doorB.changeState(0);
+        }
+
+        else if(changeRoom && doorC.getState() == 1){
+            windowedClassRoom.resetActiveRoom();
+            setActiveRoom(windowedClassRoom.getActiveRoom());
+            doorC.changeState(0);
         }
     }
     
-    public void addClassroom(GreenChairsRoom classroom){
-        this.classroom = classroom;
+    public void addChairClassroom(GreenChairsRoom chairClassroom){
+        this.chairClassroom = chairClassroom;
     }
 
+    public void addWindowedClassroom(WindowedClassRoom windowedClassRoom){
+        this.windowedClassRoom = windowedClassRoom;
+    }
+
+    public void addLectureHall(LectureHallRoom lectureHallRoom){
+        this.lectureHallRoom = lectureHallRoom;
+    }
 }

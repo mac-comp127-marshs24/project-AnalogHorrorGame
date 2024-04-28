@@ -45,7 +45,9 @@ public class HorrorGame {
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
         lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "templecturehall.jpg");
         windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "tempwindowroom.jpg");
-        hallway.addClassroom(greenChairsRoom);
+        hallway.addChairClassroom(greenChairsRoom);
+        hallway.addLectureHall(lectureHallRoom);
+        hallway.addWindowedClassroom(windowedClassRoom);
 
         activeRoom = hallway.getActiveRoom();
 
@@ -90,7 +92,7 @@ public class HorrorGame {
             canvas.add(cursor);
         }
         // System.out.println(activeRoom.getBackgroundImage() + " active room");  // TESTING
-        // System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
+        System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
     }
 
     private void clickInventoryCollectableInteractions(MouseButtonEvent event){
