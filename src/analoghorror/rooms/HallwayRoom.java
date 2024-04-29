@@ -35,13 +35,13 @@ public class HallwayRoom extends Room{
     }
 
     public void addRoomInhabitants(){    
-        box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
-        box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
-        this.roomInhabitants.add(box);  // Add to this.roomInhabitants
+        // box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
+        // box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
+        // this.roomInhabitants.add(box);  // Add to this.roomInhabitants
 
-        key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key02");
-        this.roomInhabitants.add(key);
-        box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
+        // key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key02");
+        // this.roomInhabitants.add(key);
+        // box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
         /*Doors */
         doorA = new Item(660, -30, "assets" + File.separator + "Door1Closed.png", false, 2);
@@ -57,27 +57,27 @@ public class HallwayRoom extends Room{
         doorC.setMaxHeight(200);
         this.roomInhabitants.add(doorC);
 
-        sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
-        sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
-        "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
-        this.roomInhabitants.add(sonic);
-        sonic.addValidInitCollectable(primaryCursor);
-        sonic.addValidSubCollectable(primaryCursor);
+        // sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
+        // sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
+        // "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
+        // this.roomInhabitants.add(sonic);
+        // sonic.addValidInitCollectable(primaryCursor);
+        // sonic.addValidSubCollectable(primaryCursor);
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card02");
         this.roomInhabitants.add(card);
 
-        box.addValidSubCollectable(primaryCursor);
+        // box.addValidSubCollectable(primaryCursor);
 
         /*Door key interaction */
         doorA.addValidInitCollectable(card);
-        doorA.addValidInitCollectable(key);
+        // doorA.addValidInitCollectable(key);
 
         doorB.addValidInitCollectable(card);
-        doorB.addValidInitCollectable(key);
+        // doorB.addValidInitCollectable(key);
 
         doorC.addValidInitCollectable(card);
-        doorC.addValidInitCollectable(key);
+        // doorC.addValidInitCollectable(key);
 
         doorA.addValidSubCollectable(primaryCursor);
         doorB.addValidSubCollectable(primaryCursor);
@@ -102,13 +102,13 @@ public class HallwayRoom extends Room{
     public void updateRoom(GraphicsGroup displayText) {
         // System.out.println(displayText + " dt");
         // System.out.println(box.getState() +" bs");
-        if (displayText.getWidth() != 0) {
-            displayText.removeAll();
-        }
-        else if (box.getState() == 1 && hasTextBeenShown == false) {
-            displayText.add(new Image("assets" + File.separator + "sampleText.png"));
-            hasTextBeenShown = true;
-        }
+        // if (displayText.getWidth() != 0) {
+        //     displayText.removeAll();
+        // }
+        // else if (box.getState() == 1 && hasTextBeenShown == false) {
+        //     displayText.add(new Image("assets" + File.separator + "sampleText.png"));
+        //     hasTextBeenShown = true;
+        // }
         doorInteraction();
     }
 
