@@ -39,7 +39,7 @@ public abstract class Room extends GraphicsGroup{
     }
 
     public abstract void addRoomInhabitants();
-    public abstract void updateRoom();
+    public abstract void updateRoom(GraphicsGroup displayText);
 
     public Image getBackgroundImage(){
         return backgroundImage;

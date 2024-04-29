@@ -1,13 +1,10 @@
 package analoghorror.rooms;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.events.*;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import analoghorror.inhabitants.*;
-import edu.macalester.graphics.*;
 
 public class WindowedClassRoom extends Room{
     Collectable primaryCursor;
@@ -69,7 +66,7 @@ public class WindowedClassRoom extends Room{
     }
 
     @Override
-    public void updateRoom() {
+    public void updateRoom(GraphicsGroup displayText) {
         doorInteraction();
     }
 

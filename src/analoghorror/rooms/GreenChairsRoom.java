@@ -68,7 +68,7 @@ public class GreenChairsRoom extends Room{
     }
    
     @Override
-    public void updateRoom() {
+    public void updateRoom(GraphicsGroup displayText) {
         doorInteraction();
     }
 
