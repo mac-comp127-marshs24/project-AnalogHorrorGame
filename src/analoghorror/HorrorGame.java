@@ -105,6 +105,7 @@ public class HorrorGame {
         if (check(event, activeRoom) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
             // If the element under the click is a Collectable
             Collectable collectable = (Collectable) check(event, activeRoom);
+            collectable.changePathOnCollection();
             // System.out.println(collectable + " collectable in clickInventoryCollectable...");  // TESTING
             inventory.acquireCollectable(collectable, activeCursor);
             // System.out.println(activeRoom.getRoomInhabitants() + " activeRoom inhabitants");  // TESTING
