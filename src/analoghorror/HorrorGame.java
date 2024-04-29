@@ -95,6 +95,7 @@ public class HorrorGame {
             canvas.add(activeRoom);
             canvas.add(inventory);
             canvas.add(cursor);
+            canvas.add(displayText);
         }
         // System.out.println(activeRoom.getBackgroundImage() + " active room");  // TESTING
         System.out.println(event.getPosition());  // TESTING and used to find asset coordinates

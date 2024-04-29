@@ -88,11 +88,11 @@ public class HallwayRoom extends Room{
     }
 
     public void doorInteraction(){
-        System.out.println(doorA.getState() + " state");
-        System.out.println(changeRoom + " before conditional");
+        // System.out.println(doorA.getState() + " state");
+        // System.out.println(changeRoom + " before conditional");
         if (doorA.getState() == 1 || doorB.getState() == 1 || doorC.getState() == 1) {
             changeRoom = true;
-            System.out.println(changeRoom + " after conditional");
+            // System.out.println(changeRoom + " after conditional");
             // System.out.println("room change");  // TESTING
             // setActiveRoom(chairClassroom.getActiveRoom());  // Might be redundant structure
             changeRoom();
@@ -101,6 +101,8 @@ public class HallwayRoom extends Room{
     
     @Override
     public void updateRoom(GraphicsGroup displayText) {
+        // System.out.println(displayText + " dt");
+        // System.out.println(box.getState() +" bs");
         if (displayText.getWidth() != 0) {
             displayText.removeAll();
         }
@@ -108,7 +110,6 @@ public class HallwayRoom extends Room{
             displayText.add(new Image("assets" + File.separator + "sampleText.png"));
             hasTextBeenShown = true;
         }
-        
         doorInteraction();
     }
 
