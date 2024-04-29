@@ -10,11 +10,11 @@ public class GreenChairsRoom extends Room{
     HallwayRoom hallway;
 
     //TODO: Replace with actual items
-    Item box;
-    Collectable key;
+    Item ratCage;
+    // Collectable key;
     Item door;
-    Collectable card;
-    Item sonic;
+    // Collectable card;
+    // Item sonic;
 
     public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage) {
         super(backgroundImage);
@@ -27,33 +27,35 @@ public class GreenChairsRoom extends Room{
     //add items to roomInhabitants here
 	@Override
 	public void addRoomInhabitants() {
-		box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
-        box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
-        this.roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
+		ratCage = new Item(527, 201, "assets" + File.separator + "ratCageSmallRat.png", true, 4);
+        ratCage.setStatePaths(Arrays.asList("assets" + File.separator + "ratCageSmallRat.png", "assets" + File.separator + "ratCageBigRat.png", "assets"
+         + File.separator + "ratCageHugeRat.png", "assets" + File.separator + "ratCageEmpty.png"));
+        this.roomInhabitants.add(ratCage);  // Add to "Room" (GraphicsGroup for now)
 
-        key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
-        this.roomInhabitants.add(key);
-        box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
+        // key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
+        // this.roomInhabitants.add(key);
+        // ratCage.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
         door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         this.roomInhabitants.add(door);
 
-        sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
-        sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
-        "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
-        this.roomInhabitants.add(sonic);
-        sonic.addValidInitCollectable(primaryCursor);
-        sonic.addValidSubCollectable(primaryCursor);
+        // sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
+        // sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
+        // "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
+        // this.roomInhabitants.add(sonic);
+        // sonic.addValidInitCollectable(primaryCursor);
+        // sonic.addValidSubCollectable(primaryCursor);
 
-        card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
-        this.roomInhabitants.add(card);
-        door.addValidInitCollectable(card);
-        
-        door.addValidInitCollectable(key);
+        // card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
+        // this.roomInhabitants.add(card);
+        ratCage.addValidInitCollectable(primaryCursor);
+        ratCage.addValidSubCollectable(primaryCursor);
+        door.addValidInitCollectable(primaryCursor);
+        door.addValidInitCollectable(primaryCursor);
 
-        box.addValidSubCollectable(primaryCursor);
-        door.addValidSubCollectable(primaryCursor);
+        // box.addValidSubCollectable(primaryCursor);
+        // door.addValidSubCollectable(primaryCursor);
 
         add(roomInhabitants);
 	}
