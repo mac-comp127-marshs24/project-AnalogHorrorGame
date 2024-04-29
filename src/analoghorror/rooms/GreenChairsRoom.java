@@ -11,8 +11,9 @@ public class GreenChairsRoom extends Room{
 
     //TODO: Replace with actual items
     Item ratCage;
-    // Collectable key;
+    Collectable poisonedRat;
     Item door;
+    boolean poisonedRatInteraction;
     // Collectable card;
     // Item sonic;
 
@@ -21,21 +22,20 @@ public class GreenChairsRoom extends Room{
         this.hallway = hallway;
         primaryCursor =  hand;
         changeRoom = false;
+        poisonedRatInteraction = false;
         addRoomInhabitants();
     }
 
     //add items to roomInhabitants here
 	@Override
 	public void addRoomInhabitants() {
-		ratCage = new Item(527, 201, "assets" + File.separator + "ratCageSmallRat.png", true, 4);
+		ratCage = new Item(500, 201, "assets" + File.separator + "ratCageSmallRat.png", true, 4);
         ratCage.setStatePaths(Arrays.asList("assets" + File.separator + "ratCageSmallRat.png", "assets" + File.separator + "ratCageBigRat.png", "assets"
          + File.separator + "ratCageHugeRat.png", "assets" + File.separator + "ratCageEmpty.png"));
         this.roomInhabitants.add(ratCage);  // Add to "Room" (GraphicsGroup for now)
 
-        // key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
+        poisonedRat = new Collectable(500, 201, "assets" + File.separator + "looseRat.png", "rat01");
         // this.roomInhabitants.add(key);
-        // ratCage.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
-
         door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         this.roomInhabitants.add(door);
@@ -71,6 +71,10 @@ public class GreenChairsRoom extends Room{
    
     @Override
     public void updateRoom(GraphicsGroup displayText) {
+        if (ratCage.getState() == 3 && poisonedRatInteraction == false) {
+            this.roomInhabitants.add(poisonedRat);
+            poisonedRatInteraction = true;
+        }
         doorInteraction();
     }
 
