@@ -70,7 +70,7 @@ public class LectureHallRoom extends Room {
     }
 
     @Override
-    public void updateRoom() {
+    public void updateRoom(GraphicsGroup displayText) {
         doorInteraction();
     }
 

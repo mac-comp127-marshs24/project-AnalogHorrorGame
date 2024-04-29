@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Arrays;
 
 import analoghorror.inhabitants.*;
+import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
@@ -20,12 +22,15 @@ public class HallwayRoom extends Room{
 
     Collectable card;
     Item sonic;
+
+    boolean hasTextBeenShown;
     
 
     public HallwayRoom(Collectable hand, String backgroundImage){
         super(backgroundImage);
         primaryCursor = hand;
         changeRoom = false;
+        hasTextBeenShown = false;
         addRoomInhabitants();
     }
 
@@ -95,7 +100,15 @@ public class HallwayRoom extends Room{
     }
     
     @Override
-    public void updateRoom() {
+    public void updateRoom(GraphicsGroup displayText) {
+        if (displayText.getWidth() != 0) {
+            displayText.removeAll();
+        }
+        else if (box.getState() == 1 && hasTextBeenShown == false) {
+            displayText.add(new Image("assets" + File.separator + "sampleText.png"));
+            hasTextBeenShown = true;
+        }
+        
         doorInteraction();
     }
 

@@ -18,8 +18,10 @@ public class HorrorGame {
     GraphicsObject cursorDefault;
     GraphicsGroup cursor;
 
-    Inventory inventory;
+    GraphicsGroup displayText;
+    
     Image background;
+    Inventory inventory;
 
     Room activeRoom;
     HallwayRoom hallway;
@@ -40,6 +42,8 @@ public class HorrorGame {
         activeCursor.resetCursor();
         cursor.add(activeCursor);
 
+        displayText = new GraphicsGroup();
+
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
         hallway = new HallwayRoom(hand,"assets" + File.separator + "hall.png");
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
@@ -59,6 +63,7 @@ public class HorrorGame {
         canvas.add(activeRoom);
         canvas.add(inventory);
         canvas.add(cursor);
+        canvas.add(displayText);
         canvas.draw();
         gameLogic();
     }
@@ -83,7 +88,7 @@ public class HorrorGame {
         clickInventoryCollectableInteractions(event);
         clickCollectableItemInteractions(event);
         canvas.draw();
-        activeRoom.updateRoom();
+        activeRoom.updateRoom(displayText);
         if (activeRoom != activeRoom.getActiveRoom()) {
             canvas.removeAll();
             activeRoom = activeRoom.getActiveRoom();
