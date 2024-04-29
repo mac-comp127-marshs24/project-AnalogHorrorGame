@@ -45,9 +45,9 @@ public class HorrorGame {
         displayText = new GraphicsGroup();
 
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
-        hallway = new HallwayRoom(hand,"assets" + File.separator + "hall.png");
+        hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png");
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
-        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "templecturehall.jpg");
+        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHall.png");
         windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "tempwindowroom.jpg");
         hallway.addChairClassroom(greenChairsRoom);
         hallway.addLectureHall(lectureHallRoom);
