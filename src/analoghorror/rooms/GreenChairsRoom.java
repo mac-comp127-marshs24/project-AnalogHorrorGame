@@ -14,6 +14,7 @@ public class GreenChairsRoom extends Room{
     Collectable poisonedRat;
     Item door;
     boolean poisonedRatInteraction;
+    boolean roomScare;
     // Collectable card;
     // Item sonic;
 
@@ -23,6 +24,7 @@ public class GreenChairsRoom extends Room{
         primaryCursor =  hand;
         changeRoom = false;
         poisonedRatInteraction = false;
+        roomScare = false;
         addRoomInhabitants();
     }
 
@@ -50,6 +52,10 @@ public class GreenChairsRoom extends Room{
 
     public void doorInteraction(){
         if (door.getState() == 1) {
+            if (poisonedRatInteraction) {
+                super.setBackgroundImage("assets" + File.separator + "roombaseAlternate.png");
+                roomScare = true;
+            }
             changeRoom = true;
             // System.out.println("room change");  // TESTING
             // setActiveRoom(hallway.getActiveRoom());  // Might be redundant structure
@@ -63,6 +69,7 @@ public class GreenChairsRoom extends Room{
             this.roomInhabitants.add(poisonedRat);
             poisonedRatInteraction = true;
         }
+
         doorInteraction();
     }
 

@@ -44,4 +44,8 @@ public abstract class Room extends GraphicsGroup{
     public Image getBackgroundImage(){
         return backgroundImage;
     }
+
+    public void setBackgroundImage(String path){
+        backgroundImage.setImagePath(path);
+    }
 }
