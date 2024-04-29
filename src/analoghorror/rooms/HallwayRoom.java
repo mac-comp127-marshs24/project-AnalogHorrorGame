@@ -44,13 +44,12 @@ public class HallwayRoom extends Room{
         box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
 
         /*Doors */
-        doorA = new Item(690, 0, "assets" + File.separator + "Door1Closed.png", false, 2);
+        doorA = new Item(660, -30, "assets" + File.separator + "Door1Closed.png", false, 2);
         doorA.setStatePaths(Arrays.asList("assets" + File.separator + "Door1Closed.png", "assets" + File.separator + "Door1.png"));
         this.roomInhabitants.add(doorA);
 
-        doorB = new Item(540, 60, "assets" + File.separator + "corridorDoorAClosed.png", false, 2);
-        doorB.setStatePaths(Arrays.asList("assets" + File.separator + "corridorDoorAClosed.png", "assets" + File.separator + "corridorDoorAOpen.png"));
-        doorB.setMaxHeight(300);
+        doorB = new Item(528, 130, "assets" + File.separator + "Door2Closed.png", false, 2);
+        doorB.setStatePaths(Arrays.asList("assets" + File.separator + "Door2Closed.png", "assets" + File.separator + "Door2.png"));
         this.roomInhabitants.add(doorB);
 
         doorC = new Item(340, 109, "assets" + File.separator + "corridorDoorAClosed.png", false, 2);
