@@ -52,9 +52,8 @@ public class HallwayRoom extends Room{
         doorB.setStatePaths(Arrays.asList("assets" + File.separator + "Door2Closed.png", "assets" + File.separator + "Door2.png"));
         this.roomInhabitants.add(doorB);
 
-        doorC = new Item(340, 109, "assets" + File.separator + "corridorDoorAClosed.png", false, 2);
-        doorC.setStatePaths(Arrays.asList("assets" + File.separator + "corridorDoorAClosed.png", "assets" + File.separator + "corridorDoorAOpen.png"));
-        doorC.setMaxHeight(200);
+        doorC = new Item(288, 85, "assets" + File.separator + "Door3Closed.png", false, 2);
+        doorC.setStatePaths(Arrays.asList("assets" + File.separator + "Door3Closed.png", "assets" + File.separator + "Door3.png"));
         this.roomInhabitants.add(doorC);
 
         sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
