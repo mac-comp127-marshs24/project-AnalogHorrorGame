@@ -4,11 +4,13 @@ import edu.macalester.graphics.GraphicsGroup;
 import java.io.File;
 import java.util.Arrays;
 
+import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
 
 public class WindowedClassRoom extends Room{
     Collectable primaryCursor;
     HallwayRoom hallway;
+    Inventory inventory;
 
     //TODO: Replace with actual items
     Item box;
@@ -16,10 +18,12 @@ public class WindowedClassRoom extends Room{
     Collectable poison;
     Collectable card;
     Item sonic;
+    
 
-    public WindowedClassRoom(HallwayRoom hallway, Collectable hand, String backgroundImage) {
+    public WindowedClassRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
         super(backgroundImage);
         this.hallway = hallway;
+        this.inventory = inventory;
         primaryCursor =  hand;
         changeRoom = false;
         addRoomInhabitants();
@@ -41,6 +45,7 @@ public class WindowedClassRoom extends Room{
         roomInhabitants.add(card);
         door.addValidInitCollectable(card);
         box.addValidInitCollectable(card);
+        //box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
 
         box.addValidSubCollectable(primaryCursor);
         door.addValidSubCollectable(primaryCursor);

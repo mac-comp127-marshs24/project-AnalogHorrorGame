@@ -2,12 +2,14 @@ package analoghorror.rooms;
 import java.io.File;
 import java.util.Arrays;
 
+import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
 
 public class GreenChairsRoom extends Room{
     Collectable primaryCursor;
     HallwayRoom hallway;
+    Inventory inventory;
 
     //TODO: Replace with actual items
     Item ratCage;
@@ -19,9 +21,10 @@ public class GreenChairsRoom extends Room{
     // Collectable card;
     // Item sonic;
 
-    public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage) {
+    public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
         super(backgroundImage);
         this.hallway = hallway;
+        this.inventory = inventory;
         primaryCursor =  hand;
         changeRoom = false;
         poisonedRatInteraction = false;

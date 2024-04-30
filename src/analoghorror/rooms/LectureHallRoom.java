@@ -4,11 +4,13 @@ import edu.macalester.graphics.GraphicsGroup;
 import java.io.File;
 import java.util.Arrays;
 
+import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
 
 public class LectureHallRoom extends Room {
     Collectable primaryCursor;
     HallwayRoom hallway;
+    Inventory inventory;
 
     //TODO: Replace with actual items
     Item box;
@@ -17,9 +19,10 @@ public class LectureHallRoom extends Room {
     Collectable card;
     Item sonic;
 
-    public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage) {
+    public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
         super(backgroundImage);
         this.hallway = hallway;
+        this.inventory = inventory;
         primaryCursor =  hand;
         changeRoom = false;
 
