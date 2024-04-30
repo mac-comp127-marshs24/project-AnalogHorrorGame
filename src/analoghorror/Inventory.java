@@ -145,7 +145,7 @@ public class Inventory extends GraphicsGroup{
         return inventoryList.contains(collectable);
     }
 
-    public Collectable getID(String id){
+    public Collectable getCollectableWithID(String id){
         for (Collectable collectable : inventoryList) {
             if(!collectable.getIDString().equals(id)){
                 return collectable;
