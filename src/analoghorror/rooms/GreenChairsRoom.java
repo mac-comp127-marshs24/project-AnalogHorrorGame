@@ -12,6 +12,7 @@ public class GreenChairsRoom extends Room{
     //TODO: Replace with actual items
     Item ratCage;
     Collectable poisonedRat;
+    Collectable windowBoxKey;
     Item door;
     boolean poisonedRatInteraction;
     boolean roomScare;
@@ -41,6 +42,10 @@ public class GreenChairsRoom extends Room{
 
         poisonedRat = new Collectable(500, 201, "assets" + File.separator + "looseRat.png", "rat01");
         poisonedRat.setInventoryPath("assets" + File.separator + "key.png");
+
+        windowBoxKey = new Collectable(100, 352, "assets" + File.separator + "keyOnFloor.png", "windowBoxKey");
+        windowBoxKey.setInventoryPath("assets" + File.separator + "brassKey.png");
+        this.roomInhabitants.add(windowBoxKey);
 
         ratCage.addValidInitCollectable(primaryCursor);
         ratCage.addValidSubCollectable(primaryCursor);
