@@ -18,20 +18,23 @@ public class WindowedClassRoom extends Room{
     Collectable poison;
     Collectable card;
     Item sonic;
+
+    boolean addedPoison;
     
 
     public WindowedClassRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
         super(backgroundImage);
         this.hallway = hallway;
         this.inventory = inventory;
-        primaryCursor =  hand;
+        primaryCursor = hand;
         changeRoom = false;
         addRoomInhabitants();
+        addedPoison = false;
     }
 
     @Override
     public void addRoomInhabitants() {
-        box = new Item(400, 280, "assets" + File.separator + "boxClosed.png", false, 2);
+        box = new Item(400, 280, "assets" + File.separator + "boxClosed.png", true, 2);
         box.setStatePaths(Arrays.asList("assets" + File.separator + "boxClosed.png", "assets" + File.separator + "boxOpen.png"));
         roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
 
@@ -48,6 +51,7 @@ public class WindowedClassRoom extends Room{
 
         box.addValidSubCollectable(primaryCursor);
         door.addValidSubCollectable(primaryCursor);
+        door.addValidInitCollectable(primaryCursor);
 
         this.add(roomInhabitants);
     }
@@ -62,13 +66,14 @@ public class WindowedClassRoom extends Room{
 
     @Override
     public void updateRoom(GraphicsGroup displayText) {
-        if(box.getState() == 1){
+        if(box.getState() == 1 && addedPoison == false){
             this.roomInhabitants.add(poison);
+            addedPoison = true;
         }
 
-        // if (inventory.getCollectableWithID("windowBoxKey") != null){ //tried adding outside of update room, still crashes game
-        //     box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
-        // }
+        if (inventory.getCollectableWithID("windowBoxKey") != null){ //tried adding outside of update room, still crashes game
+            box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
+        }
         
         doorInteraction();
     }
