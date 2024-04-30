@@ -51,7 +51,7 @@ public class HorrorGame {
         hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png");
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
         lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHall.png");
-        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "tempwindowroom.jpg");
+        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "WindowRoom.png");
         hallway.addChairClassroom(greenChairsRoom);
         hallway.addLectureHall(lectureHallRoom);
         hallway.addWindowedClassroom(windowedClassRoom);
