@@ -28,16 +28,17 @@ public class HorrorGame {
     GreenChairsRoom greenChairsRoom;
     LectureHallRoom lectureHallRoom;
     WindowedClassRoom windowedClassRoom;
+    double randomDouble;
 
     public static void main(String[] args) {
         new HorrorGame();
     }
 
     public HorrorGame() {
+        randomDouble = Math.random();
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
-
-        hand = new Collectable(0, 0, "assets" + File.separator + "hand.png", "hand");
+        handAssignment();
         activeCursor = new Cursor(hand);
         activeCursor.resetCursor();
         cursor.add(activeCursor);
@@ -59,9 +60,7 @@ public class HorrorGame {
         activeRoom = hallway.getActiveRoom();
 
         //activeRoom = new HallwayRoom(new GreenChairsRoom("assets" + File.separator + "hall.png"), hand,"assets" + File.separator + "hall.png");
-
-        
-
+    
         canvas.add(activeRoom);
         canvas.add(inventory);
         canvas.add(cursor);
@@ -146,6 +145,21 @@ public class HorrorGame {
                 activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
                 // Keep everything aligned
             }
+        }
+    }
+
+    private void handAssignment(){
+        if (randomDouble < 0.3) {
+            hand = new Collectable(0, 0, "assets" + File.separator + "hands" + File.separator + "daisyHand.png", "hand");
+        }
+        else if (randomDouble < 0.6) {
+            hand = new Collectable(0, 0, "assets" + File.separator + "hands" + File.separator + "moyartuHand.png", "hand");
+        }
+        else if (randomDouble < 0.9) {
+            hand = new Collectable(0, 0, "assets" + File.separator + "hands" + File.separator + "wrenHand.png", "hand");
+        }
+        else {
+            hand = new Collectable(0, 0, "assets" + File.separator + "hands" + File.separator + "pinkyHand.png", "hand");
         }
     }
 }

@@ -16,8 +16,8 @@ public class WindowedClassRoom extends Room{
     Item box;
     Item door;
     Collectable poison;
-    Collectable card;
-    Item sonic;
+    // Collectable card;
+    // Item sonic;
 
     boolean addedPoison;
     
@@ -44,9 +44,9 @@ public class WindowedClassRoom extends Room{
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         roomInhabitants.add(door);
 
-        card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
-        roomInhabitants.add(card);
-        door.addValidInitCollectable(card);
+        // card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
+        // roomInhabitants.add(card);
+        // door.addValidInitCollectable(card);
         //box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
 
         box.addValidSubCollectable(primaryCursor);
