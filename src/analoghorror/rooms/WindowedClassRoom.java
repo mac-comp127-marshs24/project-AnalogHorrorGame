@@ -44,7 +44,6 @@ public class WindowedClassRoom extends Room{
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
         roomInhabitants.add(card);
         door.addValidInitCollectable(card);
-        box.addValidInitCollectable(card);
         //box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
 
         box.addValidSubCollectable(primaryCursor);
@@ -58,6 +57,7 @@ public class WindowedClassRoom extends Room{
             changeRoom = true;
             changeRoom();
         }
+
     }
 
     @Override
@@ -65,6 +65,11 @@ public class WindowedClassRoom extends Room{
         if(box.getState() == 1){
             this.roomInhabitants.add(poison);
         }
+
+        if (inventory.getCollectableWithID("windowBoxKey") != null){ //tried adding outside of update room, still crashes game
+            box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
+        }
+        
         doorInteraction();
     }
 
