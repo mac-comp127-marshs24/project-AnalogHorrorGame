@@ -63,7 +63,8 @@ public class HallwayRoom extends Room{
         // sonic.addValidInitCollectable(primaryCursor);
         // sonic.addValidSubCollectable(primaryCursor);
 
-        card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card02");
+        card = new Collectable(458, 325, "assets" + File.separator + "cardOnFloor.png", "card02");
+        card.setInventoryPath("assets" + File.separator + "studentCard.png");
         this.roomInhabitants.add(card);
 
         // box.addValidSubCollectable(primaryCursor);
