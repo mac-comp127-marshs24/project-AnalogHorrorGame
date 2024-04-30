@@ -44,6 +44,9 @@ public class HorrorGame {
 
         displayText = new GraphicsGroup();
 
+        inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
+        inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
+
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
         hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png");
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "roombase.png");
@@ -57,8 +60,7 @@ public class HorrorGame {
 
         //activeRoom = new HallwayRoom(new GreenChairsRoom("assets" + File.separator + "hall.png"), hand,"assets" + File.separator + "hall.png");
 
-        inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
-        inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
+        
 
         canvas.add(activeRoom);
         canvas.add(inventory);
