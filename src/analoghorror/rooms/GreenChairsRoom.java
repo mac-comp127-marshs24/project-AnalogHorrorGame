@@ -31,8 +31,8 @@ public class GreenChairsRoom extends Room{
     //add items to roomInhabitants here
 	@Override
 	public void addRoomInhabitants() {
-		door = new Item(716, 47, "assets" + File.separator + "doorClosed.png", false, 2);
-        door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
+		door = new Item(716, 60, "assets" + File.separator + "greenChairRoomDoorClosed.png", false, 2);
+        door.setStatePaths(Arrays.asList("assets" + File.separator + "greenChairRoomDoorClosed.png", "assets" + File.separator + "greenChairRoomDoorOpen.png"));
         this.roomInhabitants.add(door);
         ratCage = new Item(500, 201, "assets" + File.separator + "ratCageSmallRat.png", true, 4);
         ratCage.setStatePaths(Arrays.asList("assets" + File.separator + "ratCageSmallRat.png", "assets" + File.separator + "ratCageBigRat.png", "assets"
