@@ -18,6 +18,7 @@ public class LectureHallRoom extends Room {
     Item door;
     Collectable card;
     Item sonic;
+    Item puzzle;
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
         super(backgroundImage);
@@ -49,6 +50,9 @@ public class LectureHallRoom extends Room {
         roomInhabitants.add(sonic);
         sonic.addValidInitCollectable(primaryCursor);
         sonic.addValidSubCollectable(primaryCursor);
+
+        //TODO: Continue implementing puzzle
+        puzzle = new Item(778, 70, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
         roomInhabitants.add(card);
