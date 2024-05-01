@@ -16,6 +16,7 @@ public class GreenChairsRoom extends Room{
     Item leaveAnnouncement;
     Collectable poisonedRat;
     Collectable windowBoxKey;
+    Collectable poison;
     boolean poisonedRatInteraction;
     boolean roomScare;
 
@@ -40,8 +41,14 @@ public class GreenChairsRoom extends Room{
         ratCage.setStatePaths(Arrays.asList("assets" + File.separator + "ratCageSmallRat.png", "assets" + File.separator + "ratCageBigRat.png", "assets"
          + File.separator + "ratCageHugeRat.png", "assets" + File.separator + "ratCageEmpty.png"));
         this.roomInhabitants.add(ratCage);  // Add to "Room" (GraphicsGroup for now)
+        poison = new Collectable(141, 286, "assets" + File.separator + "poison.png", "tutorialPoison");
+        ratCage.addValidInitCollectable(poison);
+        ratCage.addValidSubCollectable(poison);
+
         leaveAnnouncement = new Item(0, 0, "assets"+ File.separator + "getOut.png", true, 2);
         leaveAnnouncement.setStatePaths(Arrays.asList("assets"+ File.separator + "getOut.png", "assets" + File.separator + "getOut.png"));
+        
+        this.roomInhabitants.add(poison);
 
         poisonedRat = new Collectable(500, 201, "assets" + File.separator + "looseRat.png", "rat01");
         poisonedRat.setInventoryPath("assets" + File.separator + "collectedRat.png");
