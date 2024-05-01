@@ -16,11 +16,7 @@ public class LectureHallRoom extends Room {
     Inventory inventory;
 
     //TODO: Replace with actual items
-    Item box;
-    Collectable key;
     Item door;
-    Collectable card;
-    Item sonic;
     Item puzzle;
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
@@ -35,24 +31,9 @@ public class LectureHallRoom extends Room {
 
     @Override
     public void addRoomInhabitants() {
-        box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
-        box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
-        roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
-
-        key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key01");
-        roomInhabitants.add(key);
-        box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
-
         door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         roomInhabitants.add(door);
-
-        sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
-        sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
-        "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
-        roomInhabitants.add(sonic);
-        sonic.addValidInitCollectable(primaryCursor);
-        sonic.addValidSubCollectable(primaryCursor);
 
         //TODO: Continue implementing puzzle
         puzzle = new Item(700, 125, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
@@ -76,13 +57,7 @@ public class LectureHallRoom extends Room {
         puzzle.addValidSubCollectable(primaryCursor);
         roomInhabitants.add(puzzle);
 
-        card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
-        roomInhabitants.add(card);
-        door.addValidInitCollectable(card);
-        
-        door.addValidInitCollectable(key);
-
-        box.addValidSubCollectable(primaryCursor);
+        door.addValidInitCollectable(primaryCursor);
         door.addValidSubCollectable(primaryCursor);
 
         this.add(roomInhabitants);
