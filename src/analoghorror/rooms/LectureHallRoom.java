@@ -1,9 +1,11 @@
 package analoghorror.rooms;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
@@ -53,16 +55,23 @@ public class LectureHallRoom extends Room {
         sonic.addValidSubCollectable(primaryCursor);
 
         //TODO: Continue implementing puzzle
-        puzzle = new Item(700, 125, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 9);
-        puzzle.setStatePaths(Arrays.asList("assets" + File.separator + "puzzle" + File.separator + "botLeftPuzzleBoard.png", 
-        "assets" + File.separator + "puzzle" + File.separator + "botMidPuzzleBoard.png",
+        puzzle = new Item(700, 125, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
+        puzzle.setStatePaths(Arrays.asList(
+        "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png",
+
         "assets" + File.separator + "puzzle" + File.separator + "botRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "midLeftPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "midMidPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "botMidPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "botLeftPuzzleBoard.png", 
+        
+
         "assets" + File.separator + "puzzle" + File.separator + "midRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "topLeftPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "midMidPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "midLeftPuzzleBoard.png",
+        
+
+        "assets" + File.separator + "puzzle" + File.separator + "topRightPuzzleBoard.png",
         "assets" + File.separator + "puzzle" + File.separator + "topMidPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "topRightPuzzleBoard.png"));
+        "assets" + File.separator + "puzzle" + File.separator + "topLeftPuzzleBoard.png"));
         puzzle.addValidInitCollectable(primaryCursor);
         puzzle.addValidSubCollectable(primaryCursor);
         roomInhabitants.add(puzzle);
@@ -89,6 +98,7 @@ public class LectureHallRoom extends Room {
     @Override
     public void updateRoom(GraphicsGroup displayText) {
         doorInteraction();
+        puzzleMinigame();
     }
 
     private void changeRoom(){
@@ -97,6 +107,23 @@ public class LectureHallRoom extends Room {
             hallway.resetActiveRoom();
             setActiveRoom(hallway.getActiveRoom());
             door.changeState(0);
+        }
+    }
+
+    private void puzzleMinigame(){
+        long delay = 3000;
+        Timer jumpscareTimer = new Timer();
+        TimerTask jumpscareTask = new TimerTask() {
+            @Override
+            public void run() {
+                if(puzzle.getState() != 10){
+                    roomInhabitants.add(new Image("assets" + File.separator + "nancy.jpg"));
+                }
+            }
+        };
+
+        if(puzzle.getState() != 0){
+            jumpscareTimer.schedule(jumpscareTask, delay);
         }
     }
 
