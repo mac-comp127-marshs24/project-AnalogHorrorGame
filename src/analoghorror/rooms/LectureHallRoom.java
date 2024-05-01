@@ -53,8 +53,19 @@ public class LectureHallRoom extends Room {
         sonic.addValidSubCollectable(primaryCursor);
 
         //TODO: Continue implementing puzzle
-        puzzle = new Item(778, 70, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
-        //puzzle.setStatePaths(Arrays.asList(null));
+        puzzle = new Item(700, 125, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 9);
+        puzzle.setStatePaths(Arrays.asList("assets" + File.separator + "puzzle" + File.separator + "botLeftPuzzleBoard.png", 
+        "assets" + File.separator + "puzzle" + File.separator + "botMidPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "botRightPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "midLeftPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "midMidPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "midRightPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "topLeftPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "topMidPuzzleBoard.png",
+        "assets" + File.separator + "puzzle" + File.separator + "topRightPuzzleBoard.png"));
+        puzzle.addValidInitCollectable(primaryCursor);
+        puzzle.addValidSubCollectable(primaryCursor);
+        roomInhabitants.add(puzzle);
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
         roomInhabitants.add(card);
