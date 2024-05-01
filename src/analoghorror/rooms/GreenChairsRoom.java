@@ -34,27 +34,31 @@ public class GreenChairsRoom extends Room{
     //add items to roomInhabitants here
 	@Override
 	public void addRoomInhabitants() {
-		door = new Item(716, 60, "assets" + File.separator + "greenChairRoomDoorClosed.png", false, 2);
-        door.setStatePaths(Arrays.asList("assets" + File.separator + "greenChairRoomDoorClosed.png", "assets" + File.separator + "greenChairRoomDoorOpen.png"));
+		door = new Item(716, 60, "assets" + File.separator + "GreenChairsRoom" + File.separator + "greenChairRoomDoorClosed.png", false, 2);
+        door.setStatePaths(Arrays.asList("assets" + File.separator + "GreenChairsRoom" + File.separator + "greenChairRoomDoorClosed.png", 
+        "assets" + File.separator + "GreenChairsRoom" + File.separator + "greenChairRoomDoorOpen.png"));
         this.roomInhabitants.add(door);
-        ratCage = new Item(500, 201, "assets" + File.separator + "ratCageSmallRat.png", true, 4);
-        ratCage.setStatePaths(Arrays.asList("assets" + File.separator + "ratCageSmallRat.png", "assets" + File.separator + "ratCageBigRat.png", "assets"
-         + File.separator + "ratCageHugeRat.png", "assets" + File.separator + "ratCageEmpty.png"));
+        ratCage = new Item(500, 201, "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageSmallRat.png", true, 4);
+        ratCage.setStatePaths(Arrays.asList("assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageSmallRat.png", 
+        "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageBigRat.png", 
+        "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageHugeRat.png", 
+        "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageEmpty.png"));
         this.roomInhabitants.add(ratCage);  // Add to "Room" (GraphicsGroup for now)
         poison = new Collectable(141, 286, "assets" + File.separator + "poison.png", "tutorialPoison");
         ratCage.addValidInitCollectable(poison);
         ratCage.addValidSubCollectable(poison);
 
-        leaveAnnouncement = new Item(0, 0, "assets"+ File.separator + "getOut.png", true, 2);
-        leaveAnnouncement.setStatePaths(Arrays.asList("assets"+ File.separator + "getOut.png", "assets" + File.separator + "getOut.png"));
+        leaveAnnouncement = new Item(0, 0, "assets"+ File.separator + "GreenChairsRoom" + File.separator + "getOut.png", true, 2);
+        leaveAnnouncement.setStatePaths(Arrays.asList("assets"+ File.separator + "GreenChairsRoom" + File.separator + "getOut.png", 
+        "assets" + File.separator + "GreenChairsRoom" + File.separator + "getOut.png"));
         
         this.roomInhabitants.add(poison);
 
-        poisonedRat = new Collectable(500, 201, "assets" + File.separator + "looseRat.png", "rat01");
-        poisonedRat.setInventoryPath("assets" + File.separator + "collectedRat.png");
+        poisonedRat = new Collectable(500, 201, "assets" + File.separator + "GreenChairsRoom" + File.separator + "looseRat.png", "rat01");
+        poisonedRat.setInventoryPath("assets" + File.separator + "GreenChairsRoom" + File.separator + "collectedRat.png");
 
-        windowBoxKey = new Collectable(100, 352, "assets" + File.separator + "keyOnFloor.png", "windowBoxKey");
-        windowBoxKey.setInventoryPath("assets" + File.separator + "brassKey.png");
+        windowBoxKey = new Collectable(100, 352, "assets" + File.separator + "GreenChairsRoom" + File.separator + "keyOnFloor.png", "windowBoxKey");
+        windowBoxKey.setInventoryPath("assets" + File.separator + "GreenChairsRoom" + File.separator + "brassKey.png");
         this.roomInhabitants.add(windowBoxKey);
 
         // ratCage.addValidInitCollectable(primaryCursor);
@@ -67,9 +71,12 @@ public class GreenChairsRoom extends Room{
 
     public void doorInteraction(){
         if (door.getState() == 1) {
-            if (poisonedRatInteraction) {
-                super.setBackgroundImage("assets" + File.separator + "roombaseAlternate.png");
+            if (poisonedRatInteraction && roomScare == false) {
+                super.setBackgroundImage("assets" + File.separator + "GreenChairsRoom" + File.separator + "shadowGreenChairsRoomBG.png");
                 roomScare = true;
+            }
+            else if (poisonedRatInteraction && roomScare) {
+                super.setBackgroundImage("assets" + File.separator + "GreenChairsRoom" + File.separator + "slimeGreenChairsRoomBG.png");
             }
             changeRoom = true;
             // System.out.println("room change");  // TESTING
@@ -91,6 +98,10 @@ public class GreenChairsRoom extends Room{
             ratCage.addValidInitCollectable(inventory.getCollectableWithID("windowPoison"));
             ratCage.addValidSubCollectable(inventory.getCollectableWithID("windowPoison"));
         }
+        if (inventory.getCollectableWithID("lecturePoison") != null) {
+            ratCage.addValidInitCollectable(inventory.getCollectableWithID("lecturePoison"));
+            ratCage.addValidSubCollectable(inventory.getCollectableWithID("lecturePoison"));
+        }
         if (poisonedRatInteraction) {
             if (leaveAnnouncement.getState() == 1) {
                 leaveAnnouncement.changeState(0);
@@ -104,6 +115,10 @@ public class GreenChairsRoom extends Room{
         if (inventory.getCollectableWithID("tutorialPoison") != null
             && (inventory.getCollectableWithID("tutorialPoison").getUsed())) {
             inventory.disposeOfCollectable(inventory.getCollectableWithID("tutorialPoison"));
+        }
+        if (inventory.getCollectableWithID("lecturePoison") != null
+            && (inventory.getCollectableWithID("lecturePoison").getUsed())) {
+            inventory.disposeOfCollectable(inventory.getCollectableWithID("lecturePoison"));
         }
         doorInteraction();
     }

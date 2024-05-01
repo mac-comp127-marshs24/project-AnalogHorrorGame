@@ -37,7 +37,7 @@ public class LectureHallRoom extends Room {
         door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         roomInhabitants.add(door);
-        poison = new Collectable(785, 300, "assets" + File.separator + "poison.png", "windowPoison");
+        poison = new Collectable(785, 300, "assets" + File.separator + "poison.png", "lecturePoison");
 
 
         //TODO: Continue implementing puzzle
