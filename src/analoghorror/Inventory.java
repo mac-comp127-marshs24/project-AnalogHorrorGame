@@ -3,7 +3,6 @@ package analoghorror;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 
 import analoghorror.inhabitants.Collectable;
 import edu.macalester.graphics.*;

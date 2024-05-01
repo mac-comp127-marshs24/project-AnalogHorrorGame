@@ -68,15 +68,18 @@ public class Item extends Image{
         if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables)) {
             currentState = 0;
             setImagePath(itemTextures.get(currentState));
+            collectable.setUsedTrue();
         }
         else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables)) {
             currentState++;
             setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
+            collectable.setUsedTrue();
         }
         else if (currentState > 0 && currentState < itemStates
             && collectableIsValid(collectable, validSubCollectables)) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
+            collectable.setUsedTrue();
         }
     }
 

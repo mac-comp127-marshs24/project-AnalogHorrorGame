@@ -87,19 +87,24 @@ public class GreenChairsRoom extends Room{
             leaveAnnouncement.addValidInitCollectable(primaryCursor);
             leaveAnnouncement.addValidSubCollectable(primaryCursor);
         }
-        if (inventory.getCollectableWithID("windowPoison") != null){ //tried adding outside of update room, still crashes game
+        if (inventory.getCollectableWithID("windowPoison") != null) {
             ratCage.addValidInitCollectable(inventory.getCollectableWithID("windowPoison"));
             ratCage.addValidSubCollectable(inventory.getCollectableWithID("windowPoison"));
         }
-        
-        if(poisonedRatInteraction) {
+        if (poisonedRatInteraction) {
             if (leaveAnnouncement.getState() == 1) {
                 leaveAnnouncement.changeState(0);
                 this.roomInhabitants.remove(leaveAnnouncement);
+            }
         }
-    }
-        
-
+        if (inventory.getCollectableWithID("windowPoison") != null
+            && (inventory.getCollectableWithID("windowPoison").getUsed())) {
+            inventory.disposeOfCollectable(inventory.getCollectableWithID("windowPoison"));
+        }
+        if (inventory.getCollectableWithID("tutorialPoison") != null
+            && (inventory.getCollectableWithID("tutorialPoison").getUsed())) {
+            inventory.disposeOfCollectable(inventory.getCollectableWithID("tutorialPoison"));
+        }
         doorInteraction();
     }
 
