@@ -41,7 +41,7 @@ public class LectureHallRoom extends Room {
 
 
         //TODO: Continue implementing puzzle
-        puzzle = new Puzzle(700, 125, false, 10);
+        puzzle = new Puzzle(700, 125, false, 10, this);
         puzzle.addValidInitCollectable(primaryCursor);
         puzzle.addValidSubCollectable(primaryCursor);
         roomInhabitants.add(puzzle);
@@ -62,7 +62,18 @@ public class LectureHallRoom extends Room {
     @Override
     public void updateRoom(GraphicsGroup displayText) {
         doorInteraction();
-        if (puzzle.getState() == 9 && addedPoison == false) {
+        if (puzzle.getSolved() && addedPoison == false) {
+            this.roomInhabitants.add(poison);
+           addedPoison = true;
+        }
+        if (puzzle.getFailState() == true) {
+            // displayText.add(jumpscare);
+        }
+        //puzzleMinigame(); //jumpscare (really cool)
+    }
+
+    public void updateRoom() {
+        if (puzzle.getSolved() && addedPoison == false) {
             this.roomInhabitants.add(poison);
            addedPoison = true;
         }
