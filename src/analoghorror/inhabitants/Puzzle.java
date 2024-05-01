@@ -21,7 +21,8 @@ public class Puzzle extends Item {
     LectureHallRoom homeRoom;
 
     public Puzzle(double x, double y, boolean isSingleUse, int numberOfItemStates, LectureHallRoom lectureHallRoom) {
-        super(x, y, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", isSingleUse, numberOfItemStates);
+        super(x, y, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", isSingleUse,
+            numberOfItemStates);
         failState = false;
         solved = false;
         scheduled = false;
@@ -44,91 +45,78 @@ public class Puzzle extends Item {
         attemptedClears = 0;
         homeRoom = lectureHallRoom;
         setStatePaths(Arrays.asList(
-        "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png",
+            "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png",
 
-        "assets" + File.separator + "puzzle" + File.separator + "botRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "botMidPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "botLeftPuzzleBoard.png", 
-        
-        "assets" + File.separator + "puzzle" + File.separator + "midRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "midMidPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "midLeftPuzzleBoard.png",
-        
-        "assets" + File.separator + "puzzle" + File.separator + "topRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "topMidPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "topLeftPuzzleBoard.png"));
+            "assets" + File.separator + "puzzle" + File.separator + "botRightPuzzleBoard.png",
+            "assets" + File.separator + "puzzle" + File.separator + "botMidPuzzleBoard.png",
+            "assets" + File.separator + "puzzle" + File.separator + "botLeftPuzzleBoard.png",
+
+            "assets" + File.separator + "puzzle" + File.separator + "midRightPuzzleBoard.png",
+            "assets" + File.separator + "puzzle" + File.separator + "midMidPuzzleBoard.png",
+            "assets" + File.separator + "puzzle" + File.separator + "midLeftPuzzleBoard.png",
+
+            "assets" + File.separator + "puzzle" + File.separator + "topRightPuzzleBoard.png",
+            "assets" + File.separator + "puzzle" + File.separator + "topMidPuzzleBoard.png",
+            "assets" + File.separator + "puzzle" + File.separator + "topLeftPuzzleBoard.png"));
     }
 
-    public boolean getFailState(){
+    public boolean getFailState() {
         return failState;
     }
 
     @Override
-    public void interaction(Collectable collectable){
-        if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables) && solved == false) {
+    public void interaction(Collectable collectable) {
+        if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables)
+            && solved == false) {
             currentState = 1;
             setImagePath(itemTextures.get(currentState));
             collectable.setUsedTrue();
-            // if (scheduled) {
-                puzzleTimer.cancel();
-                puzzleTimer = new Timer();
-                clunkTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        clunkTaskBehavior();
-                    }
-                };
-            // }
-            wrongSquare();
-        }
-        else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables) && solved == false) {
+            puzzleTimer.cancel();
+            puzzleTimer = new Timer();
+            clunkTask = new TimerTask() {
+                @Override
+                public void run() {
+                    clunkTaskBehavior();
+                }
+            };
+            activateSquare();
+        } else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables) && solved == false) {
             currentState++;
-            setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
+            setImagePath(itemTextures.get(currentState));
             collectable.setUsedTrue();
-            // if (scheduled) {
-                puzzleTimer.cancel();
-                puzzleTimer = new Timer();
-                clunkTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        clunkTaskBehavior();
-                    }
-                };
-            // }
-            wrongSquare();
-        }
-        else if (currentState > 0 && currentState < itemStates
+            puzzleTimer.cancel();
+            puzzleTimer = new Timer();
+            clunkTask = new TimerTask() {
+                @Override
+                public void run() {
+                    clunkTaskBehavior();
+                }
+            };
+            activateSquare();
+        } else if (currentState > 0 && currentState < itemStates
             && collectableIsValid(collectable, validSubCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
             collectable.setUsedTrue();
-            // if (scheduled) {
-                puzzleTimer.cancel();
-                puzzleTimer = new Timer();
-                clunkTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        clunkTaskBehavior();
-                    }
-                };
-            // }
-            wrongSquare();
+            puzzleTimer.cancel();
+            puzzleTimer = new Timer();
+            clunkTask = new TimerTask() {
+                @Override
+                public void run() {
+                    clunkTaskBehavior();
+                }
+            };
+            activateSquare();
         }
     }
 
-    private void wrongSquare(){
+    private void activateSquare() {
         scheduled = true;
         puzzleTimer.schedule(clunkTask, puzzleDelay);
         // System.out.println("WRONG");
     }
-    
-    private void rightSquare(){
-        scheduled = true;
-        puzzleTimer.schedule(clunkTask, puzzleDelay);
-        // System.out.println("RIGHT");
-    }
 
-    private void clunkTaskBehavior(){
+    private void clunkTaskBehavior() {
         System.out.println("Clunk!");
         attemptedClears++;
         scheduled = false;
@@ -137,18 +125,17 @@ public class Puzzle extends Item {
             System.out.println("Solved!");
             setImagePath("assets" + File.separator + "puzzle" + File.separator + "openPuzzleBoard.png");
             homeRoom.updateRoom();
-        }
-        else if (attemptedClears == 3) {
+        } else if (attemptedClears == 3) {
             jumpscareTimer.schedule(scareTask, scareDelay);
-        } 
+        }
     }
-    
-    private void scareTaskBehavior(){
+
+    private void scareTaskBehavior() {
         failState = true;
         System.out.println("Yeah you die");
     }
 
-    public boolean getSolved(){
+    public boolean getSolved() {
         return solved;
     }
 }
