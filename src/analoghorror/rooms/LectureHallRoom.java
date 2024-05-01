@@ -14,10 +14,12 @@ public class LectureHallRoom extends Room {
     Collectable primaryCursor;
     HallwayRoom hallway;
     Inventory inventory;
-
+    boolean addedPoison;
     //TODO: Replace with actual items
     Item door;
     Item puzzle;
+    Collectable poison;
+
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
         super(backgroundImage);
@@ -25,6 +27,7 @@ public class LectureHallRoom extends Room {
         this.inventory = inventory;
         primaryCursor =  hand;
         changeRoom = false;
+        addedPoison = false;
 
         addRoomInhabitants();
     }
@@ -34,6 +37,8 @@ public class LectureHallRoom extends Room {
         door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
         roomInhabitants.add(door);
+        poison = new Collectable(785, 300, "assets" + File.separator + "poison.png", "windowPoison");
+
 
         //TODO: Continue implementing puzzle
         puzzle = new Item(700, 125, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
@@ -73,6 +78,10 @@ public class LectureHallRoom extends Room {
     @Override
     public void updateRoom(GraphicsGroup displayText) {
         doorInteraction();
+        if (puzzle.getState() == 9 && addedPoison == false) {
+            this.roomInhabitants.add(poison);
+           addedPoison = true;
+        }
         //puzzleMinigame(); //jumpscare (really cool)
     }
 
