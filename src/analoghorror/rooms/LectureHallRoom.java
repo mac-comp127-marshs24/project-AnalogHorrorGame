@@ -98,7 +98,7 @@ public class LectureHallRoom extends Room {
     @Override
     public void updateRoom(GraphicsGroup displayText) {
         doorInteraction();
-        puzzleMinigame();
+        //puzzleMinigame(); //jumpscare (really cool)
     }
 
     private void changeRoom(){
