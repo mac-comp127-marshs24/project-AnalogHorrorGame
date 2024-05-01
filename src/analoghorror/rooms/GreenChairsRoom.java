@@ -44,14 +44,14 @@ public class GreenChairsRoom extends Room{
         this.roomInhabitants.add(ratCage);  // Add to "Room" (GraphicsGroup for now)
 
         poisonedRat = new Collectable(500, 201, "assets" + File.separator + "looseRat.png", "rat01");
-        poisonedRat.setInventoryPath("assets" + File.separator + "key.png");
+        poisonedRat.setInventoryPath("assets" + File.separator + "collectedRat.png");
 
         windowBoxKey = new Collectable(100, 352, "assets" + File.separator + "keyOnFloor.png", "windowBoxKey");
         windowBoxKey.setInventoryPath("assets" + File.separator + "brassKey.png");
         this.roomInhabitants.add(windowBoxKey);
 
-        ratCage.addValidInitCollectable(primaryCursor);
-        ratCage.addValidSubCollectable(primaryCursor);
+        // ratCage.addValidInitCollectable(primaryCursor);
+        // ratCage.addValidSubCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
 
@@ -76,6 +76,10 @@ public class GreenChairsRoom extends Room{
         if (ratCage.getState() == 3 && poisonedRatInteraction == false) {
             this.roomInhabitants.add(poisonedRat);
             poisonedRatInteraction = true;
+        }
+        if (inventory.getCollectableWithID("windowPoison") != null){ //tried adding outside of update room, still crashes game
+            ratCage.addValidInitCollectable(inventory.getCollectableWithID("windowPoison"));
+            ratCage.addValidSubCollectable(inventory.getCollectableWithID("windowPoison"));
         }
 
         doorInteraction();

@@ -99,7 +99,7 @@ public class HorrorGame {
             canvas.add(displayText);
         }
         // System.out.println(activeRoom.getBackgroundImage() + " active room");  // TESTING
-        System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
+        // System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
     }
 
     private void clickInventoryCollectableInteractions(MouseButtonEvent event){

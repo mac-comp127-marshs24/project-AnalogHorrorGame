@@ -146,11 +146,20 @@ public class Inventory extends GraphicsGroup{
     }
 
     public Collectable getCollectableWithID(String id){
+        System.out.println(inventoryList);
         for (Collectable collectable : inventoryList) {
-            if(collectable.getIDString().equals(id)){
-                return collectable;
+            if (collectable != null) {
+                if (collectable.getIDString().equals(id)) {
+                    return collectable;
+                }
             }
         }
         return null;
+    }
+
+    public void disposeOfCollectable(Collectable collectable){
+        collectable.setInInventory(false);
+        collectableLayer.remove(collectable);
+        inventoryList.remove(collectable);
     }
 }

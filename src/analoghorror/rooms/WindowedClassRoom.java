@@ -69,8 +69,8 @@ public class WindowedClassRoom extends Room{
         if(box.getState() == 1 && addedPoison == false){
             this.roomInhabitants.add(poison);
             addedPoison = true;
+            inventory.disposeOfCollectable(inventory.getCollectableWithID("windowBoxKey"));
         }
-
         if (inventory.getCollectableWithID("windowBoxKey") != null){ //tried adding outside of update room, still crashes game
             box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
         }
