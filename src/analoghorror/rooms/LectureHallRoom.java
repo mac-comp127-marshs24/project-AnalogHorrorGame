@@ -3,6 +3,7 @@ import edu.macalester.graphics.GraphicsGroup;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Timer;
 
 import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
@@ -53,6 +54,7 @@ public class LectureHallRoom extends Room {
 
         //TODO: Continue implementing puzzle
         puzzle = new Item(778, 70, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
+        //puzzle.setStatePaths(Arrays.asList(null));
 
         card = new Collectable(528, 325, "assets" + File.separator + "studentCard.png", "card01");
         roomInhabitants.add(card);
