@@ -2,14 +2,47 @@ package analoghorror.inhabitants;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import analoghorror.rooms.LectureHallRoom;
 
 public class Puzzle extends Item {
     boolean failState;
+    boolean solved;
+    boolean scheduled;
     int attemptedClears;
+    Timer puzzleTimer;
+    Timer jumpscareTimer;
+    TimerTask clunkTask;
+    TimerTask scareTask;
+    long puzzleDelay;
+    long scareDelay;
+    LectureHallRoom homeRoom;
 
-    public Puzzle(double x, double y, boolean isSingleUse, int numberOfItemStates) {
+    public Puzzle(double x, double y, boolean isSingleUse, int numberOfItemStates, LectureHallRoom lectureHallRoom) {
         super(x, y, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", isSingleUse, numberOfItemStates);
         failState = false;
+        solved = false;
+        scheduled = false;
+        puzzleTimer = new Timer();
+        jumpscareTimer = new Timer();
+        clunkTask = new TimerTask() {
+            @Override
+            public void run() {
+                clunkTaskBehavior();
+            }
+        };
+        scareTask = new TimerTask() {
+            @Override
+            public void run() {
+                scareTaskBehavior();
+            }
+        };
+        puzzleDelay = 5000;
+        scareDelay = 500;
+        attemptedClears = 0;
+        homeRoom = lectureHallRoom;
         setStatePaths(Arrays.asList(
         "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png",
 
@@ -32,38 +65,90 @@ public class Puzzle extends Item {
 
     @Override
     public void interaction(Collectable collectable){
-        if (currentState == 8 && collectableIsValid(collectable, validSubCollectables)) {
-            currentState++;
+        if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables) && solved == false) {
+            currentState = 1;
             setImagePath(itemTextures.get(currentState));
             collectable.setUsedTrue();
-            rightSquare();
-        }
-        else if (currentState == itemStates && singleUse == false && collectableIsValid(collectable, validSubCollectables)) {
-            currentState = 0;
-            setImagePath(itemTextures.get(currentState));
-            collectable.setUsedTrue();
+            // if (scheduled) {
+                puzzleTimer.cancel();
+                puzzleTimer = new Timer();
+                clunkTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        clunkTaskBehavior();
+                    }
+                };
+            // }
             wrongSquare();
         }
-        else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables)) {
+        else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
             collectable.setUsedTrue();
+            // if (scheduled) {
+                puzzleTimer.cancel();
+                puzzleTimer = new Timer();
+                clunkTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        clunkTaskBehavior();
+                    }
+                };
+            // }
             wrongSquare();
         }
         else if (currentState > 0 && currentState < itemStates
-            && collectableIsValid(collectable, validSubCollectables)) {
+            && collectableIsValid(collectable, validSubCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
             collectable.setUsedTrue();
+            // if (scheduled) {
+                puzzleTimer.cancel();
+                puzzleTimer = new Timer();
+                clunkTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        clunkTaskBehavior();
+                    }
+                };
+            // }
             wrongSquare();
         }
     }
 
     private void wrongSquare(){
-        System.out.println("WRONG");
+        scheduled = true;
+        puzzleTimer.schedule(clunkTask, puzzleDelay);
+        // System.out.println("WRONG");
     }
     
     private void rightSquare(){
-        System.out.println("RIGHT");
+        scheduled = true;
+        puzzleTimer.schedule(clunkTask, puzzleDelay);
+        // System.out.println("RIGHT");
+    }
+
+    private void clunkTaskBehavior(){
+        System.out.println("Clunk!");
+        attemptedClears++;
+        scheduled = false;
+        if (currentState == 9) {
+            solved = true;
+            System.out.println("Solved!");
+            setImagePath("assets" + File.separator + "puzzle" + File.separator + "openPuzzleBoard.png");
+            homeRoom.updateRoom();
+        }
+        else if (attemptedClears == 3) {
+            jumpscareTimer.schedule(scareTask, scareDelay);
+        } 
+    }
+    
+    private void scareTaskBehavior(){
+        failState = true;
+        System.out.println("Yeah you die");
+    }
+
+    public boolean getSolved(){
+        return solved;
     }
 }
