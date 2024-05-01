@@ -2,7 +2,6 @@ package analoghorror.rooms;
 
 import java.io.File;
 import java.util.Arrays;
-
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
 
@@ -30,10 +29,12 @@ public class HallwayRoom extends Room{
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
+        // playSound("res\\assets\\Audio\\hello.wav");  //SOUND ADDED TO GAME INSANE!!!!
         addRoomInhabitants();
     }
 
-    public void addRoomInhabitants(){    
+    public void addRoomInhabitants(){
+
         // box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
         // box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
         // this.roomInhabitants.add(box);  // Add to this.roomInhabitants

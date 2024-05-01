@@ -162,4 +162,6 @@ public class HorrorGame {
             hand = new Collectable(0, 0, "assets" + File.separator + "hands" + File.separator + "pinkyHand.png", "hand");
         }
     }
+
+    
 }
