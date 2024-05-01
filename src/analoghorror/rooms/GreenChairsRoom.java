@@ -11,15 +11,13 @@ public class GreenChairsRoom extends Room{
     HallwayRoom hallway;
     Inventory inventory;
 
-    //TODO: Replace with actual items
+    Item door;
     Item ratCage;
+    Item leaveAnnouncement;
     Collectable poisonedRat;
     Collectable windowBoxKey;
-    Item door;
     boolean poisonedRatInteraction;
     boolean roomScare;
-    // Collectable card;
-    // Item sonic;
 
     public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
         super(backgroundImage);
@@ -42,6 +40,8 @@ public class GreenChairsRoom extends Room{
         ratCage.setStatePaths(Arrays.asList("assets" + File.separator + "ratCageSmallRat.png", "assets" + File.separator + "ratCageBigRat.png", "assets"
          + File.separator + "ratCageHugeRat.png", "assets" + File.separator + "ratCageEmpty.png"));
         this.roomInhabitants.add(ratCage);  // Add to "Room" (GraphicsGroup for now)
+        leaveAnnouncement = new Item(0, 0, "assets"+ File.separator + "getOut.png", true, 2);
+        leaveAnnouncement.setStatePaths(Arrays.asList("assets"+ File.separator + "getOut.png", "assets" + File.separator + "getOut.png"));
 
         poisonedRat = new Collectable(500, 201, "assets" + File.separator + "looseRat.png", "rat01");
         poisonedRat.setInventoryPath("assets" + File.separator + "collectedRat.png");
@@ -76,11 +76,22 @@ public class GreenChairsRoom extends Room{
         if (ratCage.getState() == 3 && poisonedRatInteraction == false) {
             this.roomInhabitants.add(poisonedRat);
             poisonedRatInteraction = true;
+            this.roomInhabitants.add(leaveAnnouncement);
+            leaveAnnouncement.addValidInitCollectable(primaryCursor);
+            leaveAnnouncement.addValidSubCollectable(primaryCursor);
         }
         if (inventory.getCollectableWithID("windowPoison") != null){ //tried adding outside of update room, still crashes game
             ratCage.addValidInitCollectable(inventory.getCollectableWithID("windowPoison"));
             ratCage.addValidSubCollectable(inventory.getCollectableWithID("windowPoison"));
         }
+        
+        if(poisonedRatInteraction) {
+            if (leaveAnnouncement.getState() == 1) {
+                leaveAnnouncement.changeState(0);
+                this.roomInhabitants.remove(leaveAnnouncement);
+        }
+    }
+        
 
         doorInteraction();
     }

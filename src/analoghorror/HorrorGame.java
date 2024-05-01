@@ -13,7 +13,7 @@ public class HorrorGame {
     private static final int CANVAS_HEIGHT = 480;
 
     private CanvasWindow canvas;
-    Collectable hand;  // TODO: Random hand asset
+    Collectable hand;
     Cursor activeCursor;
     GraphicsObject cursorDefault;
     GraphicsGroup cursor;
