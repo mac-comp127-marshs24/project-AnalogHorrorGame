@@ -65,8 +65,7 @@ public class LectureHallRoom extends Room {
             displayOverlay.removeAll();
         }
         else if (puzzle.getFailState()) {
-            roomInhabitants.add(new Image("assets" + File.separator + "nancy.jpg"));
-            scareDelay();
+            jumpscare();
         }
         if (puzzle.getSolved() && addedPoison == false) {
             this.roomInhabitants.add(poison);
@@ -82,16 +81,8 @@ public class LectureHallRoom extends Room {
         }
     }
 
-    private void scareDelay(){
-        long delay = 3000;
-        Timer jumpscareTimer = new Timer();
-        TimerTask jumpscareTask = new TimerTask() {
-            @Override
-            public void run() {
-                System.exit(0);
-            }
-        };
-        jumpscareTimer.schedule(jumpscareTask, delay);
+    public void jumpscare(){
+        displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        scareDelay();
     }
-
 }

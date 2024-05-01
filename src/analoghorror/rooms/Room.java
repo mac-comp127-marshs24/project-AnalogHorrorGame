@@ -1,6 +1,8 @@
 package analoghorror.rooms;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -53,6 +55,8 @@ public abstract class Room extends GraphicsGroup{
         backgroundImage.setImagePath(path);
     }
 
+    public abstract void jumpscare();
+
     //CREDIT: https://stackoverflow.com/questions/21369365/how-to-stop-a-sound-while-its-playing-from-another-method
     public void playSound(String filePath) {
         try {
@@ -71,4 +75,16 @@ public abstract class Room extends GraphicsGroup{
           System.err.println("Error playing sound: " + e.getMessage());
         }
       }
+
+    protected void scareDelay(){
+    long delay = 3000;
+    Timer jumpscareTimer = new Timer();
+    TimerTask jumpscareTask = new TimerTask() {
+        @Override
+        public void run() {
+            System.exit(0);
+        }
+    };
+    jumpscareTimer.schedule(jumpscareTask, delay);
+}
 }

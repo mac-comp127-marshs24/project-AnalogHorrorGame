@@ -6,6 +6,7 @@ import java.util.Arrays;
 import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 
 public class GreenChairsRoom extends Room {
     Collectable primaryCursor;
@@ -138,5 +139,8 @@ public class GreenChairsRoom extends Room {
         }
     }
 
-
+    public void jumpscare(){
+        displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        scareDelay();
+    }
 }

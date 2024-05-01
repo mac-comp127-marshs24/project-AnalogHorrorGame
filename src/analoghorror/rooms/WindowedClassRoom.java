@@ -1,5 +1,6 @@
 package analoghorror.rooms;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 
 import java.io.File;
 import java.util.Arrays;
@@ -86,4 +87,8 @@ public class WindowedClassRoom extends Room{
         }
     }
     
+    public void jumpscare(){
+        displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        scareDelay();
+    }
 }

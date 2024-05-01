@@ -3,6 +3,7 @@ package analoghorror;
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.events.*;
 
+import java.awt.Color;
 import java.io.File;
 
 import analoghorror.inhabitants.*;
@@ -13,12 +14,15 @@ public class HorrorGame {
     private static final int CANVAS_HEIGHT = 480;
 
     private CanvasWindow canvas;
+    boolean timerStarted;
     Collectable hand;
     Cursor activeCursor;
     GraphicsObject cursorDefault;
     GraphicsGroup cursor;
-
     GraphicsGroup displayOverlay;
+    GraphicsGroup timer;
+    long startTime;
+    GraphicsText timerText;
     
     Image background;
     Inventory inventory;
@@ -35,6 +39,7 @@ public class HorrorGame {
     }
 
     public HorrorGame() {
+        timerStarted = false;
         randomDouble = Math.random();
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
@@ -44,6 +49,11 @@ public class HorrorGame {
         cursor.add(activeCursor);
 
         displayOverlay = new GraphicsGroup();
+        timer = new GraphicsGroup();
+        timerText = new GraphicsText("null", 23, 39);
+        timerText.setFillColor(Color.RED);
+        timerText.setFontSize(30);
+        timer.add(timerText);
 
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
@@ -65,12 +75,31 @@ public class HorrorGame {
         canvas.add(inventory);
         canvas.add(cursor);
         canvas.add(displayOverlay);
+        canvas.add(timer);
         canvas.draw();
         gameLogic();
     }
 
     private void gameLogic() {
         // Move cursor with the mouse
+        canvas.animate(() -> {
+            if (inventory.getCollectableWithID("rat01") != null) {
+                if (!timerStarted) {
+                    startTime = System.currentTimeMillis();
+                    timerStarted = true;
+                }
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                long elapsedSeconds = elapsedTime / 1000;
+                long secondsDisplay = elapsedSeconds % 60;
+                // long elapsedMinutes = elapsedSeconds / 60;
+                if (30 - secondsDisplay == 0) {
+                    activeRoom.jumpscare();
+                    timer.removeAll();
+                }
+                timerText.setText("You should probably find your supplies within " + (30 - secondsDisplay) + " seconds.");
+                canvas.draw();
+            }
+        });       
         canvas.onMouseMove(event -> {
             activeCursor.setCenter(event.getPosition());
         });
@@ -97,6 +126,7 @@ public class HorrorGame {
             canvas.add(inventory);
             canvas.add(cursor);
             canvas.add(displayOverlay);
+            canvas.add(timer);
         }
         // System.out.println(activeRoom.getBackgroundImage() + " active room");  // TESTING
         System.out.println(event.getPosition());  // TESTING and used to find asset coordinates

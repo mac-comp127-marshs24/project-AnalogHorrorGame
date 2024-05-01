@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
@@ -107,5 +108,10 @@ public class HallwayRoom extends Room{
 
     public void addLectureHall(LectureHallRoom lectureHallRoom){
         this.lectureHallRoom = lectureHallRoom;
+    }
+
+    public void jumpscare(){
+        displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        scareDelay();
     }
 }
