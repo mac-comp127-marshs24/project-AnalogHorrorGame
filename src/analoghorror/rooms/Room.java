@@ -14,17 +14,16 @@ public abstract class Room extends GraphicsGroup{
     protected Image backgroundImage;
     protected Room activeRoom;
     protected boolean changeRoom;
+    protected GraphicsGroup displayOverlay;
 
-    public Room(String backgroundImage) {
+    public Room(String backgroundImage, GraphicsGroup overlayGroup) {
         super();
         roomInhabitants = new GraphicsGroup();
         this.backgroundImage = new Image(backgroundImage);
         add(this.backgroundImage);
         this.activeRoom = this;
+        this.displayOverlay = overlayGroup;
     }
-
-    //add items to item graphics group in room so not on same "layer" as bg
-    //idk it doesnt have to be on different "layers" aka graphics groups i just feel like its better to have that just in case? idk
 
     public GraphicsGroup getRoomInhabitants() {
         return roomInhabitants;
@@ -44,7 +43,7 @@ public abstract class Room extends GraphicsGroup{
     }
 
     public abstract void addRoomInhabitants();
-    public abstract void updateRoom(GraphicsGroup displayText);
+    public abstract void updateRoom();
 
     public Image getBackgroundImage(){
         return backgroundImage;

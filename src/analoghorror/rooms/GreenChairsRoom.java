@@ -1,4 +1,5 @@
 package analoghorror.rooms;
+
 import java.io.File;
 import java.util.Arrays;
 
@@ -6,7 +7,7 @@ import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
 
-public class GreenChairsRoom extends Room{
+public class GreenChairsRoom extends Room {
     Collectable primaryCursor;
     HallwayRoom hallway;
     Inventory inventory;
@@ -20,21 +21,21 @@ public class GreenChairsRoom extends Room{
     boolean poisonedRatInteraction;
     boolean roomScare;
 
-    public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
-        super(backgroundImage);
+    public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
+        super(backgroundImage, displayOverlay);
         this.hallway = hallway;
         this.inventory = inventory;
-        primaryCursor =  hand;
+        primaryCursor = hand;
         changeRoom = false;
         poisonedRatInteraction = false;
         roomScare = false;
         addRoomInhabitants();
     }
 
-    //add items to roomInhabitants here
-	@Override
-	public void addRoomInhabitants() {
-		door = new Item(716, 60,
+    // add items to roomInhabitants here
+    @Override
+    public void addRoomInhabitants() {
+        door = new Item(716, 60,
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "greenChairRoomDoorClosed.png", false, 2);
         door.setStatePaths(Arrays.asList(
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "greenChairRoomDoorClosed.png",
@@ -70,32 +71,29 @@ public class GreenChairsRoom extends Room{
         windowBoxKey.setInventoryPath("assets" + File.separator + "GreenChairsRoom" + File.separator + "brassKey.png");
         this.roomInhabitants.add(windowBoxKey);
 
-        // ratCage.addValidInitCollectable(primaryCursor);
-        // ratCage.addValidSubCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
 
         add(roomInhabitants);
     }
 
-    public void doorInteraction(){
+    public void doorInteraction() {
         if (door.getState() == 1) {
             if (poisonedRatInteraction && roomScare == false) {
-                super.setBackgroundImage("assets" + File.separator + "GreenChairsRoom" + File.separator + "shadowGreenChairsRoomBG.png");
+                super.setBackgroundImage(
+                    "assets" + File.separator + "GreenChairsRoom" + File.separator + "shadowGreenChairsRoomBG.png");
                 roomScare = true;
-            }
-            else if (poisonedRatInteraction && roomScare) {
-                super.setBackgroundImage("assets" + File.separator + "GreenChairsRoom" + File.separator + "slimeGreenChairsRoomBG.png");
+            } else if (poisonedRatInteraction && roomScare) {
+                super.setBackgroundImage(
+                    "assets" + File.separator + "GreenChairsRoom" + File.separator + "slimeGreenChairsRoomBG.png");
             }
             changeRoom = true;
-            // System.out.println("room change");  // TESTING
-            // setActiveRoom(hallway.getActiveRoom());  // Might be redundant structure
             changeRoom();
         }
     }
-   
+
     @Override
-    public void updateRoom(GraphicsGroup displayText) {
+    public void updateRoom() {
         if (ratCage.getState() == 3 && poisonedRatInteraction == false) {
             this.roomInhabitants.add(poisonedRat);
             poisonedRatInteraction = true;
@@ -132,14 +130,13 @@ public class GreenChairsRoom extends Room{
         doorInteraction();
     }
 
-    private void changeRoom(){
-        if(changeRoom){ //change changeRoom to a specific click event?
-            //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
+    private void changeRoom() {
+        if (changeRoom) {
             hallway.resetActiveRoom();
             setActiveRoom(hallway.getActiveRoom());
             door.changeState(0);
         }
     }
 
-    
+
 }

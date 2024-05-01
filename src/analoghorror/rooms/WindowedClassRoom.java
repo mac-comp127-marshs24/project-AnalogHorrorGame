@@ -22,8 +22,8 @@ public class WindowedClassRoom extends Room{
     boolean addedPoison;
     
 
-    public WindowedClassRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
-        super(backgroundImage);
+    public WindowedClassRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
+        super(backgroundImage, displayOverlay);
         this.hallway = hallway;
         this.inventory = inventory;
         primaryCursor = hand;
@@ -65,7 +65,7 @@ public class WindowedClassRoom extends Room{
     }
 
     @Override
-    public void updateRoom(GraphicsGroup displayText) {
+    public void updateRoom() {
         if (inventory.getCollectableWithID("windowBoxKey") != null && (inventory.getCollectableWithID("windowBoxKey").getUsed())) {
            this.roomInhabitants.add(poison);
            addedPoison = true;

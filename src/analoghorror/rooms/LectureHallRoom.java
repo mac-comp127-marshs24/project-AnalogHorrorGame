@@ -4,8 +4,6 @@ import edu.macalester.graphics.Image;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
@@ -15,14 +13,13 @@ public class LectureHallRoom extends Room {
     HallwayRoom hallway;
     Inventory inventory;
     boolean addedPoison;
-    //TODO: Replace with actual items
     Item door;
     Puzzle puzzle;
     Collectable poison;
 
 
-    public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory) {
-        super(backgroundImage);
+    public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
+        super(backgroundImage, displayOverlay);
         this.hallway = hallway;
         this.inventory = inventory;
         primaryCursor =  hand;
@@ -41,7 +38,6 @@ public class LectureHallRoom extends Room {
         poison.setInventoryPath("assets" + File.separator + "poison.png");
 
 
-        //TODO: Continue implementing puzzle
         puzzle = new Puzzle(700, 125, false, 10, this);
         puzzle.addValidInitCollectable(primaryCursor);
         puzzle.addValidSubCollectable(primaryCursor);
@@ -61,53 +57,43 @@ public class LectureHallRoom extends Room {
     }
 
     @Override
-    public void updateRoom(GraphicsGroup displayText) {
-        doorInteraction();
-        if (puzzle.getSolved() && addedPoison == false) {
-            this.roomInhabitants.add(poison);
-           addedPoison = true;
-        }
-        if (puzzle.getFailState() == true) {
-            // displayText.add(jumpscare);
-        }
-        //puzzleMinigame(); //jumpscare (really cool)
-    }
-
     public void updateRoom() {
+        doorInteraction();
+        if (displayOverlay.getWidth() != 0) {
+            displayOverlay.removeAll();
+        }
+        else if (puzzle.getFailState()) {
+            displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        }
         if (puzzle.getSolved() && addedPoison == false) {
             this.roomInhabitants.add(poison);
            addedPoison = true;
         }
-        if (puzzle.getFailState() == true) {
-            // displayText.add(jumpscare);
-        }
-        //puzzleMinigame(); //jumpscare (really cool)
     }
 
     private void changeRoom(){
-        if(changeRoom){ //change changeRoom to a specific click event?
-            //TODO: setActiveRoom should change the active room to the inputted new room, but ensure that is reflected on the canvas
+        if(changeRoom){
             hallway.resetActiveRoom();
             setActiveRoom(hallway.getActiveRoom());
             door.changeState(0);
         }
     }
 
-    private void puzzleMinigame(){
-        long delay = 3000;
-        Timer jumpscareTimer = new Timer();
-        TimerTask jumpscareTask = new TimerTask() {
-            @Override
-            public void run() {
-                if(puzzle.getState() != 10){
-                    roomInhabitants.add(new Image("assets" + File.separator + "nancy.jpg"));
-                }
-            }
-        };
+    // private void puzzleMinigame(){
+    //     long delay = 3000;
+    //     Timer jumpscareTimer = new Timer();
+    //     TimerTask jumpscareTask = new TimerTask() {
+    //         @Override
+    //         public void run() {
+    //             if(puzzle.getState() != 10){
+    //                 roomInhabitants.add(new Image("assets" + File.separator + "nancy.jpg"));
+    //             }
+    //         }
+    //     };
 
-        if(puzzle.getState() != 0){
-            jumpscareTimer.schedule(jumpscareTask, delay);
-        }
-    }
+    //     if(puzzle.getState() != 0){
+    //         jumpscareTimer.schedule(jumpscareTask, delay);
+    //     }
+    // }
 
 }

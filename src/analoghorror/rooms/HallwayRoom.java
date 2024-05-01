@@ -24,8 +24,8 @@ public class HallwayRoom extends Room{
     boolean hasTextBeenShown;
     
 
-    public HallwayRoom(Collectable hand, String backgroundImage){
-        super(backgroundImage);
+    public HallwayRoom(Collectable hand, String backgroundImage, GraphicsGroup displayOverlay){
+        super(backgroundImage, displayOverlay);
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
@@ -34,15 +34,6 @@ public class HallwayRoom extends Room{
     }
 
     public void addRoomInhabitants(){
-
-        // box = new Item(255, 286, "assets" + File.separator + "chestClosed.png", false, 2);
-        // box.setStatePaths(Arrays.asList("assets" + File.separator + "chestClosed.png", "assets" + File.separator + "chestOpen.png"));
-        // this.roomInhabitants.add(box);  // Add to this.roomInhabitants
-
-        // key = new Collectable(60, 205, "assets" + File.separator + "silverKey.png", "key02");
-        // this.roomInhabitants.add(key);
-        // box.addValidInitCollectable(key);  // Add the Collectable to the internal validCollectable Sets for the Item
-
         /*Doors */
         doorA = new Item(660, -30, "assets" + File.separator + "Door1Closed.png", false, 2);
         doorA.setStatePaths(Arrays.asList("assets" + File.separator + "Door1Closed.png", "assets" + File.separator + "Door1.png"));
@@ -56,28 +47,16 @@ public class HallwayRoom extends Room{
         doorC.setStatePaths(Arrays.asList("assets" + File.separator + "Door3Closed.png", "assets" + File.separator + "Door3.png"));
         this.roomInhabitants.add(doorC);
 
-        // sonic = new Item(778, 70, "assets" + File.separator + "sonicForward.png", true, 4);
-        // sonic.setStatePaths(Arrays.asList("assets" + File.separator + "sonicForward.png", "assets" + File.separator + "sonicDown.png",
-        // "assets" + File.separator + "sonicBack.png", "assets" + File.separator + "sonicUp.png"));
-        // this.roomInhabitants.add(sonic);
-        // sonic.addValidInitCollectable(primaryCursor);
-        // sonic.addValidSubCollectable(primaryCursor);
-
         card = new Collectable(458, 325, "assets" + File.separator + "cardOnFloor.png", "card02");
         card.setInventoryPath("assets" + File.separator + "studentCard.png");
         this.roomInhabitants.add(card);
 
-        // box.addValidSubCollectable(primaryCursor);
-
         /*Door key interaction */
         doorA.addValidInitCollectable(card);
-        // doorA.addValidInitCollectable(key);
 
         doorB.addValidInitCollectable(card);
-        // doorB.addValidInitCollectable(key);
 
         doorC.addValidInitCollectable(card);
-        // doorC.addValidInitCollectable(key);
 
         doorA.addValidSubCollectable(primaryCursor);
         doorB.addValidSubCollectable(primaryCursor);
@@ -87,28 +66,14 @@ public class HallwayRoom extends Room{
     }
 
     public void doorInteraction(){
-        // System.out.println(doorA.getState() + " state");
-        // System.out.println(changeRoom + " before conditional");
         if (doorA.getState() == 1 || doorB.getState() == 1 || doorC.getState() == 1) {
             changeRoom = true;
-            // System.out.println(changeRoom + " after conditional");
-            // System.out.println("room change");  // TESTING
-            // setActiveRoom(chairClassroom.getActiveRoom());  // Might be redundant structure
             changeRoom();
         }
     }
     
     @Override
-    public void updateRoom(GraphicsGroup displayText) {
-        // System.out.println(displayText + " dt");
-        // System.out.println(box.getState() +" bs");
-        // if (displayText.getWidth() != 0) {
-        //     displayText.removeAll();
-        // }
-        // else if (box.getState() == 1 && hasTextBeenShown == false) {
-        //     displayText.add(new Image("assets" + File.separator + "sampleText.png"));
-        //     hasTextBeenShown = true;
-        // }
+    public void updateRoom() {
         doorInteraction();
     }
 

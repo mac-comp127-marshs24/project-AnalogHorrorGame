@@ -133,6 +133,7 @@ public class Puzzle extends Item {
     private void scareTaskBehavior() {
         failState = true;
         System.out.println("Yeah you die");
+        homeRoom.updateRoom();
     }
 
     public boolean getSolved() {

@@ -18,7 +18,7 @@ public class HorrorGame {
     GraphicsObject cursorDefault;
     GraphicsGroup cursor;
 
-    GraphicsGroup displayText;
+    GraphicsGroup displayOverlay;
     
     Image background;
     Inventory inventory;
@@ -43,16 +43,16 @@ public class HorrorGame {
         activeCursor.resetCursor();
         cursor.add(activeCursor);
 
-        displayText = new GraphicsGroup();
+        displayOverlay = new GraphicsGroup();
 
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
 
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
-        hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png");
-        greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory);
-        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHall.png", inventory);
-        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "WindowRoom.png", inventory);
+        hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png", displayOverlay);
+        greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory, displayOverlay);
+        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHall.png", inventory, displayOverlay);
+        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "WindowRoom.png", inventory, displayOverlay);
         hallway.addChairClassroom(greenChairsRoom);
         hallway.addLectureHall(lectureHallRoom);
         hallway.addWindowedClassroom(windowedClassRoom);
@@ -64,7 +64,7 @@ public class HorrorGame {
         canvas.add(activeRoom);
         canvas.add(inventory);
         canvas.add(cursor);
-        canvas.add(displayText);
+        canvas.add(displayOverlay);
         canvas.draw();
         gameLogic();
     }
@@ -89,14 +89,14 @@ public class HorrorGame {
         clickInventoryCollectableInteractions(event);
         clickCollectableItemInteractions(event);
         canvas.draw();
-        activeRoom.updateRoom(displayText);
+        activeRoom.updateRoom();
         if (activeRoom != activeRoom.getActiveRoom()) {
             canvas.removeAll();
             activeRoom = activeRoom.getActiveRoom();
             canvas.add(activeRoom);
             canvas.add(inventory);
             canvas.add(cursor);
-            canvas.add(displayText);
+            canvas.add(displayOverlay);
         }
         // System.out.println(activeRoom.getBackgroundImage() + " active room");  // TESTING
         System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
