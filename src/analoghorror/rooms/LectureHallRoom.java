@@ -4,6 +4,8 @@ import edu.macalester.graphics.Image;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
@@ -63,7 +65,8 @@ public class LectureHallRoom extends Room {
             displayOverlay.removeAll();
         }
         else if (puzzle.getFailState()) {
-            displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+            roomInhabitants.add(new Image("assets" + File.separator + "nancy.jpg"));
+            scareDelay();
         }
         if (puzzle.getSolved() && addedPoison == false) {
             this.roomInhabitants.add(poison);
@@ -79,21 +82,16 @@ public class LectureHallRoom extends Room {
         }
     }
 
-    // private void puzzleMinigame(){
-    //     long delay = 3000;
-    //     Timer jumpscareTimer = new Timer();
-    //     TimerTask jumpscareTask = new TimerTask() {
-    //         @Override
-    //         public void run() {
-    //             if(puzzle.getState() != 10){
-    //                 roomInhabitants.add(new Image("assets" + File.separator + "nancy.jpg"));
-    //             }
-    //         }
-    //     };
-
-    //     if(puzzle.getState() != 0){
-    //         jumpscareTimer.schedule(jumpscareTask, delay);
-    //     }
-    // }
+    private void scareDelay(){
+        long delay = 3000;
+        Timer jumpscareTimer = new Timer();
+        TimerTask jumpscareTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        };
+        jumpscareTimer.schedule(jumpscareTask, delay);
+    }
 
 }
