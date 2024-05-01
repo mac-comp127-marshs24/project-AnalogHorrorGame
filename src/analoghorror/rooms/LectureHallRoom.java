@@ -17,7 +17,7 @@ public class LectureHallRoom extends Room {
     boolean addedPoison;
     //TODO: Replace with actual items
     Item door;
-    Item puzzle;
+    Puzzle puzzle;
     Collectable poison;
 
 
@@ -41,23 +41,7 @@ public class LectureHallRoom extends Room {
 
 
         //TODO: Continue implementing puzzle
-        puzzle = new Item(700, 125, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
-        puzzle.setStatePaths(Arrays.asList(
-        "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png",
-
-        "assets" + File.separator + "puzzle" + File.separator + "botRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "botMidPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "botLeftPuzzleBoard.png", 
-        
-
-        "assets" + File.separator + "puzzle" + File.separator + "midRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "midMidPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "midLeftPuzzleBoard.png",
-        
-
-        "assets" + File.separator + "puzzle" + File.separator + "topRightPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "topMidPuzzleBoard.png",
-        "assets" + File.separator + "puzzle" + File.separator + "topLeftPuzzleBoard.png"));
+        puzzle = new Puzzle(700, 125, false, 10);
         puzzle.addValidInitCollectable(primaryCursor);
         puzzle.addValidSubCollectable(primaryCursor);
         roomInhabitants.add(puzzle);
