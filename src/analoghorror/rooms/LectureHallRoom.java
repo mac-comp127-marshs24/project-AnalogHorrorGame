@@ -66,6 +66,9 @@ public class LectureHallRoom extends Room {
             this.roomInhabitants.add(poison);
            addedPoison = true;
         }
+        if (puzzle.getFailState() == true) {
+            // displayText.add(jumpscare);
+        }
         //puzzleMinigame(); //jumpscare (really cool)
     }
 

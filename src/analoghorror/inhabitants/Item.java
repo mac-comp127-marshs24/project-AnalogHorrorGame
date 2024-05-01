@@ -140,7 +140,7 @@ public class Item extends Image{
      * @param set
      * @return true if the specified Collectable is found in the internal Set specified
      */
-    private boolean collectableIsValid(Collectable collectable, Set<String> set){
+    protected boolean collectableIsValid(Collectable collectable, Set<String> set){
         return set.contains(collectable.getIDString());
     }
 
