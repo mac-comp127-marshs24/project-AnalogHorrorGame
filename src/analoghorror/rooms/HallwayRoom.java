@@ -14,6 +14,7 @@ public class HallwayRoom extends Room{
     boolean playerDeath;
     boolean startDisplay;
     boolean introDisplay;
+    boolean youWin;
 
     Collectable primaryCursor;
     GreenChairsRoom greenChairsRoom;
@@ -39,6 +40,7 @@ public class HallwayRoom extends Room{
         introDisplay = false;
         piperDeath = false;
         playerDeath = false;
+        youWin = false;
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
@@ -94,9 +96,13 @@ public class HallwayRoom extends Room{
     
     @Override
     public void updateRoom() {
+        System.out.println("updateHallwayRoom called");
         ambientSound();
-        if (displayOverlay.getWidth() != 0) {
+        if (displayOverlay.getWidth() != 0 && !youWin) {
             displayOverlay.removeAll();
+        }
+        if (displayOverlay.getWidth() != 0 && youWin) {
+            scareDelay();
         }
         introDisplay();
         startDisplay();
@@ -110,6 +116,7 @@ public class HallwayRoom extends Room{
             System.out.println("They are dead");
             piperDeath = true;
             piper.piperEnd();
+            youWin();
             // killed
         }
         if (piper.getState() == 4) {  // or 5
@@ -177,13 +184,19 @@ public class HallwayRoom extends Room{
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "start.png"));
             startDisplay = true;
         }
-
     }
 
     private void introDisplay(){
         if (startDisplay && !introDisplay) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "intro.png"));
             introDisplay = true;
+        }
+    }
+
+    private void youWin(){
+        if (!youWin) {
+            displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "youWin.png"));
+            youWin = true;
         }
     }
 }

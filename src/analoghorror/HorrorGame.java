@@ -16,6 +16,7 @@ public class HorrorGame {
     private boolean timerStarted;
     private boolean laptopSpawned;
     private boolean finalMonster;
+    private boolean bagpipeNoise;
 
     private double randomDouble;
     private long startTime;
@@ -44,6 +45,7 @@ public class HorrorGame {
         timerStarted = false;
         laptopSpawned = false;
         finalMonster = false;
+        bagpipeNoise = false;
         randomDouble = Math.random();
         canvas = new CanvasWindow("Biology Majors Be Like", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
@@ -112,6 +114,10 @@ public class HorrorGame {
                 }
             } else {
                 timerText.setText("");
+                if (!bagpipeNoise) {
+                    displayOverlay.add(new Image ("assets" + File.separator + "overlays" + File.separator + "bagpipeNoise.png"));
+                    bagpipeNoise = true;
+                }
                 // Play scary pipe scream
                 if (activeRoom == hallway && finalMonster == false) {
                     hallway.finalScare();

@@ -9,7 +9,8 @@ import analoghorror.rooms.HallwayRoom;
 
 public class Piper extends Item {
     HallwayRoom homeRoom;
-    Boolean startedFrameLoop;
+    boolean startedFrameLoop;
+    boolean piperDead;
     int numberOfFrameLoops;
     Timer frameTimer;
     TimerTask changeFrame;
@@ -21,6 +22,7 @@ public class Piper extends Item {
         frameDelay = 1000;
         homeRoom = hallway;
         startedFrameLoop = false;
+        piperDead = false;
         numberOfFrameLoops = 0;
         setStatePaths(Arrays.asList(
             "assets" + File.separator + "piper" + File.separator + "frame0.png",
@@ -47,7 +49,7 @@ public class Piper extends Item {
             currentState++;
             // System.out.println("State after ++ " + currentState);
             setImagePath(itemTextures.get(currentState));
-            if (itemStates == 4) {
+            if (itemStates == 4 && !piperDead) {
                 homeRoom.updateRoom();
             }
         }
@@ -71,6 +73,7 @@ public class Piper extends Item {
         }
     }
     public void piperEnd(){
+        piperDead = true;
         // stop all timers?
     }
 }
