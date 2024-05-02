@@ -105,7 +105,7 @@ public class HorrorGame {
                         timer.removeAll();
                     }
                     timerText.setText(
-                        "You should probably find your laptop within " + (30 - secondsDisplay) + " seconds.");
+                        "You have " + (30 - secondsDisplay) + " seconds.");
                     canvas.draw();
                 }
             } else {

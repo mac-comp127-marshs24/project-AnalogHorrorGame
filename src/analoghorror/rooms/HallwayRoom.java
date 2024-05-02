@@ -12,7 +12,7 @@ public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
     boolean piperDeath;
     Collectable primaryCursor;
-    GreenChairsRoom chairClassroom;
+    GreenChairsRoom greenChairsRoom;
     LectureHallRoom lectureHallRoom;
     WindowedClassRoom windowedClassRoom;
     Item box;
@@ -20,9 +20,9 @@ public class HallwayRoom extends Room{
     boolean jumpscarePresent;
     Inventory inventory;
 
-    Item doorA;
-    Item doorB;
-    Item doorC;
+    Item greenChairsRoomDoor;
+    Item lectureHallRoomDoor;
+    Item windowedClassRoomDoor;
 
     Piper piper;
 
@@ -46,17 +46,17 @@ public class HallwayRoom extends Room{
 
     public void addRoomInhabitants(){
         /*Doors */
-        doorA = new Item(660, -30, "assets" + File.separator + "Door1Closed.png", false, 2);
-        doorA.setStatePaths(Arrays.asList("assets" + File.separator + "Door1Closed.png", "assets" + File.separator + "Door1.png"));
-        this.roomInhabitants.add(doorA);
+        greenChairsRoomDoor = new Item(660, -30, "assets" + File.separator + "Door1Closed.png", false, 2);
+        greenChairsRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "Door1Closed.png", "assets" + File.separator + "Door1.png"));
+        this.roomInhabitants.add(greenChairsRoomDoor);
 
-        doorB = new Item(528, 130, "assets" + File.separator + "Door2Closed.png", false, 2);
-        doorB.setStatePaths(Arrays.asList("assets" + File.separator + "Door2Closed.png", "assets" + File.separator + "Door2.png"));
-        this.roomInhabitants.add(doorB);
+        lectureHallRoomDoor = new Item(528, 130, "assets" + File.separator + "Door2Closed.png", false, 2);
+        lectureHallRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "Door2Closed.png", "assets" + File.separator + "Door2.png"));
+        this.roomInhabitants.add(lectureHallRoomDoor);
 
-        doorC = new Item(288, 85, "assets" + File.separator + "Door3Closed.png", false, 2);
-        doorC.setStatePaths(Arrays.asList("assets" + File.separator + "Door3Closed.png", "assets" + File.separator + "Door3.png"));
-        this.roomInhabitants.add(doorC);
+        windowedClassRoomDoor = new Item(288, 85, "assets" + File.separator + "Door3Closed.png", false, 2);
+        windowedClassRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "Door3Closed.png", "assets" + File.separator + "Door3.png"));
+        this.roomInhabitants.add(windowedClassRoomDoor);
 
         card = new Collectable(458, 325, "assets" + File.separator + "cardOnFloor.png", "card02");
         card.setInventoryPath("assets" + File.separator + "studentCard.png");
@@ -65,21 +65,21 @@ public class HallwayRoom extends Room{
         piper = new Piper(0, 0, this);
 
         /*Door key interaction */
-        doorA.addValidInitCollectable(card);
+        greenChairsRoomDoor.addValidInitCollectable(card);
 
-        doorB.addValidInitCollectable(card);
+        lectureHallRoomDoor.addValidInitCollectable(card);
 
-        doorC.addValidInitCollectable(card);
+        windowedClassRoomDoor.addValidInitCollectable(card);
 
-        doorA.addValidSubCollectable(primaryCursor);
-        doorB.addValidSubCollectable(primaryCursor);
-        doorC.addValidSubCollectable(primaryCursor);
+        greenChairsRoomDoor.addValidSubCollectable(primaryCursor);
+        lectureHallRoomDoor.addValidSubCollectable(primaryCursor);
+        windowedClassRoomDoor.addValidSubCollectable(primaryCursor);
 
         add(roomInhabitants);
     }
 
     public void doorInteraction(){
-        if (doorA.getState() == 1 || doorB.getState() == 1 || doorC.getState() == 1) {
+        if (greenChairsRoomDoor.getState() == 1 || lectureHallRoomDoor.getState() == 1 || windowedClassRoomDoor.getState() == 1) {
             changeRoom = true;
             changeRoom();
         }
@@ -108,22 +108,22 @@ public class HallwayRoom extends Room{
     }
 
     private void changeRoom(){
-        if(changeRoom && doorA.getState() == 1){ 
-            chairClassroom.resetActiveRoom();
-            setActiveRoom(chairClassroom.getActiveRoom());
-            doorA.changeState(0);
+        if(changeRoom && greenChairsRoomDoor.getState() == 1){ 
+            greenChairsRoom.resetActiveRoom();
+            setActiveRoom(greenChairsRoom.getActiveRoom());
+            greenChairsRoomDoor.changeState(0);
         }
 
-        else if(changeRoom && doorB.getState() == 1){
+        else if(changeRoom && lectureHallRoomDoor.getState() == 1){
             lectureHallRoom.resetActiveRoom();
             setActiveRoom(lectureHallRoom.getActiveRoom());
-            doorB.changeState(0);
+            lectureHallRoomDoor.changeState(0);
         }
 
-        else if(changeRoom && doorC.getState() == 1){
+        else if(changeRoom && windowedClassRoomDoor.getState() == 1){
             windowedClassRoom.resetActiveRoom();
             setActiveRoom(windowedClassRoom.getActiveRoom());
-            doorC.changeState(0);
+            windowedClassRoomDoor.changeState(0);
         }
     }
 
@@ -134,7 +134,7 @@ public class HallwayRoom extends Room{
     }
     
     public void addChairClassroom(GreenChairsRoom chairClassroom){
-        this.chairClassroom = chairClassroom;
+        this.greenChairsRoom = chairClassroom;
     }
 
     public void addWindowedClassroom(WindowedClassRoom windowedClassRoom){

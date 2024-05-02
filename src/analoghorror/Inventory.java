@@ -124,16 +124,10 @@ public class Inventory extends GraphicsGroup{
     public void assignCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor, MouseButtonEvent event){
         // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
         cursor.setCursor(collectable);
-        System.out.println("Collectable is cursor");
         collectableLayer.remove(cursor.getCursor());
-        System.out.println("Collectable was removed from CollectableLayer");
         cursorGroup.add(cursor);
-        System.out.println("Collectable is in cursorGroup");
         cursor.setCenter(event.getPosition());
-        System.out.println("Collectable is is centered on cursor");
         collectable.setInInventory(false);  // CollectableItem is out of inventory
-        System.out.println("Collectable is not in Inventory");
-
     }
 
     public int getAvailableSlotIndex(){
