@@ -14,6 +14,7 @@ public class HallwayRoom extends Room{
     WindowedClassRoom windowedClassRoom;
     Item box;
     Collectable key;
+    boolean jumpscarePresent;
 
     Item doorA;
     Item doorB;
@@ -30,7 +31,8 @@ public class HallwayRoom extends Room{
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
-        // playSound("res\\assets\\Audio\\hello.wav");  //SOUND ADDED TO GAME INSANE!!!!
+        jumpscarePresent = false;
+         //SOUND ADDED TO GAME INSANE!!!!
         addRoomInhabitants();
     }
 
@@ -75,6 +77,7 @@ public class HallwayRoom extends Room{
     
     @Override
     public void updateRoom() {
+        ambientSound();
         doorInteraction();
     }
 
@@ -95,6 +98,12 @@ public class HallwayRoom extends Room{
             windowedClassRoom.resetActiveRoom();
             setActiveRoom(windowedClassRoom.getActiveRoom());
             doorC.changeState(0);
+        }
+    }
+
+    private void ambientSound(){
+        if (jumpscarePresent ==  false) {
+            playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "ambientBG.wav");
         }
     }
     
