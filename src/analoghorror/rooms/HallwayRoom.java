@@ -10,6 +10,7 @@ import edu.macalester.graphics.Image;
 
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
+    boolean piperDeath;
     Collectable primaryCursor;
     GreenChairsRoom chairClassroom;
     LectureHallRoom lectureHallRoom;
@@ -33,6 +34,7 @@ public class HallwayRoom extends Room{
 
     public HallwayRoom(Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay){
         super(backgroundImage, displayOverlay);
+        piperDeath = false;
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
@@ -92,8 +94,9 @@ public class HallwayRoom extends Room{
             piper.addValidSubCollectable(inventory.getCollectableWithID("rat01"));
 
         }
-        if (piper.getState() == 0) {
+        if (piper.getState() == 0 && piperDeath == false) {
             System.out.println("They are dead");
+            piperDeath = true;
             piper.piperEnd();
             // killed
         }
