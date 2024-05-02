@@ -16,6 +16,7 @@ public class LectureHallRoom extends Room {
     Inventory inventory;
     boolean addedPoison;
     Item door;
+    Item clunk;
     Puzzle puzzle;
     Collectable poison;
 
@@ -46,6 +47,13 @@ public class LectureHallRoom extends Room {
         puzzle.addValidSubCollectable(primaryCursor);
         roomInhabitants.add(puzzle);
 
+        clunk = new Item(0, 0,
+            "assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png", true, 2);
+        clunk
+            .setStatePaths(Arrays.asList("assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png",
+                "assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png"));
+
+
         door.addValidInitCollectable(primaryCursor);
         door.addValidSubCollectable(primaryCursor);
 
@@ -72,6 +80,11 @@ public class LectureHallRoom extends Room {
             this.roomInhabitants.add(poison);
            addedPoison = true;
         }
+        if (clunk.getState() == 1) {
+            clunk.changeState(0);
+            this.roomInhabitants.remove(clunk);
+            
+        }
     }
 
     private void changeRoom(){
@@ -85,5 +98,11 @@ public class LectureHallRoom extends Room {
     public void jumpscare(){
         displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
         scareDelay();
+    }
+
+    public void clunk(){
+        this.roomInhabitants.add(clunk);
+        clunk.addValidInitCollectable(primaryCursor);
+        clunk.addValidSubCollectable(primaryCursor);
     }
 }

@@ -117,7 +117,7 @@ public class Puzzle extends Item {
     }
 
     private void clunkTaskBehavior() {
-        System.out.println("Clunk!");
+        homeRoom.clunk();
         attemptedClears++;
         scheduled = false;
         if (currentState == 9) {
