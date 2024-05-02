@@ -17,6 +17,7 @@ public abstract class Room extends GraphicsGroup{
     protected Room activeRoom;
     protected boolean changeRoom;
     protected GraphicsGroup displayOverlay;
+    Clip clip;
 
     public Room(String backgroundImage, GraphicsGroup overlayGroup) {
         super();
@@ -62,7 +63,7 @@ public abstract class Room extends GraphicsGroup{
         try {
           // loads sound 
           AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath));
-          Clip clip = AudioSystem.getClip();
+          clip = AudioSystem.getClip();
           clip.open(audioInputStream);
       
           // plays sound
@@ -75,6 +76,14 @@ public abstract class Room extends GraphicsGroup{
           System.err.println("Error playing sound: " + e.getMessage());
         }
       }
+    
+    public void loopSound(int numOfLoops){
+        clip.loop(numOfLoops);
+    }
+
+    public void stopSound(){
+        clip.stop();
+    }
 
     protected void scareDelay(){
     long delay = 3000;

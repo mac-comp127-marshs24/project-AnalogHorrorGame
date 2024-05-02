@@ -101,9 +101,13 @@ public class HallwayRoom extends Room{
         }
     }
 
+    //TODO: work on stop sound method
     private void ambientSound(){
         if (jumpscarePresent ==  false) {
             playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "ambientBG.wav");
+        }
+        else{
+            stopSound();
         }
     }
     
@@ -120,6 +124,7 @@ public class HallwayRoom extends Room{
     }
 
     public void jumpscare(){
+        jumpscarePresent = true;
         displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
         scareDelay();
     }

@@ -8,7 +8,7 @@ import analoghorror.Inventory;
 public class Collectable extends Image {
     boolean inInventory;  // True if CollectableItem is in inventory
     boolean used;  // True if Collectable successfully interacted with an Item at least once
-    Point inventorySlot;  // Inventory space; TODO: Have an inventory class to help with slot management
+    Point inventorySlot;  // Inventory space; 
     String collectableID;
     String inventoryPath;
 
