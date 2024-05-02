@@ -50,7 +50,7 @@ public class HorrorGame {
 
         displayOverlay = new GraphicsGroup();
         timer = new GraphicsGroup();
-        timerText = new GraphicsText("null", 23, 39);
+        timerText = new GraphicsText("", 23, 39);
         timerText.setFillColor(Color.RED);
         timerText.setFontSize(30);
         timer.add(timerText);
