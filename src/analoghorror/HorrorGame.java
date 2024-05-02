@@ -63,7 +63,7 @@ public class HorrorGame {
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
 
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
-        hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png", displayOverlay);
+        hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png", inventory, displayOverlay);
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory, displayOverlay);
         lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomBG.png", inventory, displayOverlay);
         windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomBG.png", inventory, displayOverlay);
@@ -107,6 +107,7 @@ public class HorrorGame {
                 }
             } else {
                 timerText.setText("");
+                // Play scary pipe scream
                 if (activeRoom == hallway && finalMonster == false) {
                     hallway.finalScare();
                     finalMonster = true;
