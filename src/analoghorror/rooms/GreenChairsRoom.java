@@ -22,6 +22,7 @@ public class GreenChairsRoom extends Room {
     Collectable poison;
     boolean poisonedRatInteraction;
     boolean roomScare;
+    boolean leaveAfterAnnouncement;
 
     public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
         super(backgroundImage, displayOverlay);
@@ -99,6 +100,9 @@ public class GreenChairsRoom extends Room {
 
     @Override
     public void updateRoom() {
+        if (displayOverlay.getWidth() != 0) {
+                displayOverlay.removeAll();
+        }
         if (ratCage.getState() == 3 && poisonedRatInteraction == false) {
             this.roomInhabitants.add(poisonedRat);
             poisonedRatInteraction = true;
@@ -118,6 +122,7 @@ public class GreenChairsRoom extends Room {
             if (leaveAnnouncement.getState() == 1) {
                 leaveAnnouncement.changeState(0);
                 this.roomInhabitants.remove(leaveAnnouncement);
+                leaveAfterAnnouncement();
             }
         }
         if (inventory.getCollectableWithID("windowPoison") != null
@@ -150,5 +155,12 @@ public class GreenChairsRoom extends Room {
 
     public void spawnOpenLaptop() {
         this.roomInhabitants.add(openLaptop);
+    }
+
+    private void leaveAfterAnnouncement(){
+        if (!leaveAfterAnnouncement) {
+            displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "leaveAfterAnnouncement.png"));
+            leaveAfterAnnouncement = true;
+        }
     }
 }

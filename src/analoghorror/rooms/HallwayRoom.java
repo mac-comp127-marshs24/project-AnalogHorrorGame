@@ -11,6 +11,7 @@ import edu.macalester.graphics.Image;
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
     boolean piperDeath;
+    boolean playerDeath;
     boolean startDisplay;
     boolean introDisplay;
 
@@ -37,6 +38,7 @@ public class HallwayRoom extends Room{
         startDisplay = false;
         introDisplay = false;
         piperDeath = false;
+        playerDeath = false;
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
@@ -104,7 +106,7 @@ public class HallwayRoom extends Room{
             piper.addValidSubCollectable(inventory.getCollectableWithID("rat01"));
 
         }
-        if (piper.getState() == 0 && piperDeath == false) {
+        if (piper.getState() == 0 && piperDeath == false && playerDeath == false) {
             System.out.println("They are dead");
             piperDeath = true;
             piper.piperEnd();
@@ -112,8 +114,9 @@ public class HallwayRoom extends Room{
         }
         if (piper.getState() == 4) {  // or 5
             System.out.println("You are dead");
+            playerDeath = true;
             // monster wins
-            scareDelay();
+            scareDelay();  // closes game
         }
     }
 
@@ -122,18 +125,21 @@ public class HallwayRoom extends Room{
             greenChairsRoom.resetActiveRoom();
             setActiveRoom(greenChairsRoom.getActiveRoom());
             greenChairsRoomDoor.changeState(0);
+            greenChairsRoom.updateRoom();
         }
 
         else if(changeRoom && lectureHallRoomDoor.getState() == 1){
             lectureHallRoom.resetActiveRoom();
             setActiveRoom(lectureHallRoom.getActiveRoom());
             lectureHallRoomDoor.changeState(0);
+            lectureHallRoom.updateRoom();
         }
 
         else if(changeRoom && windowedClassRoomDoor.getState() == 1){
             windowedClassRoom.resetActiveRoom();
             setActiveRoom(windowedClassRoom.getActiveRoom());
             windowedClassRoomDoor.changeState(0);
+            windowedClassRoom.updateRoom();
         }
     }
 

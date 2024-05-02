@@ -13,6 +13,8 @@ public class LectureHallRoom extends Room {
     HallwayRoom hallway;
     Inventory inventory;
     boolean addedPoison;
+    boolean puzzleFirstSight;
+    boolean puzzleComplete;
     Item door;
     Item clunk;
     Puzzle puzzle;
@@ -23,6 +25,8 @@ public class LectureHallRoom extends Room {
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
         super(backgroundImage, displayOverlay);
+        puzzleFirstSight = false;
+        puzzleComplete= false;
         this.hallway = hallway;
         this.inventory = inventory;
         primaryCursor =  hand;
@@ -79,9 +83,10 @@ public class LectureHallRoom extends Room {
         if (displayOverlay.getWidth() != 0) {
             displayOverlay.removeAll();
         }
-        else if (puzzle.getFailState()) {
+        else if (puzzle.getFailState()) {  // Maybe make all jumpscare()s more like ↓
             jumpscare();
         }
+        puzzleFirstSight();
         if (puzzle.getSolved() && addedPoison == false) {
             this.roomInhabitants.add(poison);
            addedPoison = true;
@@ -89,7 +94,7 @@ public class LectureHallRoom extends Room {
         if (clunk.getState() == 1) {
             clunk.changeState(0);
             this.roomInhabitants.remove(clunk);
-            
+            puzzleComplete();
         }
     }
 
@@ -118,5 +123,19 @@ public class LectureHallRoom extends Room {
 
     public void spawnClosedLaptop(){
         this.roomInhabitants.add(closedLaptop);
+    }
+
+    private void puzzleFirstSight(){
+        if (!puzzleFirstSight) {
+            displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "puzzleFirstSight.png"));
+            puzzleFirstSight = true;
+        }
+    }
+
+    private void puzzleComplete(){
+        if (puzzle.getSolved() && !puzzleComplete) {
+            displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "puzzleComplete.png"));
+            puzzleComplete = true;
+        }
     }
 }
