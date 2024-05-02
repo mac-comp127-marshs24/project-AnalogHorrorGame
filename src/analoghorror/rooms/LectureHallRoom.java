@@ -33,8 +33,9 @@ public class LectureHallRoom extends Room {
 
     @Override
     public void addRoomInhabitants() {
-        door = new Item(385, 120, "assets" + File.separator + "doorClosed.png", false, 2);
-        door.setStatePaths(Arrays.asList("assets" + File.separator + "doorClosed.png", "assets" + File.separator + "doorOpen.png"));
+        door = new Item(45, 105, "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomClosed.png", false, 2);
+        door.setStatePaths(Arrays.asList("assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomClosed.png", 
+        "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomOpen.png"));
         roomInhabitants.add(door);
         poison = new Collectable(745, 165, "assets" + File.separator + "poisonSmall.png", "lecturePoison");
         poison.setInventoryPath("assets" + File.separator + "poison.png");
