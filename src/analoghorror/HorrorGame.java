@@ -62,7 +62,8 @@ public class HorrorGame {
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "inventoryBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
 
-        hallway = new HallwayRoom(hand, "assets" + File.separator + "Corridor.png", inventory, displayOverlay);
+        hallway = new HallwayRoom(hand, "assets" + File.separator + "HallwayRoom" + File.separator + "hallwayRoomBG.png", inventory, 
+            displayOverlay);
         greenChairsRoom = new GreenChairsRoom(hallway, hand,
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory,
             displayOverlay);
