@@ -2,12 +2,15 @@ package analoghorror.rooms;
 
 import java.io.File;
 import java.util.Arrays;
+
+import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
 
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
+    boolean piperDeath;
     Collectable primaryCursor;
     GreenChairsRoom chairClassroom;
     LectureHallRoom lectureHallRoom;
@@ -15,10 +18,13 @@ public class HallwayRoom extends Room{
     Item box;
     Collectable key;
     boolean jumpscarePresent;
+    Inventory inventory;
 
     Item doorA;
     Item doorB;
     Item doorC;
+
+    Piper piper;
 
     Collectable card;
     Item sonic;
@@ -26,12 +32,14 @@ public class HallwayRoom extends Room{
     boolean hasTextBeenShown;
     
 
-    public HallwayRoom(Collectable hand, String backgroundImage, GraphicsGroup displayOverlay){
+    public HallwayRoom(Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay){
         super(backgroundImage, displayOverlay);
+        piperDeath = false;
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
         jumpscarePresent = false;
+        this.inventory = inventory;
          //SOUND ADDED TO GAME INSANE!!!!
         addRoomInhabitants();
     }
@@ -53,6 +61,8 @@ public class HallwayRoom extends Room{
         card = new Collectable(458, 325, "assets" + File.separator + "cardOnFloor.png", "card02");
         card.setInventoryPath("assets" + File.separator + "studentCard.png");
         this.roomInhabitants.add(card);
+
+        piper = new Piper(20, 20, this);
 
         /*Door key interaction */
         doorA.addValidInitCollectable(card);
@@ -79,6 +89,22 @@ public class HallwayRoom extends Room{
     public void updateRoom() {
         ambientSound();
         doorInteraction();
+        if (inventory.getCollectableWithID("rat01") != null){ //tried adding outside of update room, still crashes game
+            piper.addValidInitCollectable(inventory.getCollectableWithID("rat01"));
+            piper.addValidSubCollectable(inventory.getCollectableWithID("rat01"));
+
+        }
+        if (piper.getState() == 0 && piperDeath == false) {
+            System.out.println("They are dead");
+            piperDeath = true;
+            piper.piperEnd();
+            // killed
+        }
+        if (piper.getState() == 4) {  // or 5
+            System.out.println("You are dead");
+            // monster wins
+            scareDelay();
+        }
     }
 
     private void changeRoom(){
@@ -130,6 +156,8 @@ public class HallwayRoom extends Room{
     }
 
     public void finalScare(){
+        this.roomInhabitants.add(piper);
+        piper.piperStart();
         System.out.println("FINAL MONSTER");
     }
 

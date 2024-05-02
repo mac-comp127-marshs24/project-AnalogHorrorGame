@@ -42,9 +42,9 @@ public class WindowedClassRoom extends Room{
 
         poison = new Collectable(530, 365, "assets" + File.separator + "poison.png", "windowPoison");
 
-        door = new Item(739, 200, "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomClosed.png", false, 2);
-        door.setStatePaths(Arrays.asList("assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomClosed.png", 
-        "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomOpen.png"));
+        door = new Item(729, 200, "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png", false, 2);
+        door.setStatePaths(Arrays.asList("assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png", 
+        "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png"));
         roomInhabitants.add(door);
 
         box.addValidSubCollectable(primaryCursor);

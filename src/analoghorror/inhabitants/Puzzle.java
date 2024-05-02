@@ -10,7 +10,7 @@ import analoghorror.rooms.LectureHallRoom;
 public class Puzzle extends Item {
     boolean failState;
     boolean solved;
-    boolean scheduled;
+    // boolean scheduled;
     int attemptedClears;
     Timer puzzleTimer;
     Timer jumpscareTimer;
@@ -25,7 +25,7 @@ public class Puzzle extends Item {
             numberOfItemStates);
         failState = false;
         solved = false;
-        scheduled = false;
+        // scheduled = false;
         puzzleTimer = new Timer();
         jumpscareTimer = new Timer();
         clunkTask = new TimerTask() {
@@ -70,7 +70,7 @@ public class Puzzle extends Item {
             && solved == false) {
             currentState = 1;
             setImagePath(itemTextures.get(currentState));
-            collectable.setUsedTrue();
+            // collectable.setUsedTrue();
             puzzleTimer.cancel();
             puzzleTimer = new Timer();
             clunkTask = new TimerTask() {
@@ -83,7 +83,7 @@ public class Puzzle extends Item {
         } else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
-            collectable.setUsedTrue();
+            // collectable.setUsedTrue();
             puzzleTimer.cancel();
             puzzleTimer = new Timer();
             clunkTask = new TimerTask() {
@@ -97,7 +97,7 @@ public class Puzzle extends Item {
             && collectableIsValid(collectable, validSubCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
-            collectable.setUsedTrue();
+            // collectable.setUsedTrue();
             puzzleTimer.cancel();
             puzzleTimer = new Timer();
             clunkTask = new TimerTask() {
@@ -111,7 +111,7 @@ public class Puzzle extends Item {
     }
 
     private void activateSquare() {
-        scheduled = true;
+        // scheduled = true;
         puzzleTimer.schedule(clunkTask, puzzleDelay);
         // System.out.println("WRONG");
     }
@@ -119,7 +119,7 @@ public class Puzzle extends Item {
     private void clunkTaskBehavior() {
         homeRoom.clunk();
         attemptedClears++;
-        scheduled = false;
+        // scheduled = false;
         if (currentState == 9) {
             solved = true;
             System.out.println("Solved!");
