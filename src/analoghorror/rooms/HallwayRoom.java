@@ -124,4 +124,8 @@ public class HallwayRoom extends Room{
         scareDelay();
     }
 
+    public void finalScare(){
+        System.out.println("FINAL MONSTER");
+    }
+
 }

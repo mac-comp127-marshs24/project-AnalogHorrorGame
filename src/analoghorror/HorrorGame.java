@@ -16,6 +16,7 @@ public class HorrorGame {
     private CanvasWindow canvas;
     boolean timerStarted;
     boolean laptopSpawned;
+    boolean finalMonster;
     Collectable hand;
     Cursor activeCursor;
     GraphicsObject cursorDefault;
@@ -42,6 +43,7 @@ public class HorrorGame {
     public HorrorGame() {
         timerStarted = false;
         laptopSpawned = false;
+        finalMonster = false;
         randomDouble = Math.random();
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
@@ -104,7 +106,11 @@ public class HorrorGame {
                     canvas.draw();
                 }
             } else {
-                timerText.setText("You're safe");
+                timerText.setText("");
+                if (activeRoom == hallway && finalMonster == false) {
+                    hallway.finalScare();
+                    finalMonster = true;
+                }
             }
         });       
         canvas.onMouseMove(event -> {
