@@ -147,7 +147,7 @@ public class HorrorGame {
             canvas.add(displayOverlay);
             canvas.add(timer);
         }
-        // System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
+        System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
     }
 
     private void clickInventoryCollectableInteractions(MouseButtonEvent event){

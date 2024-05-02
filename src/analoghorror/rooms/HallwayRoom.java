@@ -46,19 +46,19 @@ public class HallwayRoom extends Room{
 
     public void addRoomInhabitants(){
         /*Doors */
-        greenChairsRoomDoor = new Item(660, -30, "assets" + File.separator + "HallwayRoom" + File.separator + "Door1Closed.png", false, 2);
-        greenChairsRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "HallwayRoom" + File.separator + "Door1Closed.png", 
-        "assets" + File.separator + "HallwayRoom" + File.separator + "Door1.png"));
+        greenChairsRoomDoor = new Item(581, -5, "assets" + File.separator + "HallwayRoom" + File.separator + "greenChairsRoomDoorClosed.png", false, 2);
+        greenChairsRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "HallwayRoom" + File.separator + "greenChairsRoomDoorClosed.png", 
+        "assets" + File.separator + "HallwayRoom" + File.separator + "greenChairsRoomDoorOpen.png"));
         this.roomInhabitants.add(greenChairsRoomDoor);
 
-        lectureHallRoomDoor = new Item(528, 130, "assets" + File.separator + "HallwayRoom" + File.separator + "Door2Closed.png", false, 2);
-        lectureHallRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "HallwayRoom" + File.separator + "Door2Closed.png", 
-        "assets" + File.separator + "HallwayRoom" + File.separator + "Door2.png"));
+        lectureHallRoomDoor = new Item(450, 140, "assets" + File.separator + "HallwayRoom" + File.separator + "lectureHallRoomDoorClosed.png", false, 2);
+        lectureHallRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "HallwayRoom" + File.separator + "lectureHallRoomDoorClosed.png", 
+        "assets" + File.separator + "HallwayRoom" + File.separator + "lectureHallRoomDoorOpen.png"));
         this.roomInhabitants.add(lectureHallRoomDoor);
 
-        windowedClassRoomDoor = new Item(288, 85, "assets" + File.separator + "HallwayRoom" + File.separator + "Door3Closed.png", false, 2);
-        windowedClassRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "HallwayRoom" + File.separator + "Door3Closed.png", 
-        "assets" + File.separator + "HallwayRoom" + File.separator + "Door3.png"));
+        windowedClassRoomDoor = new Item(275, 92, "assets" + File.separator + "HallwayRoom" + File.separator + "windowedClassRoomDoorClosed.png", false, 2);
+        windowedClassRoomDoor.setStatePaths(Arrays.asList("assets" + File.separator + "HallwayRoom" + File.separator + "windowedClassRoomDoorClosed.png", 
+        "assets" + File.separator + "HallwayRoom" + File.separator + "windowedClassRoomDoorOpen.png"));
         this.roomInhabitants.add(windowedClassRoomDoor);
 
         card = new Collectable(458, 325, "assets" + File.separator + "cardOnFloor.png", "card02");
