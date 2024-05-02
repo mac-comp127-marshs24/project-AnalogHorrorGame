@@ -50,7 +50,7 @@ public class Piper extends Item {
     }
 
     private void changeFrameBehavior(){
-        if (currentState != itemStates) {  // or 4
+        if (currentState != itemStates && currentState != 0) {  // or 4
             System.out.println("Current state " + currentState);
             currentState++;
             System.out.println("State after ++ " + currentState);
@@ -75,7 +75,7 @@ public class Piper extends Item {
                 frameTimer.schedule(new TimerTask() {
                     @Override
                     public void run(){
-                        // i--;
+                        // i--;  ??
                         changeFrameBehavior();
                     }
                 }, 0, i * 3000);
