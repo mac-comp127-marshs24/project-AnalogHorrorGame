@@ -105,4 +105,12 @@ public class LectureHallRoom extends Room {
         clunk.addValidInitCollectable(primaryCursor);
         clunk.addValidSubCollectable(primaryCursor);
     }
+    
+    public void spawnOpenLaptop(){
+
+    }
+
+    public void spawnClosedLaptop () {
+        
+    }
 }

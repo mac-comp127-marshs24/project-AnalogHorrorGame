@@ -123,4 +123,5 @@ public class HallwayRoom extends Room{
         displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
         scareDelay();
     }
+
 }

@@ -88,4 +88,12 @@ public class WindowedClassRoom extends Room{
         displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
         scareDelay();
     }
+
+    public void spawnOpenLaptop(){
+
+    }
+
+    public void spawnClosedLaptop(){
+        
+    }
 }

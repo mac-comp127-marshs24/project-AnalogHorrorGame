@@ -16,6 +16,7 @@ public class GreenChairsRoom extends Room {
     Item door;
     Item ratCage;
     Item leaveAnnouncement;
+    Collectable openLaptop;
     Collectable poisonedRat;
     Collectable windowBoxKey;
     Collectable poison;
@@ -71,6 +72,9 @@ public class GreenChairsRoom extends Room {
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "keyOnFloor.png", "windowBoxKey");
         windowBoxKey.setInventoryPath("assets" + File.separator + "GreenChairsRoom" + File.separator + "brassKey.png");
         this.roomInhabitants.add(windowBoxKey);
+
+        openLaptop = new Collectable(84, 254, "assets" + File.separator + "laptopOpen.png", "laptop");
+        openLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
 
         door.addValidInitCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
@@ -142,5 +146,9 @@ public class GreenChairsRoom extends Room {
     public void jumpscare(){
         displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
         scareDelay();
+    }
+
+    public void spawnOpenLaptop() {
+        this.roomInhabitants.add(openLaptop);
     }
 }

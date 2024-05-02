@@ -15,6 +15,7 @@ public class HorrorGame {
 
     private CanvasWindow canvas;
     boolean timerStarted;
+    boolean laptopSpawned;
     Collectable hand;
     Cursor activeCursor;
     GraphicsObject cursorDefault;
@@ -40,6 +41,7 @@ public class HorrorGame {
 
     public HorrorGame() {
         timerStarted = false;
+        laptopSpawned = false;
         randomDouble = Math.random();
         canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
@@ -83,21 +85,26 @@ public class HorrorGame {
     private void gameLogic() {
         // Move cursor with the mouse
         canvas.animate(() -> {
-            if (inventory.getCollectableWithID("rat01") != null) {
-                if (!timerStarted) {
-                    startTime = System.currentTimeMillis();
-                    timerStarted = true;
+            if (inventory.getCollectableWithID("laptop") == null) {
+                if (inventory.getCollectableWithID("rat01") != null) {
+                    if (!timerStarted) {
+                        startTime = System.currentTimeMillis();
+                        timerStarted = true;
+                    }
+                    
+                    long elapsedTime = System.currentTimeMillis() - startTime;
+                    long elapsedSeconds = elapsedTime / 1000;
+                    long secondsDisplay = elapsedSeconds % 60;
+                    // long elapsedMinutes = elapsedSeconds / 60;
+                    if (30 - secondsDisplay == 0) {
+                        activeRoom.jumpscare();
+                        timer.removeAll();
+                    }
+                    timerText.setText("You should probably find your supplies within " + (30 - secondsDisplay) + " seconds.");
+                    canvas.draw();
                 }
-                long elapsedTime = System.currentTimeMillis() - startTime;
-                long elapsedSeconds = elapsedTime / 1000;
-                long secondsDisplay = elapsedSeconds % 60;
-                // long elapsedMinutes = elapsedSeconds / 60;
-                if (30 - secondsDisplay == 0) {
-                    activeRoom.jumpscare();
-                    timer.removeAll();
-                }
-                timerText.setText("You should probably find your supplies within " + (30 - secondsDisplay) + " seconds.");
-                canvas.draw();
+            } else {
+                timerText.setText("You're safe");
             }
         });       
         canvas.onMouseMove(event -> {
@@ -117,6 +124,7 @@ public class HorrorGame {
     private void clickLogic(MouseButtonEvent event){
         clickInventoryCollectableInteractions(event);
         clickCollectableItemInteractions(event);
+        spawnLaptop();
         canvas.draw();
         activeRoom.updateRoom();
         if (activeRoom != activeRoom.getActiveRoom()) {
@@ -190,6 +198,35 @@ public class HorrorGame {
         }
         else {
             hand = new Collectable(0, 0, "assets" + File.separator + "hands" + File.separator + "pinkyHand.png", "hand");
+        }
+    }
+
+    private void spawnLaptop(){
+        if (inventory.getCollectableWithID("rat01") != null && !laptopSpawned) {
+            if (randomDouble < 0.2) {
+                greenChairsRoom.spawnOpenLaptop();
+                laptopSpawned = true;
+            }
+            else if (randomDouble < 0.4) {
+                // windowedClassRoom.spawnOpenLaptop();
+                greenChairsRoom.spawnOpenLaptop();
+                laptopSpawned = true;
+            }
+            else if (randomDouble < 0.6) {
+                // windowedClassRoom.spawnClosedLaptop();
+                greenChairsRoom.spawnOpenLaptop();
+                laptopSpawned = true;
+            }
+            else if (randomDouble < 0.8) {
+                // lectureHallRoom.spawnOpenLaptop();
+                greenChairsRoom.spawnOpenLaptop();
+                laptopSpawned = true;
+            }
+            else {
+                // lectureHallRoom.spawnClosedLaptop();
+                greenChairsRoom.spawnOpenLaptop();
+                laptopSpawned = true;
+            }
         }
     }
 
