@@ -35,8 +35,9 @@ public class WindowedClassRoom extends Room{
 
     @Override
     public void addRoomInhabitants() {
-        box = new Item(400, 280, "assets" + File.separator + "boxClosed.png", true, 2);
-        box.setStatePaths(Arrays.asList("assets" + File.separator + "boxClosed.png", "assets" + File.separator + "boxOpen.png"));
+        box = new Item(400, 280, "assets" + File.separator + "WindowedClassRoom" + File.separator + "boxClosed.png", true, 2);
+        box.setStatePaths(Arrays.asList("assets" + File.separator + "WindowedClassRoom" + File.separator + "boxClosed.png", 
+        "assets" + File.separator + "WindowedClassRoom" + File.separator + "boxOpen.png"));
         roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
 
         poison = new Collectable(530, 365, "assets" + File.separator + "poison.png", "windowPoison");

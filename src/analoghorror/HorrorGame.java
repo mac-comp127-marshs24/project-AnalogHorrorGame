@@ -55,14 +55,14 @@ public class HorrorGame {
         timerText.setFontSize(30);
         timer.add(timerText);
 
-        inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "testBar.png");
+        inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "inventoryBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
 
         //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
         hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png", displayOverlay);
         greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory, displayOverlay);
-        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHall.png", inventory, displayOverlay);
-        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "WindowRoom.png", inventory, displayOverlay);
+        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomBG.png", inventory, displayOverlay);
+        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomBG.png", inventory, displayOverlay);
         hallway.addChairClassroom(greenChairsRoom);
         hallway.addLectureHall(lectureHallRoom);
         hallway.addWindowedClassroom(windowedClassRoom);
