@@ -4,8 +4,6 @@ import edu.macalester.graphics.Image;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import analoghorror.Inventory;
 import analoghorror.inhabitants.*;
@@ -19,6 +17,8 @@ public class LectureHallRoom extends Room {
     Item clunk;
     Puzzle puzzle;
     Collectable poison;
+    Collectable openLaptop;
+    Collectable closedLaptop;
 
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
@@ -56,6 +56,12 @@ public class LectureHallRoom extends Room {
 
         door.addValidInitCollectable(primaryCursor);
         door.addValidSubCollectable(primaryCursor);
+
+        openLaptop = new Collectable(610, 290, "assets" + File.separator + "laptopOpen.png", "laptop");
+        openLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
+
+        closedLaptop = new Collectable(785, 317, "assets" + File.separator + "laptopClosed.png", "laptop");
+        closedLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
 
         this.add(roomInhabitants);
     }
@@ -107,10 +113,10 @@ public class LectureHallRoom extends Room {
     }
     
     public void spawnOpenLaptop(){
-
+        this.roomInhabitants.add(openLaptop);
     }
 
-    public void spawnClosedLaptop () {
-        
+    public void spawnClosedLaptop(){
+        this.roomInhabitants.add(closedLaptop);
     }
 }

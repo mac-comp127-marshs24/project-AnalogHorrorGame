@@ -13,12 +13,12 @@ public class WindowedClassRoom extends Room{
     HallwayRoom hallway;
     Inventory inventory;
 
-    //TODO: Replace with actual items
     Item box;
     Item door;
     Collectable poison;
-    // Collectable card;
-    // Item sonic;
+    Collectable openLaptop;
+    Collectable closedLaptop;
+
 
     boolean addedPoison;
     
@@ -50,6 +50,12 @@ public class WindowedClassRoom extends Room{
         box.addValidSubCollectable(primaryCursor);
         door.addValidSubCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
+
+        openLaptop = new Collectable(111, 356, "assets" + File.separator + "laptopOpen.png", "laptop");
+        openLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
+
+        closedLaptop = new Collectable(231, 302, "assets" + File.separator + "laptopClosed.png", "laptop");
+        closedLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
 
         this.add(roomInhabitants);
     }
@@ -90,10 +96,10 @@ public class WindowedClassRoom extends Room{
     }
 
     public void spawnOpenLaptop(){
-
+        this.roomInhabitants.add(openLaptop);
     }
 
     public void spawnClosedLaptop(){
-        
+        this.roomInhabitants.add(closedLaptop);
     }
 }

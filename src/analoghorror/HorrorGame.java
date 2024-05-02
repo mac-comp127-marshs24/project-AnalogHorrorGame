@@ -208,23 +208,19 @@ public class HorrorGame {
                 laptopSpawned = true;
             }
             else if (randomDouble < 0.4) {
-                // windowedClassRoom.spawnOpenLaptop();
-                greenChairsRoom.spawnOpenLaptop();
+                windowedClassRoom.spawnOpenLaptop();
                 laptopSpawned = true;
             }
             else if (randomDouble < 0.6) {
-                // windowedClassRoom.spawnClosedLaptop();
-                greenChairsRoom.spawnOpenLaptop();
+                windowedClassRoom.spawnClosedLaptop();
                 laptopSpawned = true;
             }
             else if (randomDouble < 0.8) {
-                // lectureHallRoom.spawnOpenLaptop();
-                greenChairsRoom.spawnOpenLaptop();
+                lectureHallRoom.spawnOpenLaptop();
                 laptopSpawned = true;
             }
             else {
-                // lectureHallRoom.spawnClosedLaptop();
-                greenChairsRoom.spawnOpenLaptop();
+                lectureHallRoom.spawnClosedLaptop();
                 laptopSpawned = true;
             }
         }
