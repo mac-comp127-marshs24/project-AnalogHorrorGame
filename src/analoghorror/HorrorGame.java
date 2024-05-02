@@ -169,7 +169,6 @@ public class HorrorGame {
         else if (check(event, inventory) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
             // If the element under the click is a Collectable and in Inventory
             Collectable collectable = (Collectable) check(event, inventory);
-            System.out.println("This is your collectable " + collectable);
             inventory.assignCollectable(collectable, cursor, activeCursor, event);
             // It becomes the cursor
         }

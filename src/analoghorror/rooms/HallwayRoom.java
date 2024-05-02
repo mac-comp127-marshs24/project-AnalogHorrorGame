@@ -96,7 +96,6 @@ public class HallwayRoom extends Room{
     
     @Override
     public void updateRoom() {
-        System.out.println("updateHallwayRoom called");
         ambientSound();
         if (displayOverlay.getWidth() != 0 && !youWin) {
             displayOverlay.removeAll();
@@ -113,14 +112,12 @@ public class HallwayRoom extends Room{
 
         }
         if (piper.getState() == 0 && piperDeath == false && playerDeath == false) {
-            System.out.println("They are dead");
             piperDeath = true;
             piper.piperEnd();
             youWin();
             // killed
         }
         if (piper.getState() == 4) {  // or 5
-            System.out.println("You are dead");
             playerDeath = true;
             // monster wins
             scareDelay();  // closes game
@@ -176,7 +173,6 @@ public class HallwayRoom extends Room{
     public void finalScare(){
         this.roomInhabitants.add(piper);
         piper.piperStart();
-        System.out.println("FINAL MONSTER");
     }
 
     private void startDisplay(){

@@ -111,18 +111,14 @@ public class Puzzle extends Item {
     }
 
     private void activateSquare() {
-        // scheduled = true;
         puzzleTimer.schedule(clunkTask, puzzleDelay);
-        // System.out.println("WRONG");
     }
 
     private void clunkTaskBehavior() {
         homeRoom.clunk();
         attemptedClears++;
-        // scheduled = false;
         if (currentState == 9) {
             solved = true;
-            System.out.println("Solved!");
             setImagePath("assets" + File.separator + "puzzle" + File.separator + "openPuzzleBoard.png");
             homeRoom.updateRoom();
         } else if (attemptedClears == 3) {
@@ -132,7 +128,6 @@ public class Puzzle extends Item {
 
     private void scareTaskBehavior() {
         failState = true;
-        System.out.println("Yeah you die");
         homeRoom.updateRoom();
     }
 

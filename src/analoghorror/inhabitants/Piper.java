@@ -18,7 +18,6 @@ public class Piper extends Item {
 
     public Piper(double x, double y, HallwayRoom hallway) {
         super(x, y, "assets" + File.separator + "piper" + File.separator + "frame0.jpg", true, 5);
-        //TODO Auto-generated constructor stub
         frameDelay = 1000;
         homeRoom = hallway;
         startedFrameLoop = false;
@@ -45,9 +44,7 @@ public class Piper extends Item {
 
     private void changeFrameBehavior(){
         if (currentState != itemStates && currentState != 0) {  // or 4
-            // System.out.println("Current state " + currentState);
             currentState++;
-            // System.out.println("State after ++ " + currentState);
             setImagePath(itemTextures.get(currentState));
             if (itemStates == 4 && !piperDead) {
                 homeRoom.updateRoom();
@@ -57,15 +54,12 @@ public class Piper extends Item {
 
     public void piperStart(){
         for(int i = 1; i <= itemStates; i++){
-            System.out.println("Loop " + i);
             if (startedFrameLoop == false) {
                 startedFrameLoop = true;
-                // frameTimer.cancel();
                 frameTimer = new Timer(false);
                 frameTimer.schedule(new TimerTask() {
                     @Override
                     public void run(){
-                        // i--;  ??
                         changeFrameBehavior();
                     }
                 }, 0, i * 3000);

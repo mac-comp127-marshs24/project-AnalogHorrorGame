@@ -145,7 +145,6 @@ public class Inventory extends GraphicsGroup{
     }
 
     public Collectable getCollectableWithID(String id){
-        // System.out.println(inventoryList);
         for (Collectable collectable : inventoryList) {
             if (collectable != null) {
                 if (collectable.getIDString().equals(id)) {
