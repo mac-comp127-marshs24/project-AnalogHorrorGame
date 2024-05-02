@@ -12,17 +12,17 @@ public class Piper extends Item {
     boolean startedFrameLoop;
     boolean piperDead;
     int numberOfFrameLoops;
+    long frameDelay;
     Timer frameTimer;
     TimerTask changeFrame;
-    long frameDelay;
 
     public Piper(double x, double y, HallwayRoom hallway) {
         super(x, y, "assets" + File.separator + "piper" + File.separator + "frame0.jpg", true, 5);
-        frameDelay = 1000;
         homeRoom = hallway;
         startedFrameLoop = false;
         piperDead = false;
         numberOfFrameLoops = 0;
+        frameDelay = 1000;
         setStatePaths(Arrays.asList(
             "assets" + File.separator + "piper" + File.separator + "frame0.png",
             "assets" + File.separator + "piper" + File.separator + "frame1.png",
@@ -36,8 +36,8 @@ public class Piper extends Item {
     @Override
     public void interaction(Collectable collectable) {
         if (collectableIsValid(collectable, validSubCollectables)) {
-            currentState = 0;  // death state; initialize at 1
-            setImagePath(itemTextures.get(currentState)); // monster's return path
+            currentState = 0;  // Monster's death image path
+            setImagePath(itemTextures.get(currentState)); // Monster's death image path
             homeRoom.updateRoom();
         }
     }
@@ -68,6 +68,6 @@ public class Piper extends Item {
     }
     public void piperEnd(){
         piperDead = true;
-        // stop all timers?
+        // Stop all timers?
     }
 }

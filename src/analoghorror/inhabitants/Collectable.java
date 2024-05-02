@@ -8,7 +8,7 @@ import analoghorror.Inventory;
 public class Collectable extends Image {
     boolean inInventory;  // True if CollectableItem is in inventory
     boolean used;  // True if Collectable successfully interacted with an Item at least once
-    Point inventorySlot;  // Inventory space; TODO: Have an inventory class to help with slot management
+    Point inventorySlot;  // Inventory space
     String collectableID;
     String inventoryPath;
 
@@ -29,7 +29,7 @@ public class Collectable extends Image {
         used = false;
     }
 
-    public void setInventorySlot(Point point){  // TODO: Eventually make private
+    public void setInventorySlot(Point point){
         inventorySlot = point;
     }
 
@@ -79,7 +79,6 @@ public class Collectable extends Image {
         this.inInventory = inInventory;
     }
 
-    //idk psuedo code
     public void changePathOnCollection(){
             this.setImagePath(inventoryPath);
     }
