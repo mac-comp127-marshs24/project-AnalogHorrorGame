@@ -13,28 +13,28 @@ public class HorrorGame {
     private static final int CANVAS_WIDTH = 854;
     private static final int CANVAS_HEIGHT = 480;
 
-    private CanvasWindow canvas;
-    boolean timerStarted;
-    boolean laptopSpawned;
-    boolean finalMonster;
-    Collectable hand;
-    Cursor activeCursor;
-    GraphicsObject cursorDefault;
-    GraphicsGroup cursor;
-    GraphicsGroup displayOverlay;
-    GraphicsGroup timer;
-    long startTime;
-    GraphicsText timerText;
-    
-    Image background;
-    Inventory inventory;
+    private boolean timerStarted;
+    private boolean laptopSpawned;
+    private boolean finalMonster;
 
-    Room activeRoom;
-    HallwayRoom hallway;
-    GreenChairsRoom greenChairsRoom;
-    LectureHallRoom lectureHallRoom;
-    WindowedClassRoom windowedClassRoom;
-    double randomDouble;
+    private double randomDouble;
+    private long startTime;
+    
+    private CanvasWindow canvas;
+
+    private Inventory inventory;
+    private Collectable hand;
+    private Cursor activeCursor;
+    private GraphicsGroup cursor;
+    private GraphicsGroup displayOverlay;
+    private GraphicsGroup timer;
+    private GraphicsText timerText;
+
+    private Room activeRoom;
+    private HallwayRoom hallway;
+    private GreenChairsRoom greenChairsRoom;
+    private LectureHallRoom lectureHallRoom;
+    private WindowedClassRoom windowedClassRoom;
 
     public static void main(String[] args) {
         new HorrorGame();
@@ -62,19 +62,22 @@ public class HorrorGame {
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "inventoryBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
 
-        //given that we start in hallway, hallway should always have a val and shouldnt be null when greenchairs is called?
-        hallway = new HallwayRoom(hand,"assets" + File.separator + "Corridor.png", inventory, displayOverlay);
-        greenChairsRoom = new GreenChairsRoom(hallway, hand, "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory, displayOverlay);
-        lectureHallRoom = new LectureHallRoom(hallway, hand, "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomBG.png", inventory, displayOverlay);
-        windowedClassRoom = new WindowedClassRoom(hallway, hand,  "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomBG.png", inventory, displayOverlay);
+        hallway = new HallwayRoom(hand, "assets" + File.separator + "Corridor.png", inventory, displayOverlay);
+        greenChairsRoom = new GreenChairsRoom(hallway, hand,
+            "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory,
+            displayOverlay);
+        lectureHallRoom = new LectureHallRoom(hallway, hand,
+            "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomBG.png", inventory,
+            displayOverlay);
+        windowedClassRoom = new WindowedClassRoom(hallway, hand,
+            "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomBG.png", inventory,
+            displayOverlay);
         hallway.addChairClassroom(greenChairsRoom);
         hallway.addLectureHall(lectureHallRoom);
         hallway.addWindowedClassroom(windowedClassRoom);
 
         activeRoom = hallway.getActiveRoom();
 
-        //activeRoom = new HallwayRoom(new GreenChairsRoom("assets" + File.separator + "hall.png"), hand,"assets" + File.separator + "hall.png");
-    
         canvas.add(activeRoom);
         canvas.add(inventory);
         canvas.add(cursor);
@@ -93,16 +96,16 @@ public class HorrorGame {
                         startTime = System.currentTimeMillis();
                         timerStarted = true;
                     }
-                    
+
                     long elapsedTime = System.currentTimeMillis() - startTime;
                     long elapsedSeconds = elapsedTime / 1000;
                     long secondsDisplay = elapsedSeconds % 60;
-                    // long elapsedMinutes = elapsedSeconds / 60;
                     if (30 - secondsDisplay == 0) {
                         activeRoom.jumpscare();
                         timer.removeAll();
                     }
-                    timerText.setText("You should probably find your supplies within " + (30 - secondsDisplay) + " seconds.");
+                    timerText.setText(
+                        "You should probably find your supplies within " + (30 - secondsDisplay) + " seconds.");
                     canvas.draw();
                 }
             } else {
@@ -113,7 +116,7 @@ public class HorrorGame {
                     finalMonster = true;
                 }
             }
-        });       
+        });
         canvas.onMouseMove(event -> {
             activeCursor.setCenter(event.getPosition());
         });
@@ -143,8 +146,7 @@ public class HorrorGame {
             canvas.add(displayOverlay);
             canvas.add(timer);
         }
-        // System.out.println(activeRoom.getBackgroundImage() + " active room");  // TESTING
-        System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
+        // System.out.println(event.getPosition());  // TESTING and used to find asset coordinates
     }
 
     private void clickInventoryCollectableInteractions(MouseButtonEvent event){
@@ -152,9 +154,7 @@ public class HorrorGame {
             // If the element under the click is a Collectable
             Collectable collectable = (Collectable) check(event, activeRoom);
             collectable.changePathOnCollection();
-            // System.out.println(collectable + " collectable in clickInventoryCollectable...");  // TESTING
             inventory.acquireCollectable(collectable, activeCursor);
-            // System.out.println(activeRoom.getRoomInhabitants() + " activeRoom inhabitants");  // TESTING
             activeRoom.getRoomInhabitants().remove(collectable);
             // It is added to inventory if it isn't already collected
         }
@@ -173,13 +173,12 @@ public class HorrorGame {
             if (check(event, activeRoom) instanceof Item) {
                 // ...and there is an Item underneath it...
                 Item item = (Item) check(event, activeRoom);
-                // System.out.println(item + " item in clickCollectableItemInterface");  // TESTING
                 // Try to interact with the Item
                 if (collectable != hand) {
                     // Reset the cursor if there isn't an item under it and it isn't the hand
                     item.interaction(collectable);
                     collectable.resetCursor(inventory, activeCursor);
-                    activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
+                    activeCursor.setCenter(event.getPosition());
                     // Keep everything aligned
                 } else if (collectable == hand) {
                     item.interaction(collectable);
@@ -187,7 +186,7 @@ public class HorrorGame {
             } else if (collectable != hand) {
                 // Reset the cursor if there isn't an item under it and it isn't the hand
                 collectable.resetCursorIfOverRoom(event, activeCursor, inventory);
-                activeCursor.setCenter(event.getPosition()); // TODO: Look at improving resetCursor() (maybe move from Collectable?)
+                activeCursor.setCenter(event.getPosition());
                 // Keep everything aligned
             }
         }
