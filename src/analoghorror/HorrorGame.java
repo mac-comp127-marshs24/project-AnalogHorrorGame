@@ -45,7 +45,7 @@ public class HorrorGame {
         laptopSpawned = false;
         finalMonster = false;
         randomDouble = Math.random();
-        canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas = new CanvasWindow("Biology Majors Be Like", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
         handAssignment();
         activeCursor = new Cursor(hand);
@@ -105,7 +105,7 @@ public class HorrorGame {
                         timer.removeAll();
                     }
                     timerText.setText(
-                        "You should probably find your supplies within " + (30 - secondsDisplay) + " seconds.");
+                        "You should probably find your laptop within " + (30 - secondsDisplay) + " seconds.");
                     canvas.draw();
                 }
             } else {
@@ -132,8 +132,8 @@ public class HorrorGame {
     }
 
     private void clickLogic(MouseButtonEvent event){
+        clickCollectableItemInteractions(event); // Opposite order prevents you from selecting during piper scare
         clickInventoryCollectableInteractions(event);
-        clickCollectableItemInteractions(event);
         spawnLaptop();
         canvas.draw();
         activeRoom.updateRoom();
@@ -161,6 +161,7 @@ public class HorrorGame {
         else if (check(event, inventory) instanceof Collectable && ((Collectable) check(event, cursor)).getIDString() == hand.getIDString()) {
             // If the element under the click is a Collectable and in Inventory
             Collectable collectable = (Collectable) check(event, inventory);
+            System.out.println("This is your collectable " + collectable);
             inventory.assignCollectable(collectable, cursor, activeCursor, event);
             // It becomes the cursor
         }

@@ -62,7 +62,7 @@ public class HallwayRoom extends Room{
         card.setInventoryPath("assets" + File.separator + "studentCard.png");
         this.roomInhabitants.add(card);
 
-        piper = new Piper(20, 20, this);
+        piper = new Piper(0, 0, this);
 
         /*Door key interaction */
         doorA.addValidInitCollectable(card);
@@ -146,7 +146,7 @@ public class HallwayRoom extends Room{
     }
 
     public void jumpscare(){
-        displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
         scareDelay();
     }
 

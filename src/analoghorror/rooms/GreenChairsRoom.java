@@ -144,7 +144,7 @@ public class GreenChairsRoom extends Room {
     }
 
     public void jumpscare(){
-        displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
         scareDelay();
     }
 

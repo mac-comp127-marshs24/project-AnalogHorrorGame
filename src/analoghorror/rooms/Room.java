@@ -77,7 +77,7 @@ public abstract class Room extends GraphicsGroup{
       }
 
     protected void scareDelay(){
-    long delay = 3000;
+    long delay = 1500;
     Timer jumpscareTimer = new Timer();
     TimerTask jumpscareTask = new TimerTask() {
         @Override
