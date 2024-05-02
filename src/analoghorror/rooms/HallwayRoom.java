@@ -11,12 +11,13 @@ import edu.macalester.graphics.Image;
 public class HallwayRoom extends Room{
     // private static boolean changeRoom = false;
     boolean piperDeath;
+    boolean startDisplay;
+    boolean introDisplay;
+
     Collectable primaryCursor;
     GreenChairsRoom greenChairsRoom;
     LectureHallRoom lectureHallRoom;
     WindowedClassRoom windowedClassRoom;
-    Item box;
-    Collectable key;
     boolean jumpscarePresent;
     Inventory inventory;
 
@@ -27,13 +28,14 @@ public class HallwayRoom extends Room{
     Piper piper;
 
     Collectable card;
-    Item sonic;
 
     boolean hasTextBeenShown;
     
 
     public HallwayRoom(Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay){
         super(backgroundImage, displayOverlay);
+        startDisplay = false;
+        introDisplay = false;
         piperDeath = false;
         primaryCursor = hand;
         changeRoom = false;
@@ -91,6 +93,11 @@ public class HallwayRoom extends Room{
     @Override
     public void updateRoom() {
         ambientSound();
+        if (displayOverlay.getWidth() != 0) {
+            displayOverlay.removeAll();
+        }
+        introDisplay();
+        startDisplay();
         doorInteraction();
         if (inventory.getCollectableWithID("rat01") != null){ //tried adding outside of update room, still crashes game
             piper.addValidInitCollectable(inventory.getCollectableWithID("rat01"));
@@ -159,4 +166,18 @@ public class HallwayRoom extends Room{
         System.out.println("FINAL MONSTER");
     }
 
+    private void startDisplay(){
+        if (!startDisplay) {
+            displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "start.png"));
+            startDisplay = true;
+        }
+
+    }
+
+    private void introDisplay(){
+        if (startDisplay && !introDisplay) {
+            displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "intro.png"));
+            introDisplay = true;
+        }
+    }
 }
