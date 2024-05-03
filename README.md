@@ -4,13 +4,13 @@ Team members: Daisy Chan, Moyartu Manley, Wren Kuratana
 
 Project description: This project is an analog horror inspired point-and-click game that was made using the Kilt Graphics API.
 
-System requirements: The program should run on any system that can run Java 17 programs. All necessary assets are included within the program files.
+System requirements: The program should run on any system that can run Java 17 programs. All necessary assets are included within the program files. Play the program with sound on and in a dark room for the intended experience.
 
 How to run: The main class is in HorrorGame. Just click Run and you should be ready to go!
 
 Credit: Stack overflow (https://stackoverflow.com/questions/25186631/how-to-add-loop-timer-in-java) was referenced for the implementation of the final timed scene.
 
-Limitations: The program is designed to run in a non-scalable window that measures at 854 x 480 px. The mouse is the game's sole input, but it is not designed to handle dragging the cursor while the left mouse button is depressed. 
+Limitations: The program is designed to run in a non-scalable window that measures at 854 x 480 px. The mouse is the game's sole input, but it is not designed to handle dragging the cursor while the left mouse button is depressed. The ambient audio only plays for 10 minutes — if you take longer than that to complete the game you must do so in silence. Alternatively, you can get creative and make your own spooky sounds as you play once the track ends.
 
 Performance may be inferior during the part of the game in which there is a visible timer; this is due to canvas.animate() inhibiting performance. (Probably.)
 
