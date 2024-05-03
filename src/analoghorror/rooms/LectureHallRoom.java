@@ -28,12 +28,12 @@ public class LectureHallRoom extends Room {
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound) {
         super(backgroundImage, displayOverlay);
-        puzzleFirstSight = false;
-        puzzleComplete= false;
         this.hallway = hallway;
         this.inventory = inventory;
         this.primarySound =  primarySound;
         primaryCursor =  hand;
+        puzzleFirstSight = false;
+        puzzleComplete= false;
         changeRoom = false;
         addedPoison = false;
 
@@ -46,24 +46,21 @@ public class LectureHallRoom extends Room {
         door.setStatePaths(Arrays.asList("assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomClosed.png", 
         "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomOpen.png"));
         roomInhabitants.add(door);
-        poison = new Collectable(745, 165, "assets" + File.separator + "poisonSmall.png", "lecturePoison");
-        poison.setInventoryPath("assets" + File.separator + "poison.png");
-
 
         puzzle = new Puzzle(700, 125, this);
         puzzle.addValidInitCollectable(primaryCursor);
         puzzle.addValidSubCollectable(primaryCursor);
         roomInhabitants.add(puzzle);
-
-        clunk = new Item(0, 0,
-            "assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png", true, 2);
-        clunk
-            .setStatePaths(Arrays.asList("assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png",
-                "assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png"));
-
+        
+        clunk = new Item(0, 0, "assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png", true, 2);
+        clunk.setStatePaths(Arrays.asList("assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png",
+        "assets" + File.separator + "LectureHallRoom" + File.separator + "clunk.png"));
 
         door.addValidInitCollectable(primaryCursor);
         door.addValidSubCollectable(primaryCursor);
+
+        poison = new Collectable(745, 165, "assets" + File.separator + "poisonSmall.png", "lecturePoison");
+        poison.setInventoryPath("assets" + File.separator + "poison.png");
 
         openLaptop = new Collectable(610, 290, "assets" + File.separator + "laptopOpen.png", "laptop");
         openLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
@@ -74,6 +71,9 @@ public class LectureHallRoom extends Room {
         this.add(roomInhabitants);
     }
 
+    /**
+     * Change room if door opens.
+     */
     public void doorInteraction(){
         if (door.getState() == 1) {
             changeRoom = true;
@@ -86,17 +86,14 @@ public class LectureHallRoom extends Room {
         clearDisplayOverlay();
         puzzleFirstSight();
         puzzleComplete();
-        if (puzzle.getSolved() && addedPoison == false) {
-            this.roomInhabitants.add(poison);
-           addedPoison = true;
-        }
-        if (clunk.getState() == 1) {
-            clunk.changeState(0);
-            this.roomInhabitants.remove(clunk);
-        }
+        spawnPoison();
+        clunkRemoval();
         doorInteraction();
     }
 
+    /**
+     * Set ActiveRoom to hallway and reset door.
+     */
     private void changeRoom(){
         if(changeRoom){
             hallway.resetActiveRoom();
@@ -105,6 +102,9 @@ public class LectureHallRoom extends Room {
         }
     }
 
+    /**
+     * Add "Clunk! sound" Item and validate primaryCursor.
+     */
     public void clunk(){
         this.roomInhabitants.add(clunk);
         clunk.addValidInitCollectable(primaryCursor);
@@ -119,6 +119,9 @@ public class LectureHallRoom extends Room {
         this.roomInhabitants.add(closedLaptop);
     }
 
+    /**
+     * Displays an overlay if you enter the room for the first time mentioning the puzzle.
+     */
     private void puzzleFirstSight(){
         if (!puzzleFirstSight) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "puzzleFirstSight.png"));
@@ -126,6 +129,9 @@ public class LectureHallRoom extends Room {
         }
     }
 
+    /**
+     * Displays an overlay once you collect the poison mentioning the puzzle's compartment.
+     */
     private void puzzleComplete(){
         if (puzzle.getSolved() && !puzzleComplete && poison.getInInventory()) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "puzzleComplete.png"));
@@ -140,6 +146,23 @@ public class LectureHallRoom extends Room {
         }
         else if (puzzle.getFailState()) {  // Maybe make all jumpscare()s more like ↓
             jumpscare();
+        }
+    }
+
+    private void spawnPoison(){
+        if (puzzle.getSolved() && addedPoison == false) {
+            this.roomInhabitants.add(poison);
+           addedPoison = true;
+        }
+    }
+
+    /**
+     * Removes "Clunk! sound" Item.
+     */
+    private void clunkRemoval(){
+        if (clunk.getState() == 1) {
+            clunk.changeState(0);
+            this.roomInhabitants.remove(clunk);
         }
     }
 }
