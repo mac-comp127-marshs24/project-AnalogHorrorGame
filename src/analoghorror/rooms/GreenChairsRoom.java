@@ -23,9 +23,6 @@ public class GreenChairsRoom extends Room {
     Collectable poisonedRat;
     Collectable windowBoxKey;
     Collectable poison;
-    boolean poisonedRatInteraction;
-    boolean roomScare;
-    boolean leaveAfterAnnouncement;
     Sound primarySound;
 
     public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay,  Sound primarySound) {

@@ -135,7 +135,8 @@ public class HorrorGame {
                 if (activeRoom == hallway && finalMonster == false) {
                     hallway.finalScare();
                     // primary sound frantic audio
-                    primarySound.stopSound();
+                    primarySound = new Sound();
+                    // primarySound.stopSound();
                     primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "franticHallway.wav");
                     finalMonster = true;
                 }
