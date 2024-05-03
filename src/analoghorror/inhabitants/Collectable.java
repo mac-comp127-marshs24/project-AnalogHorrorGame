@@ -6,11 +6,12 @@ import analoghorror.Cursor;
 import analoghorror.Inventory;
 
 public class Collectable extends Image {
+    
     boolean inInventory;  // True if CollectableItem is in inventory
     boolean used;  // True if Collectable successfully interacted with an Item at least once
     Point inventorySlot;  // Inventory space
-    String collectableID;
-    String inventoryPath;
+    String collectableID; //ID string associated with collectable
+    String inventoryPath; //Image path associated with collectable when in inventory
 
     /**
      * A game item that can be collected into the Inventory when clicked. Arguments determine location in Inventory, texture,
@@ -29,10 +30,17 @@ public class Collectable extends Image {
         used = false;
     }
 
+    /**
+     * Sets collectable to a specific slot in inventory.
+     * @param point Slot location
+     */
     public void setInventorySlot(Point point){
         inventorySlot = point;
     }
 
+    /**
+     * Sets center of collectable to the center of inventory slot.
+     */
     public void resetCenter(){
         setCenter(inventorySlot);
     }   
@@ -67,18 +75,33 @@ public class Collectable extends Image {
         }
     }
 
+    /**
+     * Returns collectable's unique ID string.
+     * @return ID string 
+     */
     public String getIDString(){
         return collectableID;
     }
 
+    /**
+     * Returns whether or not item is in inventory.
+     * @return True if collectable is in inventory, false if item is not present in inventory
+     */
     public boolean getInInventory(){
         return inInventory;
     }
 
+    /**
+     * Sets whether or not collectable is in inventory.
+     * @param inInventory
+     */
     public void setInInventory(boolean inInventory){
         this.inInventory = inInventory;
     }
 
+    /**
+     * Changes collectable's image upon collection.
+     */
     public void changePathOnCollection(){
             this.setImagePath(inventoryPath);
     }
@@ -87,12 +110,19 @@ public class Collectable extends Image {
         this.inventoryPath = inventoryPath;
     }
 
+    /**
+     * Sets used collectable boolean to true.
+     */
     public void setUsedTrue() {
         if(used == false) {
             used = true;
         }
     }
 
+    /**
+     * 
+     * @return True if collectable has been used, false is collectable is unused.
+     */
     public boolean getUsed(){
         return used;
     }
