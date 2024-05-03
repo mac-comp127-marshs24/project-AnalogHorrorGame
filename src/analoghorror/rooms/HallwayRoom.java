@@ -29,13 +29,14 @@ public class HallwayRoom extends Room{
     Item windowedClassRoomDoor;
 
     Piper piper;
-
     Collectable card;
 
     boolean hasTextBeenShown;
-    
 
-    public HallwayRoom(Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay){
+    /*Sound */
+    Sound primarySound;
+
+    public HallwayRoom(Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound){
         super(backgroundImage, displayOverlay);
         startDisplay = false;
         introDisplay = false;
@@ -46,10 +47,7 @@ public class HallwayRoom extends Room{
         changeRoom = false;
         hasTextBeenShown = false;
         this.inventory = inventory;
-
-        /*Sound */
-        ambientSound = new Sound();
-        jumpscareSound = new Sound();
+        this.primarySound = primarySound;
 
         addRoomInhabitants();
     }
@@ -100,7 +98,7 @@ public class HallwayRoom extends Room{
     
     @Override
     public void updateRoom() {
-        ambientSound();
+        // ambientSound();
         if (displayOverlay.getWidth() != 0 && !youWin) {
             displayOverlay.removeAll();
         }
@@ -150,12 +148,6 @@ public class HallwayRoom extends Room{
             windowedClassRoom.updateRoom();
         }
     }
-
-    private void ambientSound(){
-        if (jumpscarePresent ==  false) {
-            playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "ambientBG.wav");
-        }
-    }
     
     public void addChairClassroom(GreenChairsRoom chairClassroom){
         this.greenChairsRoom = chairClassroom;
@@ -170,12 +162,15 @@ public class HallwayRoom extends Room{
     }
 
     public void jumpscare(){
+        // primary scare call jumpscare audio
+        primarySound.stopSound();
+        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
         displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
         scareDelay();
     }
 
     public void finalScare(){
-        jumpscareSound.playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "franticHallway.wav");
+        jumpscareSound.playSound("res" + File.separator + "assets"+ File.separator +"Audio"+ File.separator + "franticHallway.wav");
         this.roomInhabitants.add(piper);
         piper.piperStart();
     }

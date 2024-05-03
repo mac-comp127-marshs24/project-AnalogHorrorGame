@@ -21,6 +21,7 @@ public abstract class Room extends GraphicsGroup{
     protected GraphicsGroup displayOverlay;
 
     protected Sound ambientSound;
+    protected Sound jumpscareSound;
 
     
 
@@ -76,12 +77,4 @@ public abstract class Room extends GraphicsGroup{
     jumpscareTimer.schedule(jumpscareTask, delay);
 }
 
-public void playAmbientSound(){
-    if (!this.jumpscarePresent) {
-        ambientSound.playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "ambientBG.wav");
-    }
-    else{
-        ambientSound.stopSound();
-    }
-}
 }

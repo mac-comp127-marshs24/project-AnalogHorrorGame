@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import analoghorror.Inventory;
+import analoghorror.Sound;
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
@@ -23,11 +24,13 @@ public class GreenChairsRoom extends Room {
     boolean poisonedRatInteraction;
     boolean roomScare;
     boolean leaveAfterAnnouncement;
+    Sound primarySound;
 
-    public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
+    public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay,  Sound primarySound) {
         super(backgroundImage, displayOverlay);
         this.hallway = hallway;
         this.inventory = inventory;
+        this.primarySound = primarySound;
         primaryCursor = hand;
         changeRoom = false;
         poisonedRatInteraction = false;
@@ -149,6 +152,7 @@ public class GreenChairsRoom extends Room {
     }
 
     public void jumpscare(){
+        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
         displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
         scareDelay();
     }

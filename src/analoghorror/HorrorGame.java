@@ -17,6 +17,7 @@ public class HorrorGame {
     private boolean laptopSpawned;
     private boolean finalMonster;
     private boolean bagpipeNoise;
+    private boolean handScare;
 
     private double randomDouble;
     private long startTime;
@@ -37,6 +38,10 @@ public class HorrorGame {
     private LectureHallRoom lectureHallRoom;
     private WindowedClassRoom windowedClassRoom;
 
+    protected Sound primarySound;
+    protected Sound secondarySound;
+
+
     public static void main(String[] args) {
         new HorrorGame();
     }
@@ -46,6 +51,7 @@ public class HorrorGame {
         laptopSpawned = false;
         finalMonster = false;
         bagpipeNoise = false;
+        handScare = false;
         randomDouble = Math.random();
         canvas = new CanvasWindow("Biology Majors Be Like", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
@@ -64,17 +70,21 @@ public class HorrorGame {
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "inventoryBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
 
+        primarySound = new Sound();
+        secondarySound = new Sound();
+        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "ambientBG.wav");
+
         hallway = new HallwayRoom(hand, "assets" + File.separator + "HallwayRoom" + File.separator + "hallwayRoomBG.png", inventory, 
-            displayOverlay);
+            displayOverlay, primarySound);
         greenChairsRoom = new GreenChairsRoom(hallway, hand,
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory,
-            displayOverlay);
+            displayOverlay, primarySound);
         lectureHallRoom = new LectureHallRoom(hallway, hand,
             "assets" + File.separator + "LectureHallRoom" + File.separator + "lectureHallRoomBG.png", inventory,
-            displayOverlay);
+            displayOverlay, primarySound);
         windowedClassRoom = new WindowedClassRoom(hallway, hand,
             "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomBG.png", inventory,
-            displayOverlay);
+            displayOverlay, primarySound);
         hallway.addChairClassroom(greenChairsRoom);
         hallway.addLectureHall(lectureHallRoom);
         hallway.addWindowedClassroom(windowedClassRoom);
@@ -104,9 +114,10 @@ public class HorrorGame {
                     long elapsedTime = System.currentTimeMillis() - startTime;
                     long elapsedSeconds = elapsedTime / 1000;
                     long secondsDisplay = elapsedSeconds % 60;
-                    if (30 - secondsDisplay == 0) {
+                    if (30 - secondsDisplay == 0 && !handScare) {
                         activeRoom.jumpscare();
                         timer.removeAll();
+                        handScare = true;
                     }
                     timerText.setText(
                         "You have " + (30 - secondsDisplay) + " seconds.");
@@ -115,12 +126,17 @@ public class HorrorGame {
             } else {
                 timerText.setText("");
                 if (!bagpipeNoise) {
+                    // secondary sound watever
+                    secondarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
                     displayOverlay.add(new Image ("assets" + File.separator + "overlays" + File.separator + "bagpipeNoise.png"));
                     bagpipeNoise = true;
                 }
                 // Play scary pipe scream
                 if (activeRoom == hallway && finalMonster == false) {
                     hallway.finalScare();
+                    // primary sound frantic audio
+                    primarySound.stopSound();
+                    primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "franticHallway.wav");
                     finalMonster = true;
                 }
             }

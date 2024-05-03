@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import analoghorror.Inventory;
+import analoghorror.Sound;
 import analoghorror.inhabitants.*;
 
 public class LectureHallRoom extends Room {
@@ -21,14 +22,17 @@ public class LectureHallRoom extends Room {
     Collectable poison;
     Collectable openLaptop;
     Collectable closedLaptop;
+    Sound primarySound;
 
 
-    public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay) {
+    public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound) {
         super(backgroundImage, displayOverlay);
         puzzleFirstSight = false;
         puzzleComplete= false;
         this.hallway = hallway;
         this.inventory = inventory;
+        this.primarySound =  primarySound;
+
         primaryCursor =  hand;
         changeRoom = false;
         addedPoison = false;
@@ -107,6 +111,7 @@ public class LectureHallRoom extends Room {
     }
 
     public void jumpscare(){
+        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
         displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
         scareDelay();
     }
