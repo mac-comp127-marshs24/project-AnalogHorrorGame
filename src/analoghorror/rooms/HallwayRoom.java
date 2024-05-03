@@ -103,7 +103,7 @@ public class HallwayRoom extends Room{
             displayOverlay.removeAll();
         }
         if (displayOverlay.getWidth() != 0 && youWin) {
-            scareDelay();
+            winDelay();
         }
         introDisplay();
         startDisplay();
@@ -170,7 +170,7 @@ public class HallwayRoom extends Room{
     }
 
     public void finalScare(){
-        jumpscareSound.playSound("res" + File.separator + "assets"+ File.separator +"Audio"+ File.separator + "franticHallway.wav");
+        // jumpscareSound.playSound("res" + File.separator + "assets"+ File.separator +"Audio"+ File.separator + "franticHallway.wav");
         this.roomInhabitants.add(piper);
         piper.piperStart();
     }

@@ -77,4 +77,16 @@ public abstract class Room extends GraphicsGroup{
     jumpscareTimer.schedule(jumpscareTask, delay);
 }
 
+    protected void winDelay(){
+        long delay = 10000;
+        Timer jumpscareTimer = new Timer();
+        TimerTask jumpscareTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        };
+        jumpscareTimer.schedule(jumpscareTask, delay);
+    }
+
 }
