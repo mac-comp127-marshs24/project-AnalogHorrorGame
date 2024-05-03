@@ -8,21 +8,29 @@ import java.util.TimerTask;
 import analoghorror.rooms.HallwayRoom;
 
 public class Piper extends Item {
-    HallwayRoom homeRoom;
-    boolean startedFrameLoop;
-    boolean piperDead;
-    int numberOfFrameLoops;
+    HallwayRoom homeRoom; // Room for animation
+    boolean startedFrameLoop; // Returns whether initial frame has started
+    boolean piperDead; // Returns whether piper monster is dead
+    int numberOfFrameLoops; 
     long frameDelay;
     Timer frameTimer;
     TimerTask changeFrame;
 
+    /**
+     * An interactable animation for the piper monster that extends the Item class. Arugments determine animation position and the room in which it occurs.
+     * @param x 
+     * @param y
+     * @param hallway Animation occurs in Hallway.
+     */
     public Piper(double x, double y, HallwayRoom hallway) {
         super(x, y, "assets" + File.separator + "piper" + File.separator + "frame0.jpg", true, 5);
-        homeRoom = hallway;
+        homeRoom = hallway; //sets hallway object from HorrorGame to homeroom
         startedFrameLoop = false;
         piperDead = false;
         numberOfFrameLoops = 0;
         frameDelay = 1000;
+
+        //Frames for monster animation
         setStatePaths(Arrays.asList(
             "assets" + File.separator + "piper" + File.separator + "frame0.png",
             "assets" + File.separator + "piper" + File.separator + "frame1.png",
@@ -42,16 +50,22 @@ public class Piper extends Item {
         }
     }
 
+    /**
+     * Changes frames if the current animation frame is not equal to the max number of frames and if current frame is not equal to 0.
+     */
     private void changeFrameBehavior(){
         if (currentState != itemStates && currentState != 0) {  // or 4
             currentState++;
             setImagePath(itemTextures.get(currentState));
-            if (itemStates == 4 && !piperDead) {
+            if (itemStates == 4 && !piperDead) { // if the animation reaches the fourth frame and the piper isn't dead, show death screen in update room.
                 homeRoom.updateRoom();
             }
         }
     }
 
+    /**
+     * Starts piper animation and runs frame behavior.
+     */
     public void piperStart(){
         for(int i = 1; i <= itemStates; i++){
             if (startedFrameLoop == false) {
@@ -66,8 +80,11 @@ public class Piper extends Item {
             }
         }
     }
+
+    /**
+     * Stops piper animation by setting piperDead to true.
+     */
     public void piperEnd(){
         piperDead = true;
-        // Stop all timers?
     }
 }
