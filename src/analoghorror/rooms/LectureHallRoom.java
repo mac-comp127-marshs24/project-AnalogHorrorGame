@@ -22,7 +22,6 @@ public class LectureHallRoom extends Room {
     Collectable poison;
     Collectable openLaptop;
     Collectable closedLaptop;
-    Sound primarySound;
 
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound) {
@@ -108,12 +107,6 @@ public class LectureHallRoom extends Room {
             setActiveRoom(hallway.getActiveRoom());
             door.changeState(0);
         }
-    }
-
-    public void jumpscare(){
-        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
-        displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
-        scareDelay();
     }
 
     public void clunk(){

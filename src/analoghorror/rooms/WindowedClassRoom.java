@@ -1,6 +1,5 @@
 package analoghorror.rooms;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.Image;
 
 import java.io.File;
 import java.util.Arrays;
@@ -21,8 +20,6 @@ public class WindowedClassRoom extends Room{
     Collectable closedLaptop;
 
     boolean addedPoison;
-
-    Sound primarySound;
     
 
     public WindowedClassRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound) {
@@ -95,12 +92,6 @@ public class WindowedClassRoom extends Room{
             setActiveRoom(hallway.getActiveRoom());
             door.changeState(0);
         }
-    }
-    
-    public void jumpscare(){
-        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
-        displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
-        scareDelay();
     }
 
     public void spawnOpenLaptop(){

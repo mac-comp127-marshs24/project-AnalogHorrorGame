@@ -34,9 +34,7 @@ public class HallwayRoom extends Room{
 
     boolean hasTextBeenShown;
 
-    /*Sound */
-    Sound primarySound;
-
+    
     public HallwayRoom(Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound){
         super(backgroundImage, displayOverlay);
         startDisplay = false;
@@ -160,14 +158,6 @@ public class HallwayRoom extends Room{
 
     public void addLectureHall(LectureHallRoom lectureHallRoom){
         this.lectureHallRoom = lectureHallRoom;
-    }
-
-    public void jumpscare(){
-        // primary scare call jumpscare audio
-        primarySound.stopSound();
-        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
-        displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
-        scareDelay();
     }
 
     public void finalScare(){

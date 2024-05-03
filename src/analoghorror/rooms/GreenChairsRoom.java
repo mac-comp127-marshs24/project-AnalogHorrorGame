@@ -23,7 +23,6 @@ public class GreenChairsRoom extends Room {
     Collectable poisonedRat;
     Collectable windowBoxKey;
     Collectable poison;
-    Sound primarySound;
 
     public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay,  Sound primarySound) {
         super(backgroundImage, displayOverlay);
@@ -142,12 +141,6 @@ public class GreenChairsRoom extends Room {
             setActiveRoom(hallway.getActiveRoom());
             door.changeState(0);
         }
-    }
-
-    public void jumpscare(){
-        primarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
-        displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
-        scareDelay();
     }
 
     public void spawnOpenLaptop() {
