@@ -127,7 +127,7 @@ public class HorrorGame {
                 timerText.setText("");
                 if (!bagpipeNoise) {
                     // secondary sound watever
-                    secondarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "jumpscareBagpipe.wav");
+                    secondarySound.playSound("res" + File.separator + "assets" + File.separator + "audio" + File.separator + "pipe.wav");
                     displayOverlay.add(new Image ("assets" + File.separator + "overlays" + File.separator + "bagpipeNoise.png"));
                     bagpipeNoise = true;
                 }
