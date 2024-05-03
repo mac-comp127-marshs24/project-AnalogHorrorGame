@@ -58,7 +58,7 @@ public class WindowedClassRoom extends Room{
         closedLaptop = new Collectable(231, 302, "assets" + File.separator + "laptopClosed.png", "laptop");
         closedLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
 
-        this.add(roomInhabitants);
+        add(roomInhabitants);
     }
 
     /**
@@ -107,6 +107,9 @@ public class WindowedClassRoom extends Room{
         }
     }
 
+    /**
+     * Lets you open the box with the newly collected key.
+     */
     private void validateKey(){
         if (inventory.getCollectableWithID("windowBoxKey") != null){
             box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
