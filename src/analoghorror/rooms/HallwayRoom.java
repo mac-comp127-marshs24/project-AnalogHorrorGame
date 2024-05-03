@@ -16,6 +16,7 @@ public class HallwayRoom extends Room{
     boolean startDisplay;
     boolean introDisplay;
     boolean youWin;
+    boolean hallucination;
 
     Collectable primaryCursor;
     GreenChairsRoom greenChairsRoom;
@@ -43,6 +44,7 @@ public class HallwayRoom extends Room{
         piperDeath = false;
         playerDeath = false;
         youWin = false;
+        hallucination = false;
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
@@ -111,7 +113,6 @@ public class HallwayRoom extends Room{
         if (inventory.getCollectableWithID("rat01") != null){ //tried adding outside of update room, still crashes game
             piper.addValidInitCollectable(inventory.getCollectableWithID("rat01"));
             piper.addValidSubCollectable(inventory.getCollectableWithID("rat01"));
-
         }
         if (piper.getState() == 0 && piperDeath == false && playerDeath == false) {
             piperDeath = true;
@@ -192,6 +193,13 @@ public class HallwayRoom extends Room{
     private void youWin(){
         if (!youWin) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "youWin.png"));
+            youWin = true;
+        }
+    }
+
+    private void hallucination(){
+        if (!hallucination && inventory.getCollectableWithID("lecturePoison") != null) {
+            displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "hallucination.png"));
             youWin = true;
         }
     }
