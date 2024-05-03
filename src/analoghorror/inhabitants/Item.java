@@ -9,12 +9,12 @@ import edu.macalester.graphics.*;
 
 public class Item extends Image{
     boolean singleUse;  // True if item can only have its state changed once
-    String defaultImagePath;
-    int itemStates;
-    int currentState;
-    Set<String> validInitialCollectables;
-    Set<String> validSubCollectables;
-    List<String> itemTextures;
+    String defaultImagePath; //Default item image
+    int itemStates; //Number of item states
+    int currentState; //Current state of item
+    Set<String> validInitialCollectables; //Collectables needed to initally change state
+    Set<String> validSubCollectables; //Collectables needed to change state after initial change
+    List<String> itemTextures; //List of images for each state
 
     /**
      * An interactable game Item that extends the Image GraphicsObject. Arguments determine textures and if
