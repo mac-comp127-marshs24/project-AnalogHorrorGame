@@ -16,6 +16,7 @@ public class HorrorGame {
     private boolean timerStarted;
     private boolean laptopSpawned;
     private boolean finalMonster;
+    private boolean bagpipeNoise;
 
     private double randomDouble;
     private long startTime;
@@ -44,8 +45,9 @@ public class HorrorGame {
         timerStarted = false;
         laptopSpawned = false;
         finalMonster = false;
+        bagpipeNoise = false;
         randomDouble = Math.random();
-        canvas = new CanvasWindow("Game Test", CANVAS_WIDTH, CANVAS_HEIGHT);
+        canvas = new CanvasWindow("Biology Majors Be Like", CANVAS_WIDTH, CANVAS_HEIGHT);
         cursor = new GraphicsGroup();
         handAssignment();
         activeCursor = new Cursor(hand);
@@ -62,7 +64,8 @@ public class HorrorGame {
         inventory = new Inventory(0, 0, 742, 68, "assets" + File.separator + "inventoryBar.png");
         inventory.setCenter(CANVAS_WIDTH / 2, CANVAS_HEIGHT - inventory.getHeight() / 2);
 
-        hallway = new HallwayRoom(hand, "assets" + File.separator + "Corridor.png", inventory, displayOverlay);
+        hallway = new HallwayRoom(hand, "assets" + File.separator + "HallwayRoom" + File.separator + "hallwayRoomBG.png", inventory, 
+            displayOverlay);
         greenChairsRoom = new GreenChairsRoom(hallway, hand,
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "defaultGreenChairsRoomBG.png", inventory,
             displayOverlay);
@@ -84,6 +87,7 @@ public class HorrorGame {
         canvas.add(displayOverlay);
         canvas.add(timer);
         canvas.draw();
+        activeRoom.updateRoom();
         gameLogic();
     }
 
@@ -105,11 +109,15 @@ public class HorrorGame {
                         timer.removeAll();
                     }
                     timerText.setText(
-                        "You should probably find your supplies within " + (30 - secondsDisplay) + " seconds.");
+                        "You have " + (30 - secondsDisplay) + " seconds.");
                     canvas.draw();
                 }
             } else {
                 timerText.setText("");
+                if (!bagpipeNoise) {
+                    displayOverlay.add(new Image ("assets" + File.separator + "overlays" + File.separator + "bagpipeNoise.png"));
+                    bagpipeNoise = true;
+                }
                 // Play scary pipe scream
                 if (activeRoom == hallway && finalMonster == false) {
                     hallway.finalScare();
@@ -132,8 +140,8 @@ public class HorrorGame {
     }
 
     private void clickLogic(MouseButtonEvent event){
+        clickCollectableItemInteractions(event); // Opposite order prevents you from selecting during piper scare
         clickInventoryCollectableInteractions(event);
-        clickCollectableItemInteractions(event);
         spawnLaptop();
         canvas.draw();
         activeRoom.updateRoom();

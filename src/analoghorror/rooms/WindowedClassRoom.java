@@ -42,7 +42,7 @@ public class WindowedClassRoom extends Room{
 
         poison = new Collectable(530, 365, "assets" + File.separator + "poison.png", "windowPoison");
 
-        door = new Item(729, 200, "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png", false, 2);
+        door = new Item(710, 200, "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png", 
         "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png"));
         roomInhabitants.add(door);
@@ -91,7 +91,7 @@ public class WindowedClassRoom extends Room{
     }
     
     public void jumpscare(){
-        displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
+        displayOverlay.add(new Image("assets" + File.separator + "piper" + File.separator + "hands.png"));
         scareDelay();
     }
 

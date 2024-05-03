@@ -8,24 +8,25 @@ import java.util.TimerTask;
 import analoghorror.rooms.LectureHallRoom;
 
 public class Puzzle extends Item {
+    LectureHallRoom homeRoom;
     boolean failState;
     boolean solved;
-    // boolean scheduled;
     int attemptedClears;
+    long puzzleDelay;
+    long scareDelay;
     Timer puzzleTimer;
     Timer jumpscareTimer;
     TimerTask clunkTask;
     TimerTask scareTask;
-    long puzzleDelay;
-    long scareDelay;
-    LectureHallRoom homeRoom;
 
     public Puzzle(double x, double y, boolean isSingleUse, int numberOfItemStates, LectureHallRoom lectureHallRoom) {
-        super(x, y, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", isSingleUse,
-            numberOfItemStates);
+        super(x, y, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", isSingleUse, numberOfItemStates);
+        homeRoom = lectureHallRoom;
         failState = false;
         solved = false;
-        // scheduled = false;
+        attemptedClears = 0;
+        puzzleDelay = 5000;
+        scareDelay = 500;
         puzzleTimer = new Timer();
         jumpscareTimer = new Timer();
         clunkTask = new TimerTask() {
@@ -40,10 +41,6 @@ public class Puzzle extends Item {
                 scareTaskBehavior();
             }
         };
-        puzzleDelay = 5000;
-        scareDelay = 500;
-        attemptedClears = 0;
-        homeRoom = lectureHallRoom;
         setStatePaths(Arrays.asList(
             "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png",
 
@@ -70,7 +67,6 @@ public class Puzzle extends Item {
             && solved == false) {
             currentState = 1;
             setImagePath(itemTextures.get(currentState));
-            // collectable.setUsedTrue();
             puzzleTimer.cancel();
             puzzleTimer = new Timer();
             clunkTask = new TimerTask() {
@@ -83,7 +79,6 @@ public class Puzzle extends Item {
         } else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
-            // collectable.setUsedTrue();
             puzzleTimer.cancel();
             puzzleTimer = new Timer();
             clunkTask = new TimerTask() {
@@ -97,7 +92,6 @@ public class Puzzle extends Item {
             && collectableIsValid(collectable, validSubCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
-            // collectable.setUsedTrue();
             puzzleTimer.cancel();
             puzzleTimer = new Timer();
             clunkTask = new TimerTask() {
@@ -111,18 +105,14 @@ public class Puzzle extends Item {
     }
 
     private void activateSquare() {
-        // scheduled = true;
         puzzleTimer.schedule(clunkTask, puzzleDelay);
-        // System.out.println("WRONG");
     }
 
     private void clunkTaskBehavior() {
         homeRoom.clunk();
         attemptedClears++;
-        // scheduled = false;
         if (currentState == 9) {
             solved = true;
-            System.out.println("Solved!");
             setImagePath("assets" + File.separator + "puzzle" + File.separator + "openPuzzleBoard.png");
             homeRoom.updateRoom();
         } else if (attemptedClears == 3) {
@@ -132,7 +122,6 @@ public class Puzzle extends Item {
 
     private void scareTaskBehavior() {
         failState = true;
-        System.out.println("Yeah you die");
         homeRoom.updateRoom();
     }
 

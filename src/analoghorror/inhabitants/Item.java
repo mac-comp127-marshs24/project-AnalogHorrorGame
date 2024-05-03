@@ -72,7 +72,7 @@ public class Item extends Image{
         }
         else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables)) {
             currentState++;
-            setImagePath(itemTextures.get(currentState));  // itemTextures.get(1)
+            setImagePath(itemTextures.get(currentState));
             collectable.setUsedTrue();
         }
         else if (currentState > 0 && currentState < itemStates
