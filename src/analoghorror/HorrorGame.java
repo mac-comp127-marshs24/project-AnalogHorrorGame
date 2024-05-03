@@ -141,6 +141,9 @@ public class HorrorGame {
                     finalMonster = true;
                 }
             }
+            if (activeRoom == hallway && inventory.getCollectableWithID("lecturePoison") != null) {
+                hallway.hallucination();
+            }
         });
         canvas.onMouseMove(event -> {
             activeCursor.setCenter(event.getPosition());

@@ -197,10 +197,10 @@ public class HallwayRoom extends Room{
         }
     }
 
-    private void hallucination(){
-        if (!hallucination && inventory.getCollectableWithID("lecturePoison") != null) {
+    public void hallucination(){
+        if (!hallucination) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "hallucination.png"));
-            youWin = true;
+            hallucination = true;
         }
     }
 }
