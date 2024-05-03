@@ -57,7 +57,7 @@ public class HorrorGame {
      * 
      * This class handles the larger big-picture logic and game events that aren't tied to specific rooms.
      * 
-     * @Author Daisy Chan, Moyartu Manley, Wren Kuratana
+     * @Author Daisy Chan, Moyartu Manley, Wren Kuratana 20240503
      */
     public HorrorGame() {
         // Initialize ↓

@@ -14,7 +14,7 @@ Limitations: The program is designed to run in a non-scalable window that measur
 
 Performance may be inferior during the part of the game in which there is a visible timer; this is due to canvas.animate() inhibiting performance. (Probably.)
 
-Societal impact: A notable sacrifice in this program's development was made in accessibility. The vast majority of the game is in black-and-white, at a low resolution. Label implementation is exceedingly limited. As a result, this game is not accessible to anyone with impaired vision. 
+Societal impact: A notable sacrifice in this program's development was made in accessibility. The vast majority of the game is in black-and-white, at a low resolution. Label implementation is exceedingly limited. As a result, this game is not accessible to anyone with impaired vision. Additionally, the game makes use of loud jumpscares — please be mindful of your volume if you are wearing headphones.
 
 Any device that can input a left mouse button event should be compatible with our program, regardless of its form.
 
