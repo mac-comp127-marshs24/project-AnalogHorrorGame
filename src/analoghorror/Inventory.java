@@ -56,7 +56,7 @@ public class Inventory extends GraphicsGroup{
         inventoryBar.setFilled(false);
         base.add(texture);
         base.add(inventoryBar);
-        double slotRowStartX = 0 + HORIZONTAL_OFFSET, slotY = texture.getY() + VERTICAL_OFFSET;  // just center later? Look at y
+        double slotRowStartX = 0 + HORIZONTAL_OFFSET, slotY = texture.getY() + VERTICAL_OFFSET;
         for (int i = 0; i < INVENTORY_CAPACITY; i++) {
             Rectangle slot = new Rectangle(slotRowStartX, slotY, SLOT_WIDTH, SLOT_WIDTH);
             slot.setFilled(false);
@@ -97,17 +97,19 @@ public class Inventory extends GraphicsGroup{
      * @param cursor
      */
     public void acquireCollectable(Collectable collectable, Cursor cursor){
-        // Put CollectableItem in inventory
-        inventoryList.set(getAvailableSlotIndex(), collectable);  // Set first empty index to Collectable
-        
-        int collectableSlot = inventoryList.indexOf(collectable);  // Set collectable "slot" to center of available slotBox
+        // Put CollectableItem in inventory.
+        inventoryList.set(getAvailableSlotIndex(), collectable);  
+        // Set first empty index to Collectable.
+        int collectableSlot = inventoryList.indexOf(collectable);  
+        // Set collectable "slot" to center of available slotBox.
         collectable.setInventorySlot(slotBoxList.get(collectableSlot).getCenter()); 
-        
-        collectableLayer.add(collectable);  // Add collectable to GraphicsGroup
-        collectable.resetCenter();  // Send to home slotBox
-
+        collectableLayer.add(collectable);  
+        // Add collectable to GraphicsGroup.
+        collectable.resetCenter();  
+        // Send to home slotBox.
         cursor.resetCursor();
-        collectable.setInInventory(true);  // CollectableItem is now in inventory
+        collectable.setInInventory(true);  
+        // CollectableItem is now in inventory.
     }
 
     /**
@@ -122,28 +124,41 @@ public class Inventory extends GraphicsGroup{
      * @param event
      */
     public void assignCollectable(Collectable collectable, GraphicsGroup cursorGroup, Cursor cursor, MouseButtonEvent event){
-        // Cursor is now CollectableItem and CollectableItem is now part of the cursor group
+        // Cursor is now CollectableItem and CollectableItem is now part of the cursor group.
         cursor.setCursor(collectable);
         collectableLayer.remove(cursor.getCursor());
         cursorGroup.add(cursor);
         cursor.setCenter(event.getPosition());
-        collectable.setInInventory(false);  // CollectableItem is out of inventory
+        collectable.setInInventory(false);  
+        // CollectableItem is out of inventory.
     }
 
     public int getAvailableSlotIndex(){
-        int firstAvailable = inventoryList.indexOf(null);  // Returns first instance of null
+        int firstAvailable = inventoryList.indexOf(null);  
+        // Returns first instance of null.
         return firstAvailable;
     }
 
+    /**
+     * Adds collectable to collectableLayer GraphicsGroup and sends it home.
+     * 
+     * @param collectable
+     */
     public void returnCollectableToLayer(Collectable collectable){
-        collectableLayer.add(collectable);  // Add collectable to GraphicsGroup
-        collectable.resetCenter();  // Send to home slotBox
+        collectableLayer.add(collectable);
+        collectable.resetCenter(); 
     }
 
     public boolean isItemInInventory(Collectable collectable){
         return inventoryList.contains(collectable);
     }
 
+    /**
+     * Returns a Collectable with a stringID that matches the specified id.
+     * 
+     * @param id
+     * @return Collectable
+     */
     public Collectable getCollectableWithID(String id){
         for (Collectable collectable : inventoryList) {
             if (collectable != null) {
@@ -155,6 +170,11 @@ public class Inventory extends GraphicsGroup{
         return null;
     }
 
+    /**
+     * Removes Collectable from the Inventory and clears it from inventoryList.
+     * 
+     * @param collectable
+     */
     public void disposeOfCollectable(Collectable collectable){
         collectable.setInInventory(false);
         collectableLayer.remove(collectable);

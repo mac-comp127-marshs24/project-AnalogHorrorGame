@@ -32,6 +32,7 @@ public class Collectable extends Image {
 
     /**
      * Sets collectable to a specific slot in inventory.
+     * 
      * @param point Slot location
      */
     public void setInventorySlot(Point point){
@@ -39,7 +40,7 @@ public class Collectable extends Image {
     }
 
     /**
-     * Sets center of collectable to the center of inventory slot.
+     * Sets center of collectable to the center of inventory slot. Slot is in collecableLayer of Inventory.
      */
     public void resetCenter(){
         setCenter(inventorySlot);
