@@ -73,15 +73,6 @@ public class GreenChairsRoom extends Room {
         this.roomInhabitants.add(poison);
         ratCage.addValidInitCollectable(poison);
         ratCage.addValidSubCollectable(poison);
-
-        
-
-
-        
-        
-
-        
-
         door.addValidInitCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
 

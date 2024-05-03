@@ -91,6 +91,7 @@ public class LectureHallRoom extends Room {
             jumpscare();
         }
         puzzleFirstSight();
+        puzzleComplete();
         if (puzzle.getSolved() && addedPoison == false) {
             this.roomInhabitants.add(poison);
            addedPoison = true;
@@ -98,7 +99,6 @@ public class LectureHallRoom extends Room {
         if (clunk.getState() == 1) {
             clunk.changeState(0);
             this.roomInhabitants.remove(clunk);
-            puzzleComplete();
         }
     }
 
@@ -138,7 +138,7 @@ public class LectureHallRoom extends Room {
     }
 
     private void puzzleComplete(){
-        if (puzzle.getSolved() && !puzzleComplete) {
+        if (puzzle.getSolved() && !puzzleComplete && poison.getInInventory()) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "puzzleComplete.png"));
             puzzleComplete = true;
         }
