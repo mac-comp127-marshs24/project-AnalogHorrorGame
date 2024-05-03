@@ -68,7 +68,7 @@ public class LectureHallRoom extends Room {
         closedLaptop = new Collectable(785, 317, "assets" + File.separator + "laptopClosed.png", "laptop");
         closedLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
 
-        this.add(roomInhabitants);
+        add(roomInhabitants);
     }
 
     /**

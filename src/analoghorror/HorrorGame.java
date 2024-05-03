@@ -118,7 +118,6 @@ public class HorrorGame {
         canvas.add(cursor);
         canvas.add(displayOverlay);
         canvas.add(timer);
-        // canvas.draw();
 
         activeRoom.updateRoom();
         // *****
