@@ -12,28 +12,38 @@ public class Sound {
     public Sound(){
     }
 
+    /**
+     * Loads sound at filePath and plays it. If the file isn't found or other errors are encountered, an error is printed.
+     * 
+     * @param filePath
+     */
     public void playSound(String filePath) {
         try {
-          // loads sound 
           AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath));
           clip = AudioSystem.getClip();
           clip.open(audioInputStream);
       
-          // plays sound
           clip.start();
         } 
-        
         catch (Exception e) {
           e.printStackTrace();
-          // handles potential exceptions (e.g., file not found, audio format unsupported)
+          // Handles potential exceptions (e.g., file not found, audio format unsupported)
           System.err.println("Error playing sound: " + e.getMessage());
         }
       }
 
-      public void loopSound(int numOfLoops){
+    /**
+     * Loops sound number of times specified.
+     * 
+     * @param numOfLoops
+     */
+    public void loopSound(int numOfLoops){
         clip.loop(numOfLoops);
     }
 
+    /**
+     * Stops and closes sound.
+     */
     public void stopSound(){
         clip.stop();
         clip.close();
