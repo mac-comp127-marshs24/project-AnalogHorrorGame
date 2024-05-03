@@ -17,6 +17,7 @@ public class HallwayRoom extends Room{
     boolean introDisplay;
     boolean youWin;
     boolean hallucination;
+    boolean hasTextBeenShown;
 
     Collectable primaryCursor;
     GreenChairsRoom greenChairsRoom;
@@ -32,9 +33,6 @@ public class HallwayRoom extends Room{
     Piper piper;
     Collectable card;
 
-    boolean hasTextBeenShown;
-
-    
     public HallwayRoom(Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound){
         super(backgroundImage, displayOverlay);
         startDisplay = false;

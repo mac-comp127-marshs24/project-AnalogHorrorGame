@@ -9,18 +9,18 @@ import analoghorror.Sound;
 import analoghorror.inhabitants.*;
 
 public class WindowedClassRoom extends Room{
+    boolean addedPoison;
+
     Collectable primaryCursor;
     HallwayRoom hallway;
     Inventory inventory;
 
-    Item box;
     Item door;
+    Item box;
+
     Collectable poison;
     Collectable openLaptop;
     Collectable closedLaptop;
-
-    boolean addedPoison;
-    
 
     public WindowedClassRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound) {
         super(backgroundImage, displayOverlay);
@@ -29,8 +29,9 @@ public class WindowedClassRoom extends Room{
         this.primarySound = primarySound;
         primaryCursor = hand;
         changeRoom = false;
-        addRoomInhabitants();
         addedPoison = false;
+        
+        addRoomInhabitants();
     }
 
     @Override

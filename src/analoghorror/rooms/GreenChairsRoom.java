@@ -10,15 +10,18 @@ import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
 
 public class GreenChairsRoom extends Room {
-    Collectable primaryCursor;
-    HallwayRoom hallway;
-    Inventory inventory;
     boolean poisonedRatInteraction;
     boolean roomScare;
     boolean leaveAfterAnnouncement;
+    
+    Collectable primaryCursor;
+    HallwayRoom hallway;
+    Inventory inventory;
+
     Item door;
     Item ratCage;
     Item leaveAnnouncement;
+
     Collectable openLaptop;
     Collectable poisonedRat;
     Collectable windowBoxKey;
@@ -34,6 +37,7 @@ public class GreenChairsRoom extends Room {
         changeRoom = false;
         poisonedRatInteraction = false;
         roomScare = false;
+        
         addRoomInhabitants();
     }
 

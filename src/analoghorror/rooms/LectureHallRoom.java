@@ -10,19 +10,21 @@ import analoghorror.Sound;
 import analoghorror.inhabitants.*;
 
 public class LectureHallRoom extends Room {
-    Collectable primaryCursor;
-    HallwayRoom hallway;
-    Inventory inventory;
     boolean addedPoison;
     boolean puzzleFirstSight;
     boolean puzzleComplete;
+    
+    Collectable primaryCursor;
+    HallwayRoom hallway;
+    Inventory inventory;
+
     Item door;
     Item clunk;
+
     Puzzle puzzle;
     Collectable poison;
     Collectable openLaptop;
     Collectable closedLaptop;
-
 
     public LectureHallRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay, Sound primarySound) {
         super(backgroundImage, displayOverlay);
@@ -31,7 +33,6 @@ public class LectureHallRoom extends Room {
         this.hallway = hallway;
         this.inventory = inventory;
         this.primarySound =  primarySound;
-
         primaryCursor =  hand;
         changeRoom = false;
         addedPoison = false;
