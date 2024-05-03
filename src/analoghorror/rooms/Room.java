@@ -8,6 +8,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import analoghorror.Sound;
 import edu.macalester.graphics.*;
 
 //room is a graphics group
@@ -16,8 +17,12 @@ public abstract class Room extends GraphicsGroup{
     protected Image backgroundImage;
     protected Room activeRoom;
     protected boolean changeRoom;
+    protected boolean jumpscarePresent;
     protected GraphicsGroup displayOverlay;
-    Clip clip;
+
+    protected Sound ambientSound;
+
+    
 
     public Room(String backgroundImage, GraphicsGroup overlayGroup) {
         super();
@@ -26,6 +31,7 @@ public abstract class Room extends GraphicsGroup{
         add(this.backgroundImage);
         this.activeRoom = this;
         this.displayOverlay = overlayGroup;
+        this.jumpscarePresent = false;
     }
 
     public GraphicsGroup getRoomInhabitants() {
@@ -58,33 +64,6 @@ public abstract class Room extends GraphicsGroup{
 
     public abstract void jumpscare();
 
-    //CREDIT: https://stackoverflow.com/questions/21369365/how-to-stop-a-sound-while-its-playing-from-another-method
-    public void playSound(String filePath) {
-        try {
-          // loads sound 
-          AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath));
-          clip = AudioSystem.getClip();
-          clip.open(audioInputStream);
-      
-          // plays sound
-          clip.start();
-        } 
-        
-        catch (Exception e) {
-          e.printStackTrace();
-          // handles potential exceptions (e.g., file not found, audio format unsupported)
-          System.err.println("Error playing sound: " + e.getMessage());
-        }
-      }
-    
-    public void loopSound(int numOfLoops){
-        clip.loop(numOfLoops);
-    }
-
-    public void stopSound(){
-        clip.stop();
-    }
-
     protected void scareDelay(){
     long delay = 3000;
     Timer jumpscareTimer = new Timer();
@@ -95,5 +74,14 @@ public abstract class Room extends GraphicsGroup{
         }
     };
     jumpscareTimer.schedule(jumpscareTask, delay);
+}
+
+public void playAmbientSound(){
+    if (!this.jumpscarePresent) {
+        ambientSound.playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "ambientBG.wav");
+    }
+    else{
+        ambientSound.stopSound();
+    }
 }
 }

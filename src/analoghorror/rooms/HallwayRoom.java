@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 
 import analoghorror.Inventory;
+import analoghorror.Sound;
 import analoghorror.inhabitants.*;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Image;
@@ -17,7 +18,6 @@ public class HallwayRoom extends Room{
     WindowedClassRoom windowedClassRoom;
     Item box;
     Collectable key;
-    boolean jumpscarePresent;
     Inventory inventory;
 
     Item doorA;
@@ -28,6 +28,8 @@ public class HallwayRoom extends Room{
 
     Collectable card;
     Item sonic;
+    
+    Sound jumpscareSound;
 
     boolean hasTextBeenShown;
     
@@ -38,9 +40,12 @@ public class HallwayRoom extends Room{
         primaryCursor = hand;
         changeRoom = false;
         hasTextBeenShown = false;
-        jumpscarePresent = false;
         this.inventory = inventory;
-         //SOUND ADDED TO GAME INSANE!!!!
+
+        /*Sound */
+        ambientSound = new Sound();
+        jumpscareSound = new Sound();
+
         addRoomInhabitants();
     }
 
@@ -87,7 +92,7 @@ public class HallwayRoom extends Room{
     
     @Override
     public void updateRoom() {
-        ambientSound();
+        playAmbientSound();
         doorInteraction();
         if (inventory.getCollectableWithID("rat01") != null){ //tried adding outside of update room, still crashes game
             piper.addValidInitCollectable(inventory.getCollectableWithID("rat01"));
@@ -95,12 +100,14 @@ public class HallwayRoom extends Room{
 
         }
         if (piper.getState() == 0 && piperDeath == false) {
+            ambientSound.stopSound();
             System.out.println("They are dead");
             piperDeath = true;
             piper.piperEnd();
             // killed
         }
         if (piper.getState() == 4) {  // or 5
+            ambientSound.stopSound();
             System.out.println("You are dead");
             // monster wins
             scareDelay();
@@ -126,16 +133,6 @@ public class HallwayRoom extends Room{
             doorC.changeState(0);
         }
     }
-
-    //TODO: work on stop sound method
-    private void ambientSound(){
-        if (jumpscarePresent ==  false) {
-            playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "ambientBG.wav");
-        }
-        else{
-            stopSound();
-        }
-    }
     
     public void addChairClassroom(GreenChairsRoom chairClassroom){
         this.chairClassroom = chairClassroom;
@@ -149,13 +146,15 @@ public class HallwayRoom extends Room{
         this.lectureHallRoom = lectureHallRoom;
     }
 
-    public void jumpscare(){
-        jumpscarePresent = true;
+    public void jumpscare(){   
+        this.jumpscarePresent = true;
+        jumpscareSound.playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "jumpscareBagpipe.wav");
         displayOverlay.add(new Image("assets" + File.separator + "nancy.jpg"));
         scareDelay();
     }
 
     public void finalScare(){
+        jumpscareSound.playSound("res"+ File.separator +"assets"+ File.separator +"Audio"+ File.separator + "franticHallway.wav");
         this.roomInhabitants.add(piper);
         piper.piperStart();
         System.out.println("FINAL MONSTER");
