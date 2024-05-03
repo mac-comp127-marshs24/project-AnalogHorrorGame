@@ -12,7 +12,6 @@ public class Sound {
     public Sound(){
     }
 
-    //CREDIT: https://stackoverflow.com/questions/21369365/how-to-stop-a-sound-while-its-playing-from-another-method
     public void playSound(String filePath) {
         try {
           // loads sound 

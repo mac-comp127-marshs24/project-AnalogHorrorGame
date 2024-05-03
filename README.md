@@ -8,7 +8,7 @@ System requirements: The program should run on any system that can run Java 17 p
 
 How to run: The main class is in HorrorGame. Just click Run and you should be ready to go!
 
-Credit: Stack overflow (https://stackoverflow.com/questions/25186631/how-to-add-loop-timer-in-java) was referenced for the implementation of the final timed scene.
+Credit: Stack overflow (https://stackoverflow.com/questions/25186631/how-to-add-loop-timer-in-java) was referenced for the implementation of the final timed scene. Stack overflow (https://stackoverflow.com/questions/21369365/how-to-stop-a-sound-while-its-playing-from-another-method) was also referenced for sound implementation.
 
 Limitations: The program is designed to run in a non-scalable window that measures at 854 x 480 px. The mouse is the game's sole input, but it is not designed to handle dragging the cursor while the left mouse button is depressed. The ambient audio only plays for 10 minutes — if you take longer than that to complete the game you must do so in silence. Alternatively, you can get creative and make your own spooky sounds as you play once the track ends.
 
