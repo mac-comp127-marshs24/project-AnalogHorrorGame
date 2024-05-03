@@ -99,9 +99,7 @@ public class GreenChairsRoom extends Room {
 
     @Override
     public void updateRoom() {
-        if (displayOverlay.getWidth() != 0) {
-                displayOverlay.removeAll();
-        }
+        clearDisplayOverlay();
         if (ratCage.getState() == 3 && poisonedRatInteraction == false) {
             this.roomInhabitants.add(poisonedRat);
             poisonedRatInteraction = true;

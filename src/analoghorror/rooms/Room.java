@@ -132,4 +132,9 @@ public abstract class Room extends GraphicsGroup{
         jumpscareTimer.schedule(jumpscareTask, delay);
     }
 
+    protected void clearDisplayOverlay(){
+        if (displayOverlay.getWidth() != 0) {
+            displayOverlay.removeAll();
+        }
+    }
 }

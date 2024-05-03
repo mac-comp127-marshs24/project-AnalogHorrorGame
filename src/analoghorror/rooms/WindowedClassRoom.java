@@ -37,11 +37,10 @@ public class WindowedClassRoom extends Room{
     @Override
     public void addRoomInhabitants() {
         box = new Item(400, 280, "assets" + File.separator + "WindowedClassRoom" + File.separator + "boxClosed.png", true, 2);
+        
         box.setStatePaths(Arrays.asList("assets" + File.separator + "WindowedClassRoom" + File.separator + "boxClosed.png", 
         "assets" + File.separator + "WindowedClassRoom" + File.separator + "boxOpen.png"));
-        roomInhabitants.add(box);  // Add to "Room" (GraphicsGroup for now)
-
-        poison = new Collectable(530, 365, "assets" + File.separator + "poison.png", "windowPoison");
+        roomInhabitants.add(box);
 
         door = new Item(710, 200, "assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png", false, 2);
         door.setStatePaths(Arrays.asList("assets" + File.separator + "WindowedClassRoom" + File.separator + "windowedClassRoomArrow.png", 
@@ -52,6 +51,8 @@ public class WindowedClassRoom extends Room{
         door.addValidSubCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);
 
+        poison = new Collectable(530, 365, "assets" + File.separator + "poison.png", "windowPoison");
+
         openLaptop = new Collectable(111, 356, "assets" + File.separator + "laptopOpen.png", "laptop");
         openLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
 
@@ -61,32 +62,27 @@ public class WindowedClassRoom extends Room{
         this.add(roomInhabitants);
     }
 
+    /**
+     * Change room if door opens.
+     */
     public void doorInteraction(){
         if (door.getState() == 1) {
             changeRoom = true;
             changeRoom();
         }
-
     }
 
     @Override
     public void updateRoom() {
-        doorInteraction();
-        if (displayOverlay.getWidth() != 0) {
-            displayOverlay.removeAll();
-        }
-        if (inventory.getCollectableWithID("windowBoxKey") != null && (inventory.getCollectableWithID("windowBoxKey").getUsed())) {
-           this.roomInhabitants.add(poison);
-           addedPoison = true;
-           inventory.disposeOfCollectable(inventory.getCollectableWithID("windowBoxKey")); 
-        }
-        if (inventory.getCollectableWithID("windowBoxKey") != null){ //tried adding outside of update room, still crashes game
-            box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
-        }
-        
+        clearDisplayOverlay();
+        spawnPoison();
+        validateKey();
         doorInteraction();
     }
 
+    /**
+     * Set ActiveRoom to hallway and reset door.
+     */
     private void changeRoom(){
         if(changeRoom){ 
             hallway.resetActiveRoom();
@@ -101,5 +97,20 @@ public class WindowedClassRoom extends Room{
 
     public void spawnClosedLaptop(){
         this.roomInhabitants.add(closedLaptop);
+    }
+
+    private void spawnPoison() {
+        if (inventory.getCollectableWithID("windowBoxKey") != null
+            && (inventory.getCollectableWithID("windowBoxKey").getUsed())) {
+            this.roomInhabitants.add(poison);
+            addedPoison = true;
+            inventory.disposeOfCollectable(inventory.getCollectableWithID("windowBoxKey"));
+        }
+    }
+
+    private void validateKey(){
+        if (inventory.getCollectableWithID("windowBoxKey") != null){
+            box.addValidInitCollectable(inventory.getCollectableWithID("windowBoxKey"));
+        }
     }
 }

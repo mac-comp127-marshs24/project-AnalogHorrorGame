@@ -96,16 +96,9 @@ public class HallwayRoom extends Room{
     
     @Override
     public void updateRoom() {
-        // ambientSound();
-        if (displayOverlay.getWidth() != 0 && !youWin) {
-            displayOverlay.removeAll();
-        }
-        if (displayOverlay.getWidth() != 0 && youWin) {
-            winDelay();
-        }
+        clearDisplayOverlay();
         introDisplay();
         startDisplay();
-        doorInteraction();
         if (inventory.getCollectableWithID("rat01") != null){ //tried adding outside of update room, still crashes game
             piper.addValidInitCollectable(inventory.getCollectableWithID("rat01"));
             piper.addValidSubCollectable(inventory.getCollectableWithID("rat01"));
@@ -121,6 +114,7 @@ public class HallwayRoom extends Room{
             // monster wins
             scareDelay();  // closes game
         }
+        doorInteraction();
     }
 
     private void changeRoom(){
@@ -189,6 +183,16 @@ public class HallwayRoom extends Room{
         if (!hallucination) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "hallucination.png"));
             hallucination = true;
+        }
+    }
+
+    @Override
+    protected void clearDisplayOverlay() {
+        if (displayOverlay.getWidth() != 0 && !youWin) {
+            displayOverlay.removeAll();
+        }
+        if (displayOverlay.getWidth() != 0 && youWin) {
+            winDelay();
         }
     }
 }

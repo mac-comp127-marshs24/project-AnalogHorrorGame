@@ -83,13 +83,7 @@ public class LectureHallRoom extends Room {
 
     @Override
     public void updateRoom() {
-        doorInteraction();
-        if (displayOverlay.getWidth() != 0) {
-            displayOverlay.removeAll();
-        }
-        else if (puzzle.getFailState()) {  // Maybe make all jumpscare()s more like ↓
-            jumpscare();
-        }
+        clearDisplayOverlay();
         puzzleFirstSight();
         puzzleComplete();
         if (puzzle.getSolved() && addedPoison == false) {
@@ -100,6 +94,7 @@ public class LectureHallRoom extends Room {
             clunk.changeState(0);
             this.roomInhabitants.remove(clunk);
         }
+        doorInteraction();
     }
 
     private void changeRoom(){
@@ -135,6 +130,16 @@ public class LectureHallRoom extends Room {
         if (puzzle.getSolved() && !puzzleComplete && poison.getInInventory()) {
             displayOverlay.add(new Image("assets" + File.separator + "overlays" + File.separator + "puzzleComplete.png"));
             puzzleComplete = true;
+        }
+    }
+
+    @Override
+    protected void clearDisplayOverlay() {
+        if (displayOverlay.getWidth() != 0) {
+            displayOverlay.removeAll();
+        }
+        else if (puzzle.getFailState()) {  // Maybe make all jumpscare()s more like ↓
+            jumpscare();
         }
     }
 }
