@@ -9,18 +9,29 @@ import analoghorror.rooms.LectureHallRoom;
 
 public class Puzzle extends Item {
     LectureHallRoom homeRoom;
+
     boolean failState;
     boolean solved;
+
     int attemptedClears;
     long puzzleDelay;
     long scareDelay;
+
     Timer puzzleTimer;
     Timer jumpscareTimer;
     TimerTask clunkTask;
     TimerTask scareTask;
 
-    public Puzzle(double x, double y, boolean isSingleUse, int numberOfItemStates, LectureHallRoom lectureHallRoom) {
-        super(x, y, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", isSingleUse, numberOfItemStates);
+    /**
+     * An Item that gives you 3 tries to succeed in opening it. If you fail,
+     * calls a jumpscare().
+     * 
+     * @param x
+     * @param y
+     * @param lectureHallRoom
+     */
+    public Puzzle(double x, double y, LectureHallRoom lectureHallRoom) {
+        super(x, y, "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png", false, 10);
         homeRoom = lectureHallRoom;
         failState = false;
         solved = false;
@@ -29,18 +40,21 @@ public class Puzzle extends Item {
         scareDelay = 500;
         puzzleTimer = new Timer();
         jumpscareTimer = new Timer();
+
         clunkTask = new TimerTask() {
             @Override
             public void run() {
                 clunkTaskBehavior();
             }
         };
+
         scareTask = new TimerTask() {
             @Override
             public void run() {
                 scareTaskBehavior();
             }
         };
+
         setStatePaths(Arrays.asList(
             "assets" + File.separator + "puzzle" + File.separator + "puzzleBoard.png",
 
@@ -67,47 +81,29 @@ public class Puzzle extends Item {
             && solved == false) {
             currentState = 1;
             setImagePath(itemTextures.get(currentState));
-            puzzleTimer.cancel();
-            puzzleTimer = new Timer();
-            clunkTask = new TimerTask() {
-                @Override
-                public void run() {
-                    clunkTaskBehavior();
-                }
-            };
-            activateSquare();
+            cancelStartClunk();
         } else if (currentState == 0 && collectableIsValid(collectable, validInitialCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
-            puzzleTimer.cancel();
-            puzzleTimer = new Timer();
-            clunkTask = new TimerTask() {
-                @Override
-                public void run() {
-                    clunkTaskBehavior();
-                }
-            };
-            activateSquare();
+            cancelStartClunk();
         } else if (currentState > 0 && currentState < itemStates
             && collectableIsValid(collectable, validSubCollectables) && solved == false) {
             currentState++;
             setImagePath(itemTextures.get(currentState));
-            puzzleTimer.cancel();
-            puzzleTimer = new Timer();
-            clunkTask = new TimerTask() {
-                @Override
-                public void run() {
-                    clunkTaskBehavior();
-                }
-            };
-            activateSquare();
+            cancelStartClunk();
         }
     }
 
+    /**
+     * Schedules a timer to check for a win or fail state.
+     */
     private void activateSquare() {
         puzzleTimer.schedule(clunkTask, puzzleDelay);
     }
 
+    /**
+     * Checks for a win or fail state and prompts the homeRoom to spawn a "Clunk! sound" Item.
+     */
     private void clunkTaskBehavior() {
         homeRoom.clunk();
         attemptedClears++;
@@ -120,12 +116,33 @@ public class Puzzle extends Item {
         }
     }
 
+    /**
+     * Calls homeRoom.updateRoom() to activate jumpscare().
+     */
     private void scareTaskBehavior() {
         failState = true;
         homeRoom.updateRoom();
     }
 
+    /**
+     * @return true if puzzle is solved
+     */
     public boolean getSolved() {
         return solved;
+    }
+
+    /**
+     * Cancels any current puzzleTimer and starts a new one so you can't just click through the puzzle and get the answer.
+     */
+    private void cancelStartClunk(){
+        puzzleTimer.cancel();
+        puzzleTimer = new Timer();
+        clunkTask = new TimerTask() {
+            @Override
+            public void run() {
+                clunkTaskBehavior();
+            }
+        };
+        activateSquare();
     }
 }

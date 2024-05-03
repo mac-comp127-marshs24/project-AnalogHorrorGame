@@ -50,7 +50,7 @@ public class LectureHallRoom extends Room {
         poison.setInventoryPath("assets" + File.separator + "poison.png");
 
 
-        puzzle = new Puzzle(700, 125, false, 10, this);
+        puzzle = new Puzzle(700, 125, this);
         puzzle.addValidInitCollectable(primaryCursor);
         puzzle.addValidSubCollectable(primaryCursor);
         roomInhabitants.add(puzzle);
