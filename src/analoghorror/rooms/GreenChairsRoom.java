@@ -13,7 +13,9 @@ public class GreenChairsRoom extends Room {
     Collectable primaryCursor;
     HallwayRoom hallway;
     Inventory inventory;
-
+    boolean poisonedRatInteraction;
+    boolean roomScare;
+    boolean leaveAfterAnnouncement;
     Item door;
     Item ratCage;
     Item leaveAnnouncement;
@@ -28,6 +30,7 @@ public class GreenChairsRoom extends Room {
 
     public GreenChairsRoom(HallwayRoom hallway, Collectable hand, String backgroundImage, Inventory inventory, GraphicsGroup displayOverlay,  Sound primarySound) {
         super(backgroundImage, displayOverlay);
+        primaryCursor = hand;
         this.hallway = hallway;
         this.inventory = inventory;
         this.primarySound = primarySound;
@@ -38,7 +41,6 @@ public class GreenChairsRoom extends Room {
         addRoomInhabitants();
     }
 
-    // add items to roomInhabitants here
     @Override
     public void addRoomInhabitants() {
         door = new Item(716, 60,
@@ -46,7 +48,6 @@ public class GreenChairsRoom extends Room {
         door.setStatePaths(Arrays.asList(
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "greenChairRoomDoorClosed.png",
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "greenChairRoomDoorOpen.png"));
-        this.roomInhabitants.add(door);
         ratCage = new Item(500, 201,
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageSmallRat.png", true, 4);
         ratCage.setStatePaths(
@@ -54,31 +55,35 @@ public class GreenChairsRoom extends Room {
                 "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageBigRat.png",
                 "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageHugeRat.png",
                 "assets" + File.separator + "GreenChairsRoom" + File.separator + "ratCageEmpty.png"));
-        this.roomInhabitants.add(ratCage);  // Add to "Room" (GraphicsGroup for now)
+        windowBoxKey = new Collectable(100, 352,
+            "assets" + File.separator + "GreenChairsRoom" + File.separator + "keyOnFloor.png", "windowBoxKey");
+        windowBoxKey.setInventoryPath("assets" + File.separator + "GreenChairsRoom" + File.separator + "brassKey.png");
         poison = new Collectable(141, 286, "assets" + File.separator + "poison.png", "tutorialPoison");
-        ratCage.addValidInitCollectable(poison);
-        ratCage.addValidSubCollectable(poison);
-
         leaveAnnouncement = new Item(0, 0,
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "getOut.png", true, 2);
         leaveAnnouncement
             .setStatePaths(Arrays.asList("assets" + File.separator + "GreenChairsRoom" + File.separator + "getOut.png",
                 "assets" + File.separator + "GreenChairsRoom" + File.separator + "getOut.png"));
-
-        this.roomInhabitants.add(poison);
-
         poisonedRat = new Collectable(500, 201,
             "assets" + File.separator + "GreenChairsRoom" + File.separator + "looseRat.png", "rat01");
         poisonedRat
             .setInventoryPath("assets" + File.separator + "GreenChairsRoom" + File.separator + "collectedRat.png");
-
-        windowBoxKey = new Collectable(100, 352,
-            "assets" + File.separator + "GreenChairsRoom" + File.separator + "keyOnFloor.png", "windowBoxKey");
-        windowBoxKey.setInventoryPath("assets" + File.separator + "GreenChairsRoom" + File.separator + "brassKey.png");
-        this.roomInhabitants.add(windowBoxKey);
-
         openLaptop = new Collectable(84, 254, "assets" + File.separator + "laptopOpen.png", "laptop");
         openLaptop.setInventoryPath("assets" + File.separator + "laptopClosed.png");
+        this.roomInhabitants.add(door);
+        this.roomInhabitants.add(ratCage);
+        this.roomInhabitants.add(windowBoxKey);
+        this.roomInhabitants.add(poison);
+        ratCage.addValidInitCollectable(poison);
+        ratCage.addValidSubCollectable(poison);
+
+        
+
+
+        
+        
+
+        
 
         door.addValidInitCollectable(primaryCursor);
         door.addValidInitCollectable(primaryCursor);

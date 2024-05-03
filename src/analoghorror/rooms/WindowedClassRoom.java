@@ -73,6 +73,10 @@ public class WindowedClassRoom extends Room{
 
     @Override
     public void updateRoom() {
+        doorInteraction();
+        if (displayOverlay.getWidth() != 0) {
+            displayOverlay.removeAll();
+        }
         if (inventory.getCollectableWithID("windowBoxKey") != null && (inventory.getCollectableWithID("windowBoxKey").getUsed())) {
            this.roomInhabitants.add(poison);
            addedPoison = true;
